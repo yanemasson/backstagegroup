@@ -14,7 +14,7 @@ type TextProps = {
 };
 const Text = ({children, variant}:TextProps) => {
     const variantStyleMap = {
-        [TextVariant.H1]: 'text-[52px] font-bold',
+        [TextVariant.H1]: 'lg:text-[52px] text-[40px] font-bold',
         [TextVariant.H2]: '',
         [TextVariant.H3]: 'text-[20px] font-normal',
         [TextVariant.P]: 'text-[20px] font-light',

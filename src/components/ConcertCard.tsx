@@ -16,8 +16,8 @@ interface ConcertCardProps {
 const ConcertCard = ({index, to, title, descriptionShort, date, location, city, poster}: ConcertCardProps) => {
 
     return (
-        <div className='flex gap-40 justify-between'>
-            <img className='w-1/4 shadow-white' alt={poster} src={poster}/>
+        <div className='flex flex-col lg:flex-row lg:gap-40 justify-between'>
+            <img className='lg:w-1/4 shadow-white' alt={poster} src={poster}/>
             <div className='flex flex-col gap-10'>
                 <div>
                     <div className={`${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
@@ -29,9 +29,9 @@ const ConcertCard = ({index, to, title, descriptionShort, date, location, city, 
                     </div>
                 </div>
                 <Text variant={TextVariant.P}>{descriptionShort}</Text>
-                <div className='flex gap-5'>
+                <div className='flex lg:flex-row flex-col gap-5'>
                     <Button variant={ButtonVariant.white}>Бронь билета</Button>
-                    <Link to={to}><Button variant={ButtonVariant.white}>Узнать больше</Button></Link>
+                    <Link className='self-center' to={to}><Button variant={ButtonVariant.white}>Узнать больше</Button></Link>
                 </div>
             </div>
         </div>

@@ -19,9 +19,9 @@ const BurgerMenu = ({children, isOpen}: BurgerMenuProps) => {
         )
     }
     return (
-        <div className={`${menuStyle}
-        ${activeSection === 'header' ? ( isOpen ? 'bg-black' : 'bg-transparent') : 'bg-black'}
-            w-full bg-black p-10 z-30 top-20 left-0 fixed flex-col gap-10
+        <div className={`${menuStyle} 
+        ${activeSection === 'hero' ? ( isOpen ? 'bg-black/80' : 'bg-transparent') : 'bg-black/80'}
+            w-full p-10 z-30 top-20 left-0 fixed flex-col gap-10
             ${!isOpen && 'opacity-0 pointer-events-none'}`}>
             {children}
         </div>
