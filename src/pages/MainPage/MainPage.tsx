@@ -1,8 +1,13 @@
+import Hero from "./sections/Hero/Hero.tsx";
+import ConcertList from "./sections/ConcertList/ConcertList.tsx";
+
+
 const MainPage = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <Hero/>
+            <ConcertList city='Красноярск'/>
+        </>
     );
 };
 

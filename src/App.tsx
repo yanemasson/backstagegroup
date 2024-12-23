@@ -1,17 +1,24 @@
 import './App.css'
 import Header from "./layouts/Header/Header.tsx";
-import Hero from "./pages/MainPage/sections/Hero/Hero.tsx";
-import ConcertList from "./pages/MainPage/sections/ConcertList/ConcertList.tsx";
 import Footer from "./layouts/Footer/Footer.tsx";
+import {BrowserRouter, Route, Routes} from "react-router";
+import MainPage from "./pages/MainPage/MainPage.tsx";
+import ConcertListPage from "./pages/ConcertListPage/ConcertListPage.tsx";
+import ConcertPage from "./pages/ConcertPage/ConcertPage.tsx";
 
 
 function App() {
   return (
       <>
-          <Header/>
-          <Hero/>
-          <ConcertList/>
-          <Footer/>
+          <BrowserRouter>
+              <Header/>
+              <Routes>
+                  <Route index element={<MainPage/>}/>
+                  <Route path={'events'} element={<ConcertListPage/>}/>
+                  <Route path={'events/:id'} element={<ConcertPage/>}/>
+              </Routes>
+              <Footer/>
+          </BrowserRouter>
       </>
   )
 }
