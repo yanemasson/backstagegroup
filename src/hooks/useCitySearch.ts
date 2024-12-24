@@ -36,7 +36,7 @@ export const useCitySearch = () => {
             );
 
             const data = await response.json();
-            const cityOptions = data.suggestions.map((suggestion: unknown) => ({
+            const cityOptions = data.suggestions.map((suggestion: any) => ({
                 value: suggestion.data.city,
                 label: `${suggestion.data.city}${suggestion.data.region ? `, ${suggestion.data.region}` : ''}`
             }));
