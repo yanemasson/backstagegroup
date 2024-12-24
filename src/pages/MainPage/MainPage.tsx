@@ -6,7 +6,7 @@ const MainPage = () => {
     return (
         <>
             <Hero/>
-            <ConcertList city='Красноярск'/>
+            <ConcertList/>
         </>
     );
 };

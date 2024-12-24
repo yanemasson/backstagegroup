@@ -1,14 +1,18 @@
-import BurgerButton from "./components/BurgerButton.tsx";
 import {useState} from "react";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
+import { useCity } from '../../hooks/useCity.ts';
+import BurgerButton from "./components/BurgerButton.tsx";
 import BurgerMenu from "./components/BurgerMenu.tsx";
-import Logo from "/src/assets/icons/logo.svg?react"
-import LocationIcon from "/src/assets/icons/ic_location.svg?react"
 import Button, {ButtonVariant} from "../../components/Button.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
+import Logo from "/src/assets/icons/logo.svg?react"
+import LocationIcon from "/src/assets/icons/ic_location.svg?react"
 import {NavLink} from "react-router";
+import {CityModal} from "./components/CityModal.tsx";
 
 const Header = () => {
+    const [isCityModalOpen, setIsCityModalOpen] = useState(false);
+    const { selectedCity} = useCity();
     const [isOpen, setIsOpen] = useState(false)
     const activeSection = useActiveSection()
     const MenuItems = [
@@ -33,14 +37,18 @@ const Header = () => {
                             hover:text-yellow transition-colors px-4 py-2`}>
                             <Text variant={TextVariant.P}>{item.label}</Text></NavLink>
                     )}
-                    <Button variant={ButtonVariant.white}>
-                        <div className='flex items-center justify-center gap-2 '>
-                            <Text variant={TextVariant.P}>Красноярск</Text>
+                    <Button variant={ButtonVariant.white}  >
+                        <div onClick={() => setIsCityModalOpen(true)} className='flex items-center justify-center gap-2 px-4 ' >
+                            <Text variant={TextVariant.P}>{selectedCity}</Text>
                             <LocationIcon/>
                         </div>
                     </Button>
                 </div>
             </BurgerMenu>
+            <CityModal
+                isOpen={isCityModalOpen}
+                onClose={() => setIsCityModalOpen(false)}
+            />
         </nav>
     );
 };

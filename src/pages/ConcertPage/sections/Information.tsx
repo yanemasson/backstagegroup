@@ -1,7 +1,7 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import Button, {ButtonVariant} from "../../../components/Button.tsx";
 import {Concert} from "../../../types/concert.ts";
-import {getDate} from "../../../functions/getDate.ts";
+import {useDate} from "../../../hooks/useDate.ts";
 
 interface InformationProps {
     item: Concert
@@ -15,7 +15,7 @@ const Information = (({item}:InformationProps) => {
                 <div>
                     <Text variant={TextVariant.H1}>{item.title}</Text>
                     <Text variant={TextVariant.H3}>{item.city}, {item.location}</Text>
-                    <Text variant={TextVariant.H3}>{getDate(item.date)}</Text>
+                    <Text variant={TextVariant.H3}>{useDate(item.date)}</Text>
                 </div>
                 <Text variant={TextVariant.P}>{item.descriptionFull}</Text>
                 <Button variant={ButtonVariant.white}>Бронь билета</Button>

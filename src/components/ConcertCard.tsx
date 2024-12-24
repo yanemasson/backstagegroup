@@ -1,6 +1,6 @@
 import Text, {TextVariant} from "./Text.tsx";
 import Button, {ButtonVariant} from "./Button.tsx";
-import {getDate} from "../functions/getDate.ts";
+import {useDate} from "../hooks/useDate.ts";
 import {Link} from "react-router";
 
 interface ConcertCardProps {
@@ -25,7 +25,7 @@ const ConcertCard = ({index, to, title, descriptionShort, date, location, city, 
                     </div>
                     <div>
                         <Text variant={TextVariant.H3}>{city}, {location}</Text>
-                        <Text variant={TextVariant.H3}>{getDate(date)}</Text>
+                        <Text variant={TextVariant.H3}>{useDate(date)}</Text>
                     </div>
                 </div>
                 <Text variant={TextVariant.P}>{descriptionShort}</Text>

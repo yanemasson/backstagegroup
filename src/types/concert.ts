@@ -1,4 +1,4 @@
-interface Track {
+export interface Track {
     musician: string,
     composition: string,
 }

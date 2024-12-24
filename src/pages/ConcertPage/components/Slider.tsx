@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import LeftArrow from "./LeftArrow.tsx";
 import RightArrow from "./RightArrow.tsx";
-import CloseButton from "./CloseButton.tsx";
+import CloseButton from "../../../components/CloseButton.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 import { useSwipeable } from 'react-swipeable';
 

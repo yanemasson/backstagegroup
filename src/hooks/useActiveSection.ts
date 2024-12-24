@@ -13,7 +13,6 @@ export const useActiveSection = () => {
                 });
                 if (mostVisible.intersectionRatio > 0) {
                     setActiveSection(mostVisible.target.id);
-                    console.log(activeSection)
                 }
             },
             {
