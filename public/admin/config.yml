@@ -40,7 +40,7 @@ collections:
         required: false
 
       - label: "Ссылка на плейлист"
-        name: "trackList"
+        name: "playlistUrl"
         widget: "string"
         required: false
         hint: "Вставьте ссылку на плейлист Яндекс.Музыки"
@@ -48,8 +48,8 @@ collections:
           field: "trackListType"
           value: "playlist"
 
-      - label: "Треклист"
-        name: "trackList"
+      - label: "Список треков"
+        name: "tracks"
         widget: "list"
         required: false
         condition:
