@@ -30,7 +30,12 @@ collections:
         name: "videos"
         widget: "list"
         required: false
-        field: {label: "URL видео", name: "video", widget: "file"}
+        field:
+          label: "URL видео"
+          name: "video"
+          widget: "file"
+          media_folder: "/public/videos"
+          public_folder: "/videos"
 
       - label: "Фотографии"
         name: "photos"
