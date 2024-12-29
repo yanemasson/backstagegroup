@@ -1,13 +1,14 @@
 import ConcertCard from "../../../../components/ConcertCard.tsx";
-import {ConcertListData} from "../../../../data/concertListData.ts"
 import {useCity} from "../../../../hooks/useCity.ts";
 import Text, {TextVariant} from "../../../../components/Text.tsx";
 import {Link} from "react-router";
 import Button, {ButtonVariant} from "../../../../components/Button.tsx";
+import {useConcerts} from "../../../../hooks/useConcerts.ts";
 
 const ConcertList = () => {
     const { selectedCity } = useCity();
-    const filteredConcerts = ConcertListData.filter(item => item.city === selectedCity);
+    const {concerts} = useConcerts()
+    const filteredConcerts = concerts.filter(item => item.city === selectedCity);
 
     return (
         <section id='list' className='flex flex-col gap-40 px-5 py-20 lg:px-40 bg-black text-white'>

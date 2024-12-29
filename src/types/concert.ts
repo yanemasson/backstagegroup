@@ -13,5 +13,7 @@ export interface Concert {
     url?: string,
     videos?: string[],
     photos?: string[],
-    trackList?: Track[] | string,
+    trackListType?: 'playlist' | 'tracks',
+    playlistUrl?: string;
+    trackList?: Track[],
 }

@@ -16,10 +16,15 @@ collections:
       - {label: "Город", name: "city", widget: "string"}
       - {label: "Место проведения", name: "location", widget: "string"}
       - {label: "Дата и время", name: "date", widget: "datetime"}
-      - {label: "Постер", name: "poster", widget: "image"}
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "markdown"}
       - {label: "Ссылка на билеты", name: "url", widget: "string", required: false}
+
+      - label: "Постер"
+        name: "poster"
+        widget: "image"
+        media_folder: "/public/images/posters"
+        public_folder: "/images/posters"
 
       - label: "Видео"
         name: "videos"
@@ -31,7 +36,12 @@ collections:
         name: "photos"
         widget: "list"
         required: false
-        field: {label: "Фото", name: "photo", widget: "image"}
+        field:
+         - label: "Фото"
+         - name: "photo"
+         - widget: "image"
+         - media_folder: "/public/images/photos"
+         - public_folder: "/images/photos"
 
       - label: "Тип треклиста"
         name: "trackListType"
