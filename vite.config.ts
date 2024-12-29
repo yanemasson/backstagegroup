@@ -5,7 +5,6 @@ import svgr from "vite-plugin-svgr";
 import * as fs from 'fs-extra'
 import type { Plugin } from 'vite'
 
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(
@@ -17,4 +16,8 @@ export default defineConfig({
           }
       } as Plugin
   ), netlifyPlugin(), svgr()],
+    build: {
+        outDir: 'dist',
+        copyPublicDir: true,
+    }
 })

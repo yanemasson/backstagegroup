@@ -1,0 +1,60 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "concerts"
+    label: "Концерты"
+    folder: "content/concerts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Название концерта", name: "title", widget: "string"}
+      - {label: "Город", name: "city", widget: "string"}
+      - {label: "Место проведения", name: "location", widget: "string"}
+      - {label: "Дата и время", name: "date", widget: "datetime"}
+      - {label: "Постер", name: "poster", widget: "image"}
+      - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
+      - {label: "Полное описание", name: "descriptionFull", widget: "markdown"}
+      - {label: "Ссылка на билеты", name: "url", widget: "string", required: false}
+
+      - label: "Видео"
+        name: "videos"
+        widget: "list"
+        required: false
+        field: {label: "URL видео", name: "video", widget: "string"}
+
+      - label: "Фотографии"
+        name: "photos"
+        widget: "list"
+        required: false
+        field: {label: "Фото", name: "photo", widget: "image"}
+
+      - label: "Тип треклиста"
+        name: "trackListType"
+        widget: "select"
+        options: ["playlist", "tracks"]
+        required: false
+
+      - label: "Ссылка на плейлист"
+        name: "trackList"
+        widget: "string"
+        required: false
+        hint: "Вставьте ссылку на плейлист Яндекс.Музыки"
+        condition:
+          field: "trackListType"
+          value: "playlist"
+
+      - label: "Треклист"
+        name: "trackList"
+        widget: "list"
+        required: false
+        condition:
+          field: "trackListType"
+          value: "tracks"
+        fields:
+          - {label: "Музыкант", name: "musician", widget: "string"}
+          - {label: "Композиция", name: "composition", widget: "string"}
