@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Concert, Track} from "../types/Concert.ts";
+import {Concert, Track} from "../types/concert.ts";
 
 export const useConcerts = () => {
     const [concerts, setConcerts] = useState<Concert[]>([]);
