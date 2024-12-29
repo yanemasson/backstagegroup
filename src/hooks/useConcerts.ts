@@ -75,7 +75,6 @@ export const useConcerts = () => {
                     eager: true,
                     as: 'raw'
                 });
-
                 const loadedConcerts: Concert[] = [];
 
                 for (const path in concertFiles) {
