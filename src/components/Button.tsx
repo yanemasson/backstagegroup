@@ -9,8 +9,9 @@ export enum ButtonVariant {
 interface ButtonProps {
     children: ReactNode,
     variant?: ButtonVariant
+    onClick?: () => void
 }
-const Button = ({children, variant = ButtonVariant.white} : ButtonProps) => {
+const Button = ({children, onClick, variant = ButtonVariant.white} : ButtonProps) => {
     const variantStyleMap = {
         [ButtonVariant.white]: 'text-black bg-white active:bg-white/70',
         [ButtonVariant.yellow]: 'text-white bg-yellow active:bg-black/70',
@@ -19,7 +20,7 @@ const Button = ({children, variant = ButtonVariant.white} : ButtonProps) => {
     return (
         <button
             className={`self-center rounded-full duration-200 hover:shadow-lg py-2 min-w-44 lg:min-w-40
-            ${variantStyleMap[variant]}`} >{children}</button>
+            ${variantStyleMap[variant]}`} onClick={()=> onClick} >{children}</button>
     );
 };
 

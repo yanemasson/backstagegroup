@@ -11,17 +11,19 @@ const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
 
 const ConcertPage = () => {
     const {id} = useParams()
+
     if(!ConcertListData[Number(id!)]) {return <NotFoundPage/>}
     const item = ConcertListData[Number(id!)];
+
     return (
-        <>
+        <div className='bg-black'>
             <Information item={item}/>
             {item.trackList && <TrackList trackList={item.trackList}/>}
             <Suspense fallback={<LoadingSpinner/>}>
                 {item.videos && <VideoSection videos={item.videos}/>}
                 {item.photos && <Gallery photos={item.photos}/>}
             </Suspense>
-        </>
+        </div>
     );
 };
 

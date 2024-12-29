@@ -13,7 +13,7 @@ const ConcertList = () => {
         <section id='list' className='flex flex-col gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
             {filteredConcerts.length > 0 ? (
                 filteredConcerts.map((item, index) => (
-                    <ConcertCard key={index} to={`events/${index}`} title={item.title}
+                    <ConcertCard key={index} url={item.url} to={`events/${index}`} title={item.title}
                                  descriptionShort={item.descriptionShort} index={index} date={item.date}
                                  poster={item.poster} city={item.city} location={item.location}
                     />
