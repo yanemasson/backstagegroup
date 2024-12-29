@@ -10,7 +10,7 @@ interface ConcertCardProps {
     to: string,
     title: string,
     descriptionShort: string,
-    date: Date,
+    date: string,
     location: string,
     city: string,
     poster: string,

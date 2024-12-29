@@ -5,18 +5,6 @@ export const useConcerts = () => {
     const [concerts, setConcerts] = useState<Concert[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-    const parseMultilineField = (content: string, fieldName: string): string => {
-        const regex = new RegExp(`${fieldName}:\\s*>-\\s*\\n((\\s{2,}.*\\n?)*)`);
-        const match = content.match(regex);
-        if (match && match[1]) {
-            return match[1]
-                .split('\n')
-                .map(line => line.trim())
-                .filter(line => line)
-                .join('\n');
-        }
-        return '';
-    };
     const parseArrayField = (content: string, fieldName: string): string[] => {
         const regex = new RegExp(`${fieldName}:\\s*\\n((\\s{2,}-.*\\n?)*)`);
         const match = content.match(regex);
@@ -94,17 +82,15 @@ export const useConcerts = () => {
                                 date: frontMatter.match(/date:\s*(.*)/)?.[1]?.trim(),
                                 poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
                                 url: frontMatter.match(/url:\s*(.*)/)?.[1]?.trim()
-
                             };
-
 
                             // многострочные поля
                             const descriptionShort = frontMatter.match(/descriptionShort:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '';
-                            const descriptionFull = parseMultilineField(frontMatter, 'descriptionFull');
+                            const descriptionFull = frontMatter.match(/descriptionFull:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '';
 
                             const concert: Concert = {
                                 ...simpleFields,
-                                date: new Date(simpleFields.date || ''),
+                                date: simpleFields.date || '',
                                 descriptionShort,
                                 descriptionFull,
                                 videos: frontMatter.match(/videos:/i) ?
@@ -125,7 +111,7 @@ export const useConcerts = () => {
                 }
 
                 const sortedConcerts = loadedConcerts.sort((a, b) =>
-                    b.date.getTime() - a.date.getTime()
+                    a.date.localeCompare(b.date)
                 );
 
                 setConcerts(sortedConcerts);

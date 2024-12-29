@@ -15,10 +15,17 @@ collections:
       - {label: "Название концерта", name: "title", widget: "string"}
       - {label: "Город", name: "city", widget: "string"}
       - {label: "Место проведения", name: "location", widget: "string"}
-      - {label: "Дата и время", name: "date", widget: "datetime"}
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "string"}
       - {label: "Ссылка на билеты", name: "url", widget: "string", required: false}
+
+      - label: "Дата и время"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        date_format: "DD.MM.YYYY"
+        time_format: "HH:mm"
+        picker_utc: false
 
       - label: "Постер"
         name: "poster"

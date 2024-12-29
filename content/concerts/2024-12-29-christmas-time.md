@@ -2,8 +2,8 @@
 title: Christmas Time
 city: Красноярск
 location: Институт искусств имени Хворостовского
-date: 2025-01-09T19:00:00.000Z
-descriptionShort: |-
+date: 2025-01-09 19:00
+descriptionShort:
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
     incididunt ut labore et dolore magna aliqua.
 descriptionFull: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

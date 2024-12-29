@@ -9,12 +9,19 @@ const ConcertList = () => {
     const { selectedCity } = useCity();
     const {concerts} = useConcerts()
     const filteredConcerts = concerts.filter(item => item.city === selectedCity);
+    const createSlug = (title: string, city: string) => {
+        return `${title}_${city}`
+            .toLowerCase()
+            .replace(/[^a-zа-яё0-9-\s]/g, '')
+            .replace(/\s+/g, '_')
+            .replace(/-+/g, '_');
+    };
 
     return (
         <section id='list' className='flex flex-col gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
             {filteredConcerts.length > 0 ? (
                 filteredConcerts.map((item, index) => (
-                    <ConcertCard key={index} url={item.url} to={`events/${index}`} title={item.title}
+                    <ConcertCard key={index} url={item.url} to={`events/${createSlug(item.title, item.city)}`} title={item.title}
                                  descriptionShort={item.descriptionShort} index={index} date={item.date}
                                  poster={item.poster} city={item.city} location={item.location}
                     />

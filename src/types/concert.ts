@@ -6,7 +6,7 @@ export interface Concert {
     title: string,
     city: string,
     location: string,
-    date: Date,
+    date: string,
     poster: string,
     descriptionShort: string,
     descriptionFull: string,

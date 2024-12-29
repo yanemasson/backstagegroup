@@ -12,8 +12,18 @@ const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
 const ConcertPage = () => {
     const {id} = useParams()
     const {concerts} = useConcerts()
-    if(!concerts[Number(id!)]) {return <NotFoundPage/>}
-    const item = concerts[Number(id!)];
+
+    const createSlug = (title: string, city: string) => {
+        return `${title}_${city}`
+            .toLowerCase()
+            .replace(/[^a-zа-яё0-9-\s]/g, '')
+            .replace(/\s+/g, '_')
+            .replace(/-+/g, '_');
+    };
+    const item= concerts.find(
+        (c) => createSlug(c.title, c.city) === id)
+
+    if(!item) {return <NotFoundPage/>}
 
     return (
         <div className='bg-black'>

@@ -2,7 +2,7 @@ import Text, {TextVariant} from "../../../components/Text.tsx";
 import Button, {ButtonVariant} from "../../../components/Button.tsx";
 import {Concert} from "../../../types/concert.ts";
 import {useDate} from "../../../hooks/useDate.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import TicketModal from "../../../components/TicketModal.tsx";
 
 interface InformationProps {
@@ -11,7 +11,9 @@ interface InformationProps {
 
 const Information = (({item}:InformationProps) => {
     const [isOpen, setIsOpen] = useState(false)
-
+    useEffect(() => {
+        console.log(item)
+    }, [item]);
     return (
         <>
             {item.url && <TicketModal isOpen={isOpen} onClose={() => setIsOpen(false)} ticketUrl={item.url}/>}
