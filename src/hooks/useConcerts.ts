@@ -89,14 +89,15 @@ export const useConcerts = () => {
 
                             // простые поля
                             const simpleFields = {
-                                title: frontMatter.match(/title:\s*(.*)/)?.[1]?.trim(),
-                                city: frontMatter.match(/city:\s*(.*)/)?.[1]?.trim(),
-                                location: frontMatter.match(/location:\s*(.*)/)?.[1]?.trim(),
+                                title: frontMatter.match(/title:\s*(.*)/)?.[1]?.trim() || '',
+                                city: frontMatter.match(/city:\s*(.*)/)?.[1]?.trim() || '',
+                                location: frontMatter.match(/location:\s*(.*)/)?.[1]?.trim() || '',
                                 date: frontMatter.match(/date:\s*(.*)/)?.[1]?.trim(),
-                                poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim(),
+                                poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
                                 url: frontMatter.match(/url:\s*(.*)/)?.[1]?.trim()
 
                             };
+
 
                             // многострочные поля
                             const descriptionShort = frontMatter.match(/descriptionShort:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '';
