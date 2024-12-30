@@ -5,6 +5,7 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
 import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import useConcerts from "../../hooks/useConcerts.ts";
+import YandexMusic from "./sections/YandexMusic.tsx";
 
 const VideoSection = lazy(() => import("./sections/VideoSection.tsx")) ;
 const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
@@ -28,7 +29,8 @@ const ConcertPage = () => {
     return (
         <div className='bg-black'>
             <Information item={item}/>
-            {item.trackList && item.trackList.length > 0 && (<TrackList trackList={item.trackList} />)}
+            {item.trackList && (<TrackList trackList={item.trackList}/>)}
+            {item.playlistUrl && <YandexMusic playlist={item.playlistUrl}/>}
             <Suspense fallback={<LoadingSpinner/>}>
                 {item.videos && item.videos.length > 0 && (<VideoSection videos={item.videos} />)}
                 {item.photos && item.photos.length > 0 && (<Gallery photos={item.photos} />)}

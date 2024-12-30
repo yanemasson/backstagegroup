@@ -26,7 +26,7 @@ const Information = (({item}:InformationProps) => {
                         <Text variant={TextVariant.H3}>{useDate(item.date)}</Text>
                     </div>
                     <Text variant={TextVariant.P}>{item.descriptionFull}</Text>
-                    <div className='lg:self-start self-center' onClick={() => setIsOpen(true)}><Button variant={ButtonVariant.white}>Бронь билета</Button></div>
+                    <div className='lg:self-start self-center' onClick={() => setIsOpen(true)}><Button variant={ButtonVariant.white}>Купить билет</Button></div>
                 </div>
             </div>
         </>

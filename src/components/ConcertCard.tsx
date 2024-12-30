@@ -38,7 +38,7 @@ const ConcertCard = ({index, to, title, descriptionShort, date, location, city, 
                 </div>
                 <Text variant={TextVariant.P}>{descriptionShort}</Text>
                 <div className='flex lg:flex-row flex-col items-center gap-5'>
-                    <div onClick={() => setIsModalOpen(true)}><Button variant={ButtonVariant.white}>Бронь билета</Button></div>
+                    <div onClick={() => setIsModalOpen(true)}><Button variant={ButtonVariant.white}>Купить билет</Button></div>
                     <Link className='self-center' to={to}><Button variant={ButtonVariant.white}>Узнать больше</Button></Link>
                 </div>
             </div>
