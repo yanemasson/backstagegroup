@@ -4,24 +4,19 @@ import {Concert, Track} from "../types/concert.ts";
 export const useConcerts = () => {
     const [concerts, setConcerts] = useState<Concert[]>([]);
 
-    const parseTracklist = (content: string): Track[] => {
+    const parseTrackList = (content: string): Track[] => {
         const regex = /tracks:\s*(\n\s*-[^]*?)(?=\n\w|$)/;
         const match = content.match(regex);
-
         if (match && match[1]) {
             const tracksSection = match[1];
             const tracks: Track[] = [];
-
-            // Разбиваем на отдельные треки и фильтруем пустые строки
             const trackStrings = tracksSection
                 .split('\n  -')
                 .filter(str => str.trim());
 
             trackStrings.forEach(trackString => {
-                // Обновленные регулярные выражения с учетом пробелов в начале строк
                 const musicianMatch = trackString.match(/\s*musician:\s*([^\n]+)/);
                 const compositionMatch = trackString.match(/\s*composition:\s*([^\n]+)/);
-
                 if (musicianMatch?.[1] && compositionMatch?.[1]) {
                     if (musicianMatch && compositionMatch) {
                         tracks.push({
@@ -31,7 +26,6 @@ export const useConcerts = () => {
                     }
                 }
             });
-
             return tracks;
         }
         return [];
@@ -78,12 +72,11 @@ export const useConcerts = () => {
                                 photos: frontMatter.match(/photos:/i) ?
                                     parseArrayField(frontMatter, 'photos') : [],
                                 trackList: frontMatter.match(/tracks:/i) ?
-                                    parseTracklist(frontMatter) :
+                                    parseTrackList(frontMatter) :
                                     undefined,
                                 trackListType: frontMatter.match(/trackListType:\s*(.*)/)?.[1] as 'playlist' | 'tracks' | undefined,
                                 playlistUrl: frontMatter.match(/playlistUrl:\s*(.*)/)?.[1]?.trim() || '',
                             };
-
                             loadedConcerts.push(concert);
                         }
                 }
@@ -92,10 +85,8 @@ export const useConcerts = () => {
                 );
                 setConcerts(sortedConcerts);
         };
-
         loadConcerts();
     }, []);
-
     return { concerts };
 };
 

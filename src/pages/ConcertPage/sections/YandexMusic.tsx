@@ -1,5 +1,3 @@
-
-
 const YandexMusic = ({playlist}: {playlist: string}) => {
     return (
         <div className='bg-black  text-white py-20 px-5 lg:px-40'>

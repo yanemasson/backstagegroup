@@ -3,7 +3,6 @@ const months = ['января', 'февраля', 'марта', 'апреля', 
 
 export const useDate = (date:string)=> {
     const dateArr = date.split(' ')[0].split('-')
-    console.log("dateArr " + dateArr)
     const time = date.split(' ')[1]
     return Number(dateArr[2]) + ' ' + months[Number(dateArr[1])] + ' в ' + time
 }

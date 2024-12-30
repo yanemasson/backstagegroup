@@ -14,7 +14,7 @@ collections:
     fields:
       - {label: "Название концерта", name: "title", widget: "string"}
       - {label: "Город", name: "city", widget: "string"}
-      - {label: "Место проведения", name: "location", widget: "string"}
+      - {label: "Место проведения", name: "location", widget: "text"}
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "string"}
       - {label: "Ссылка на билеты", name: "url", widget: "string", required: false}

@@ -19,13 +19,13 @@ interface ConcertCardProps {
 const ConcertCard = ({index, to, title, descriptionShort, date, location, city, poster, url}: ConcertCardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     return (
-        <div className='flex flex-col lg:flex-row lg:gap-40 justify-between'>
+        <div className='flex flex-col items-center text-center lg:text-start lg:flex-row xl:gap-40 md:gap-20 justify-between'>
             {url && <TicketModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 ticketUrl={url}
             />}
-            <img className='lg:w-1/4 shadow-white' alt={poster} src={poster}/>
+            <img className='xl:w-1/4 xl:h-1/4 md:w-1/2 md:h-1/2 shadow-white' alt={poster} src={poster}/>
             <div className='flex flex-col gap-10'>
                 <div>
                     <div className={`${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>

@@ -14,6 +14,7 @@ const ConcertPage = () => {
     const {id} = useParams()
     const {concerts} = useConcerts()
 
+
     const createSlug = (title: string, city: string) => {
         return `${title}_${city}`
             .toLowerCase()
@@ -27,15 +28,14 @@ const ConcertPage = () => {
     if(!item) {return <NotFoundPage/>}
 
     return (
-        <div className='bg-black'>
+        <div className='bg-black pb-20'>
             <Information item={item}/>
-            {item.trackList && (<TrackList trackList={item.trackList}/>)}
+            {item.trackList && <TrackList trackList={item.trackList}/>}
             {item.playlistUrl && <YandexMusic playlist={item.playlistUrl}/>}
             <Suspense fallback={<LoadingSpinner/>}>
                 {item.videos && item.videos.length > 0 && (<VideoSection videos={item.videos} />)}
                 {item.photos && item.photos.length > 0 && (<Gallery photos={item.photos} />)}
             </Suspense>
-
         </div>
     );
 };
