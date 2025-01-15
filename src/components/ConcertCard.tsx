@@ -29,7 +29,7 @@ const ConcertCard = ({index, to, title, descriptionShort, date, location, city, 
             <div className='flex flex-col gap-10'>
                 <div>
                     <div className={`${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
-                        <Text variant={TextVariant.H1}>{title}</Text>
+                        <Text variant={TextVariant.H2}>{title}</Text>
                     </div>
                     <div>
                         <Text variant={TextVariant.H3}>{city}, {location}</Text>

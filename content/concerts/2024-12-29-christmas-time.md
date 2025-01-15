@@ -16,5 +16,5 @@ descriptionFull: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 url: https://kras.kassy.events/events/koncerty-i-shou/2-14475/
 poster: /images/posters/1.jpg
 videos:
-  - /videos/promo_video.mp4
+  - /videos/first.mp4
 ---

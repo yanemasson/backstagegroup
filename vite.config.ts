@@ -22,5 +22,5 @@ export default defineConfig({
     },
     optimizeDeps: {
         include: ['gray-matter']
-    }
-})
+    },
+});
