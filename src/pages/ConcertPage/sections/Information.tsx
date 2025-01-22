@@ -13,7 +13,7 @@ const Information = (({item}:InformationProps) => {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <div className='flex flex-col bg-black text-white px-5 lg:px-40 gap-20'>
-            {item.url && <TicketModal isOpen={isOpen} onClose={() => setIsOpen(false)} ticketUrl={item.url}/>}
+            {item.script && <TicketModal isOpen={isOpen} onClose={() => setIsOpen(false)} script={item.script}/>}
             <div className='flex flex-col lg:flex-row pt-20 lg:gap-40 justify-between '>
                 <img className='xl:w-1/4 xl:h-1/4 md:w-1/2 md:h-1/2 shadow-white' alt={item.poster} src={item.poster}/>
                 <div className='flex flex-col gap-10'>

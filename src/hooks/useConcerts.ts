@@ -71,6 +71,7 @@ export const useConcerts = () => {
                             undefined,
                         trackListType: frontMatter.match(/trackListType:\s*(.*)/)?.[1] as 'playlist' | 'tracks' | undefined,
                         playlistUrl: frontMatter.match(/playlistUrl:\s*(.*)/)?.[1]?.trim() || '',
+                        script: frontMatter.match(/script:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
                     };
                     loadedConcerts.push(concert);
                 }

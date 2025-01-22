@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/dompurify": "^3.2.0",
     "decap-cms-app": "^3.4.0",
+    "dompurify": "^3.2.3",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
     "gray-matter-browser": "^4.0.4",

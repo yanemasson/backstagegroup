@@ -11,6 +11,7 @@ export interface Concert {
     descriptionShort: string,
     descriptionFull: string,
     url?: string,
+    script?: string
     videos?: string[],
     photos?: string[],
     trackListType?: 'playlist' | 'tracks',

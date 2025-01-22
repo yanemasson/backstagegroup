@@ -19,6 +19,10 @@ collections:
       - {label: "Полное описание", name: "descriptionFull", widget: "string"}
       - {label: "Ссылка на билеты", name: "url", widget: "string", required: false}
 
+      - label: "Скрипт"
+        name: "script"
+        widget: "text"
+        hint: "Вставьте сюда код скрипта"
       - label: "Дата и время"
         name: "date"
         widget: "datetime"
