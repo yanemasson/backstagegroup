@@ -11,9 +11,7 @@ descriptionFull: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
   esse cillum dolore   eu fugiat nulla pariatur. Excepteur sint occaecat
   cupidatat non proident, sunt   in culpa qui officia deserunt mollit anim id
   est laborum.
-url: https://kras.kassy.events/events/koncerty-i-shou/2-14475/
-script: <script
-  src="https://radario.ru/frontend/src/api/openapi/openapi.js"></script><script>radario.Widgets.Event({"params":{"textBtnColor":"#FFFFFF"},"standalone":false,"createButton":true,"eventId":2373574})</script>
+eventId: 2373574
 date: 2025-01-09 19:00
 poster: /images/posters/1.jpg
 videos:

@@ -59,7 +59,6 @@ export const useConcerts = () => {
                         location: frontMatter.match(/location:\s*(.*)/)?.[1]?.trim() || '',
                         date: frontMatter.match(/date:\s*(.*)/)?.[1]?.trim() || '',
                         poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
-                        url: frontMatter.match(/url:\s*(.*)/)?.[1]?.trim(),
                         descriptionShort: frontMatter.match(/descriptionShort:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
                         descriptionFull: frontMatter.match(/descriptionFull:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
                         videos: frontMatter.match(/videos:/i) ?
@@ -71,7 +70,7 @@ export const useConcerts = () => {
                             undefined,
                         trackListType: frontMatter.match(/trackListType:\s*(.*)/)?.[1] as 'playlist' | 'tracks' | undefined,
                         playlistUrl: frontMatter.match(/playlistUrl:\s*(.*)/)?.[1]?.trim() || '',
-                        script: frontMatter.match(/script:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
+                        eventId: Number(frontMatter.match(/eventId:\s*(\d+)/)?.[1]) || 0,
                     };
                     loadedConcerts.push(concert);
                 }

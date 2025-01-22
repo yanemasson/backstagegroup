@@ -15,7 +15,7 @@ const ConcertList = () => {
         <section id='list' className='flex flex-col gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
             {concerts.map((item, index) =>
                 <ConcertCard
-                    script={item.script} key={index} to={`${createSlug(item.title, item.city)}`} title={item.title}
+                    eventId={item.eventId} key={index} to={`${createSlug(item.title, item.city)}`} title={item.title}
                     descriptionShort={item.descriptionShort} date={item.date} poster={item.poster} city={item.city}
                     location={item.location} index={index}
                 />)

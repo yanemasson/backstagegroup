@@ -10,8 +10,7 @@ export interface Concert {
     poster: string,
     descriptionShort: string,
     descriptionFull: string,
-    url?: string,
-    script?: string
+    eventId: number,
     videos?: string[],
     photos?: string[],
     trackListType?: 'playlist' | 'tracks',
