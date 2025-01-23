@@ -5,6 +5,7 @@ import {CityProvider} from "./contexts/CityContext.tsx";
 import { Suspense, lazy } from 'react';
 import LoadingSpinner from "./components/LoadingSpinner.tsx";
 import { HelmetProvider } from 'react-helmet-async';
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
 const ConcertListPage = lazy(() => import('./pages/ConcertListPage/ConcertListPage'));
@@ -16,6 +17,7 @@ function App() {
       <HelmetProvider>
           <CityProvider>
               <BrowserRouter>
+                  <ScrollToTop />
                   <Header/>
                   <Suspense fallback={<LoadingSpinner/>}>
                       <Routes>

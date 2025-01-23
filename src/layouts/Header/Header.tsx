@@ -31,6 +31,7 @@ const Header = () => {
                 <div className='flex lg:flex-row flex-col items-center justify-center gap-5'>
                     {MenuItems.map((item) =>
                         <NavLink
+                            onClick={toggleMenu}
                             key={`#${item.id}`} to={`${item.id}`}
                             className={
                             `${activeSection === item.id ? 'text-white font-bold' : 'text-white'} 
