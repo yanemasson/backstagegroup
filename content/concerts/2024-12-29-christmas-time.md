@@ -15,5 +15,5 @@ eventId: 2373574
 date: 2025-01-09 19:00
 poster: /images/posters/1.jpg
 videos:
-  - /videos/first.mp4
+  - /videos/promo_video.mp4
 ---

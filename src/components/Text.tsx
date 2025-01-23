@@ -19,8 +19,8 @@ const Text = ({children, variant}:TextProps) => {
         [TextVariant.H1]: 'lg:text-[52px] text-[40px] font-bold',
         [TextVariant.H2]: 'lg:text-[50px] text-[22px] font-bold',
         [TextVariant.H3]: 'lg:text-[20px] text-[16px] font-normal',
-        [TextVariant.P]: 'text-[20px] font-light',
-        [TextVariant.B]: 'text-[20px] font-bold'
+        [TextVariant.P]: 'lg:text-[20px] text-[16px] font-light',
+        [TextVariant.B]: 'lg:text-[20px] text-[16px] font-bold'
     };
     const Component = variant === TextVariant.P ? 'p'
         : variant === TextVariant.B ? 'strong'
