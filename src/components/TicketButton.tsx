@@ -1,56 +1,39 @@
 import {FC, useEffect} from 'react';
+import Button, {ButtonVariant} from "./Button.tsx";
 
 interface TicketButtonProps {
     eventId: number;
-    textBtnColor?: string;
-    standalone?: boolean;
-    createButton?: boolean;
+    buttonText?: string;
 }
 
-const TicketButton: FC<TicketButtonProps> = ({eventId,
-                                                 textBtnColor = '#FFFFFF',
-                                                 standalone = false,
-                                                 createButton = true,}) => {
-        useEffect(() => {
-            // Добавляем скрипт Radario если его еще нет
-            const loadRadarioScript = () => {
-                if (!document.getElementById('radario-script')) {
-                    const script = document.createElement('script');
-                    script.id = 'radario-script';
-                    script.src = 'https://radario.ru/frontend/src/api/openapi/openapi.js'; // Замените на актуальный URL скрипта
-                    script.async = true;
-                    script.onload = initializeWidget;
-                    document.body.appendChild(script);
-                } else {
-                    initializeWidget();
-                }
-            };
-            // Инициализируем виджет
-            const initializeWidget = () => {
+const TicketButton: FC<TicketButtonProps> = ({eventId, buttonText = 'Купить билет'}) => {
+    useEffect(() => {
+        if (!document.getElementById('radario-script')) {
+            const script = document.createElement('script');
+            script.id = 'radario-script';
+            script.src = 'https://radario.ru/frontend/src/api/openapi/openapi.js';
+            script.async = true;
+
+            script.onload = () => {
                 if (window.radario) {
                     window.radario.Widgets.Event({
                         params: {
-                            textBtnColor,
+                            textBtnColor: '#FFFFFF'
                         },
-                        standalone,
-                        createButton,
-                        eventId,
+                        standalone: false,
+                        createButton: false,
+                        eventId
                     });
                 }
             };
 
-            loadRadarioScript();
+            document.head.appendChild(script);
+        }
+    }, [eventId]);
 
-            // Очистка при размонтировании
-            return () => {
-                const script = document.getElementById('radario-script');
-                if (script) {
-                    script.remove();
-                }
-            };
-        }, [eventId, textBtnColor, standalone, createButton]);
-
-        return <div id={`radario-widget-${eventId}`}/>
+    return (
+        <a href={`#event/${eventId}`}><Button variant={ButtonVariant.white}>{buttonText}</Button></a>
+    );
 };
 
-export default TicketButton;
+export default TicketButton
