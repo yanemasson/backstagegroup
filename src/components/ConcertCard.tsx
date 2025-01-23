@@ -53,7 +53,7 @@ const ConcertCard = ({item, index, to}: ConcertCardProps) => {
                     isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
                 }`}>
                     <Text variant={TextVariant.H3}>{item.city}, {item.location}</Text>
-                    {item.videos
+                    {(item.videos && item.videos.length > 0)
                         ? <VideoPlayer videos={item.videos}/>
                         : <img className='xl:w-1/4 xl:h-1/4 md:w-1/2 md:h-1/2 shadow-white' alt={item.poster} src={item.poster}/>
                     }
