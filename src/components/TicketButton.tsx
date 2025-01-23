@@ -1,5 +1,4 @@
 import {FC, useEffect} from 'react';
-import Button, {ButtonVariant} from "./Button.tsx";
 
 interface TicketButtonProps {
     eventId: number;
@@ -51,7 +50,7 @@ const TicketButton: FC<TicketButtonProps> = ({eventId,
             };
         }, [eventId, textBtnColor, standalone, createButton]);
 
-        return <div id={`radario-widget-${eventId}`}><Button variant={ButtonVariant.white}></Button></div>
+        return <div id={`radario-widget-${eventId}`}/>
 };
 
 export default TicketButton;
