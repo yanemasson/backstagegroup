@@ -71,6 +71,11 @@ const TicketButton: FC<TicketButtonProps> = ({eventId,}) => {
         }
     }, []);
     const handleClick = () => {
+        console.log('Script loaded status:', isScriptLoaded);
+        console.log('Radario object exists:', !!window.radario);
+        console.log('Window object:', Object.keys(window));
+        console.log('Radario object:', window.radario);
+
         if (!isScriptLoaded || !window.radario) {
             console.error('Radario script not loaded');
             return;

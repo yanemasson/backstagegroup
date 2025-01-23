@@ -1,0 +1,5 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self' https://radario.ru; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://radario.ru; style-src 'self' 'unsafe-inline' https://radario.ru; frame-src 'self' https://radario.ru;"
+    X-Frame-Options = "ALLOW-FROM https://radario.ru"
