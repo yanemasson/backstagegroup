@@ -21,7 +21,7 @@ const ConcertList = () => {
         <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
             {filteredConcerts.length > 0 ? (
                 filteredConcerts.map((item, index) => (
-                    <ConcertCard item={item} index={index} to={`${createSlug(item.title, item.city)}`}/>
+                    <ConcertCard item={item} index={index} to={createSlug(item.title, item.city)}/>
                 ))
             ) : (
                 <div className="flex flex-col items-center justify-center gap-5 py-20">

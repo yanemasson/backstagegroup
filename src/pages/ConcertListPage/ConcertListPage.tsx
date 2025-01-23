@@ -1,8 +1,9 @@
 import ConcertCard from "../../components/ConcertCard.tsx";
 import useConcerts from "../../hooks/useConcerts.ts";
 
-const ConcertList = () => {
+const ConcertListPage = () => {
     const {concerts} = useConcerts()
+
     const createSlug = (title: string, city: string) => {
         return `${title}_${city}`
             .toLowerCase()
@@ -13,11 +14,16 @@ const ConcertList = () => {
 
     return (
         <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
-            {concerts.map((item, index) =>
-                <ConcertCard item={item} index={index} to={`${createSlug(item.title, item.city)}`}/>)
-            }
+            {concerts.map((item, index) => (
+                <ConcertCard
+                    key={index}
+                    item={item}
+                    index={index}
+                    to={createSlug(item.title, item.city)}
+                />
+            ))}
         </section>
     );
 };
 
-export default ConcertList;
+export default ConcertListPage;

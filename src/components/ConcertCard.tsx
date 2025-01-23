@@ -1,7 +1,7 @@
 import Text, {TextVariant} from "./Text.tsx";
 import Button, {ButtonVariant} from "./Button.tsx";
 import {useDate} from "../hooks/useDate.ts";
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import {useMediaBreakpoint} from "../hooks/useMediaBreakpoint.ts";
 import TicketButton from "./TicketButton.tsx";
 import {useState} from "react";
@@ -40,7 +40,7 @@ const ConcertCard = ({item, index, to}: ConcertCardProps) => {
                             ? <TicketButton eventId={item.eventId}/>
                             : <Button variant={ButtonVariant.outline}>Пока недоступно</Button>
                         }
-                        <Link className='self-center' to={to}><Button variant={ButtonVariant.white}>Узнать больше</Button></Link>
+                        <Link className='self-center' to={`/events/${to}`}><Button variant={ButtonVariant.white}>Узнать больше</Button></Link>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@ const ConcertCard = ({item, index, to}: ConcertCardProps) => {
                             ? <TicketButton eventId={item.eventId}/>
                             : <Button variant={ButtonVariant.outline}>Пока недоступно</Button>
                         }
-                        <Link className='self-center' to={to}>
+                        <Link className='self-center' to={`/events/${to}`}>
                             <Button variant={ButtonVariant.white}>Узнать больше</Button>
                         </Link>
                     </div>
