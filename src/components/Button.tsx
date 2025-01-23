@@ -13,7 +13,7 @@ interface ButtonProps {
 }
 const Button = ({children, onClick, variant = ButtonVariant.white} : ButtonProps) => {
     const variantStyleMap = {
-        [ButtonVariant.white]: 'text-black bg-white active:bg-white/70',
+        [ButtonVariant.white]: 'text-black bg-white active:bg-white/70 hover:bg-[#FFFFFF]',
         [ButtonVariant.yellow]: 'text-white bg-yellow active:bg-black/70',
         [ButtonVariant.outline]: 'border-solid border border-2 text-white hover:border-yellow hover:text-yellow'
     }

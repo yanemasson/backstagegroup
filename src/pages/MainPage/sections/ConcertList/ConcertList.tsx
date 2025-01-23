@@ -18,7 +18,7 @@ const ConcertList = () => {
     };
 
     return (
-        <section id='list' className='flex flex-col gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
+        <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
             {filteredConcerts.length > 0 ? (
                 filteredConcerts.map((item, index) => (
                     <ConcertCard key={index} eventId={item.eventId} to={`events/${createSlug(item.title, item.city)}`} title={item.title}

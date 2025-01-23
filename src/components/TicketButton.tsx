@@ -51,31 +51,15 @@ const TicketButton: FC<TicketButtonProps> = ({eventId,}) => {
         const script = document.createElement('script');
         script.src = 'https://radario.ru/frontend/src/api/openapi/openapi.js';
         script.async = true;
-        script.crossOrigin = "anonymous";
 
         script.onload = () => {
             setIsScriptLoaded(true);
         };
 
-        script.onerror = (error) => {
-            console.error('Failed to load Radario script:', error);
-        };
-
         document.head.appendChild(script);
-
-        return () => {
-            const existingScript = document.querySelector('script[src*="openapi"]');
-            if (existingScript) {
-                existingScript.remove();
-            }
-        }
     }, []);
-    const handleClick = () => {
-        console.log('Script loaded status:', isScriptLoaded);
-        console.log('Radario object exists:', !!window.radario);
-        console.log('Window object:', Object.keys(window));
-        console.log('Radario object:', window.radario);
 
+    const handleClick = () => {
         if (!isScriptLoaded || !window.radario) {
             console.error('Radario script not loaded');
             return;
@@ -110,10 +94,7 @@ const TicketButton: FC<TicketButtonProps> = ({eventId,}) => {
             window.radario.Widgets.Event({
                 params: {
                     textBtnColor: "#FFFFFF",
-                    containerId: 'radarioContainer',
-                    protocol: 'https',
-                    domain: 'radario.ru',
-                    distributionType: 'widget' // Добавляем тип распространения
+                    containerId: 'radarioContainer' // Указываем контейнер
                 },
                 standalone: true,
                 createButton: false,

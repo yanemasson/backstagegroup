@@ -1,4 +1,6 @@
 import {ReactNode} from "react";
+import {JSX} from "react/jsx-runtime";
+import IntrinsicElements = JSX.IntrinsicElements;
 
 export enum TextVariant {
     H1 = 'H1',
@@ -15,14 +17,14 @@ type TextProps = {
 const Text = ({children, variant}:TextProps) => {
     const variantStyleMap = {
         [TextVariant.H1]: 'lg:text-[52px] text-[40px] font-bold',
-        [TextVariant.H2]: 'lg:text-[52px] text-[40px] font-bold',
-        [TextVariant.H3]: 'text-[20px] font-normal',
+        [TextVariant.H2]: 'lg:text-[50px] text-[22px] font-bold',
+        [TextVariant.H3]: 'lg:text-[20px] text-[16px] font-normal',
         [TextVariant.P]: 'text-[20px] font-light',
         [TextVariant.B]: 'text-[20px] font-bold'
     };
     const Component = variant === TextVariant.P ? 'p'
         : variant === TextVariant.B ? 'strong'
-            : variant.toLowerCase() as keyof JSX.IntrinsicElements;
+            : variant.toLowerCase() as keyof IntrinsicElements;
 
     return (
         <Component className={variantStyleMap[variant]}>
