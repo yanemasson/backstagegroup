@@ -18,16 +18,20 @@ function App() {
           <CityProvider>
               <BrowserRouter>
                   <ScrollToTop />
-                  <Header/>
-                  <Suspense fallback={<LoadingSpinner/>}>
-                      <Routes>
-                          <Route index element={<MainPage/>}/>
-                          <Route path={'events'} element={<ConcertListPage/>}/>
-                          <Route path={'events/:id'} element={<ConcertPage/>}/>
-                          <Route path={'*'} element={<NotFoundPage/>}/>
-                      </Routes>
-                  </Suspense>
-                  <Footer/>
+                  <div className="flex flex-col bg-black min-h-screen">
+                      <Header/>
+                      <main className="flex-grow">
+                          <Suspense fallback={<LoadingSpinner/>}>
+                              <Routes>
+                                  <Route index element={<MainPage/>}/>
+                                  <Route path={'events'} element={<ConcertListPage/>}/>
+                                  <Route path={'events/:id'} element={<ConcertPage/>}/>
+                                  <Route path={'*'} element={<NotFoundPage/>}/>
+                              </Routes>
+                          </Suspense>
+                      </main>
+                      <Footer/>
+                  </div>
               </BrowserRouter>
           </CityProvider>
       </HelmetProvider>
