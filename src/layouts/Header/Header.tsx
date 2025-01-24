@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
 import { useCity } from '../../hooks/useCity.ts';
 import BurgerButton from "./components/BurgerButton.tsx";
@@ -9,9 +9,11 @@ import Logo from "/src/assets/icons/logo.svg?react"
 import LocationIcon from "/src/assets/icons/ic_location.svg?react"
 import {NavLink} from "react-router";
 import {CityModal} from "./components/CityModal.tsx";
+import CityConfirmationModal from "../../components/CityConfirmationModal.tsx";
 
 const Header = () => {
     const [isCityModalOpen, setIsCityModalOpen] = useState(false);
+    const [showCityPopUp, setShowCityPopUp] = useState(false);
     const { selectedCity} = useCity();
     const [isOpen, setIsOpen] = useState(false)
     const activeSection = useActiveSection()
@@ -19,6 +21,23 @@ const Header = () => {
         {id: '/', label: 'Главная'},
         {id: 'events', label: 'Концерты'}
     ]
+    const handleConfirmCity = () => {
+        localStorage.setItem('hasVisited', 'true');
+        setShowCityPopUp(false);
+    };
+    const handleChangeCity = () => {
+        setShowCityPopUp(false);
+        setIsCityModalOpen(true)
+    };
+
+    useEffect(() => {
+        // Проверяем, первый ли это визит
+        const hasVisited = localStorage.getItem('hasVisited');
+        if (!hasVisited) {
+            setShowCityPopUp(true);
+        }
+    }, [selectedCity]);
+
     const toggleMenu = () => {
         setIsOpen(!isOpen)
     }
@@ -50,6 +69,13 @@ const Header = () => {
                 isOpen={isCityModalOpen}
                 onClose={() => setIsCityModalOpen(false)}
             />
+            {showCityPopUp && (
+                <CityConfirmationModal
+                    city={selectedCity}
+                    onConfirm={handleConfirmCity}
+                    onChangeCity={handleChangeCity}
+                />
+            )}
         </nav>
     );
 };
