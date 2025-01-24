@@ -9,12 +9,12 @@ interface CityConfirmationModalProps {
 
 const CityConfirmationModal = ({ city, onConfirm, onChangeCity }:CityConfirmationModalProps) => {
     return (
-        <div className='absolute left-2/3 top-20 bg-black p-6 rounded-3xl shadow-xl border-white border-solid border-3'>
+        <div className='absolute top-24 left-[20%] lg:left-2/3 bg-black p-6 rounded-3xl shadow-xl border-white border-solid border-3'>
             <div className='flex flex-col gap-5'>
                 {city
                     ? <>
                         <Text variant={TextVariant.P}>Ваш город - {city}?</Text>
-                        <div className='flex gap-4'>
+                        <div className='flex flex-col lg:flex-row gap-4'>
                             <div onClick={onConfirm}><Button variant={ButtonVariant.white}>Да</Button></div>
                             <div onClick={onChangeCity}><Button variant={ButtonVariant.outline}>Нет, поменять</Button></div>
                         </div>
