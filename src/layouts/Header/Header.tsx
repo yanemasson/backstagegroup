@@ -76,11 +76,7 @@ const Header = () => {
                     onChangeCity={handleChangeCity}
                 />
             )}
-            <CityConfirmationModal
-                city={selectedCity}
-                onConfirm={handleConfirmCity}
-                onChangeCity={handleChangeCity}
-            />
+
         </nav>
     );
 };
