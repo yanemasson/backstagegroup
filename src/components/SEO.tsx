@@ -1,6 +1,7 @@
 // components/SEO.tsx
 import { Helmet } from 'react-helmet-async';
 
+
 interface SEOProps {
     title: string;
     description: string;
@@ -9,7 +10,7 @@ interface SEOProps {
     url?: string;
 }
 
-export const SEO = ({title, description, keywords, image = '/default-image.jpg', url = 'https://your-site.com'}: SEOProps) => {
+export const SEO = ({title, description, keywords, image = '/src/assets/logo.svg', url = 'https://backstagegroup.ru'}: SEOProps) => {
     return (
         <Helmet>
             {/* Основные метатеги */}

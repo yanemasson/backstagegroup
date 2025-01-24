@@ -1,4 +1,3 @@
-// src/contexts/CityContext.tsx
 import { createContext, useState, useEffect, ReactNode } from 'react';
 
 interface CityContextType {
@@ -26,7 +25,6 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
                     setIsLoading(false);
                     return;
                 }
-
                 // Если нет, определяем автоматически
                 const response = await fetch(
                     "https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address",
@@ -34,11 +32,10 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
                         method: "GET",
                         headers: {
                             "Accept": "application/json",
-                            "Authorization": "Token " + import.meta.env.VITE_DADATA_API_KEY
+                            "Authorization": "Token " + process.env.VITE_DADATA_API_KEY || import.meta.env.VITE_DADATA_API_KEY
                         }
                     }
                 );
-
                 const data = await response.json();
                 if (data.location?.data?.city) {
                     setSelectedCity(data.location.data.city);

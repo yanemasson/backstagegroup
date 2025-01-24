@@ -5,8 +5,6 @@ import {Link} from "react-router-dom";
 import {useMediaBreakpoint} from "../hooks/useMediaBreakpoint.ts";
 import TicketButton from "./TicketButton.tsx";
 import {useState} from "react";
-import DownArrow from "./DownArrow.tsx";
-import UpArrow from "./UpArrow.tsx";
 import VideoPlayer from "./VideoPlayer.tsx";
 import {Concert} from "../types/concert.ts";
 
@@ -45,7 +43,7 @@ const ConcertCard = ({item, index, to}: ConcertCardProps) => {
                 </div>
             </div>
             : <div className={`border-white border-solid rounded-2xl p-4 transition-all flex flex-col items-start text-start gap-1 justify-between`}>
-                <div className={`flex flex-row ${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
+                <div onClick={() => setIsOpen(!isOpen)} className={`flex flex-row ${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
                     <Text variant={TextVariant.H2}>{item.title}</Text>
                 </div>
                 <Text variant={TextVariant.H3}>{dateString}</Text>
@@ -68,9 +66,7 @@ const ConcertCard = ({item, index, to}: ConcertCardProps) => {
                         </Link>
                     </div>
                 </div>
-                <div onClick={() => setIsOpen(!isOpen)} className='absolute left-[85%] '>
-                    {isOpen ? <UpArrow index={index}/> : <DownArrow index={index}/>}
-                </div>
+
             </div>
         }</>
     );
