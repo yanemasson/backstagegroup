@@ -1,12 +1,14 @@
 import ConcertCard from "../../../../components/ConcertCard.tsx";
-import {useCity} from "../../../../hooks/useCity.ts";
 import Text, {TextVariant} from "../../../../components/Text.tsx";
 import {Link} from "react-router";
 import Button, {ButtonVariant} from "../../../../components/Button.tsx";
 import {useConcerts} from "../../../../hooks/useConcerts.ts";
 
 const ConcertList = () => {
+/*
     const { selectedCity } = useCity();
+*/
+    const selectedCity = 'Красноярск'
     const {concerts} = useConcerts()
     const filteredConcerts = concerts.filter(item => item.city === selectedCity);
     const createSlug = (title: string, city: string) => {

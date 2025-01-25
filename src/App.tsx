@@ -11,6 +11,7 @@ const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
 const ConcertListPage = lazy(() => import('./pages/ConcertListPage/ConcertListPage'));
 const ConcertPage = lazy(() => import('./pages/ConcertPage/ConcertPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'))
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                           <Suspense fallback={<LoadingSpinner/>}>
                               <Routes>
                                   <Route index element={<MainPage/>}/>
+                                  <Route path={'about'} element={<AboutPage/>}/>
                                   <Route path={'events'} element={<ConcertListPage/>}/>
                                   <Route path={'events/:id'} element={<ConcertPage/>}/>
                                   <Route path={'*'} element={<NotFoundPage/>}/>
