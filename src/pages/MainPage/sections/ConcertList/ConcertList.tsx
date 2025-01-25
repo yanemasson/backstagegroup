@@ -25,7 +25,7 @@ const ConcertList = () => {
                 filteredConcerts.map((item, index) => (
                     <ConcertCard key={index} item={item} index={index} to={createSlug(item.title, item.city)}/>
                 ))
-            ) : (
+            ) : ( 
                 <div className="flex flex-col items-center justify-center gap-5 py-20">
                     <Text variant={TextVariant.B}>В городе {selectedCity} пока нет концертов</Text>
                     <Text variant={TextVariant.P}>Выберите другой город или следите за обновлениями</Text>
