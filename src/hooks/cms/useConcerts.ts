@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Concert, Track} from "../types/concert.ts";
+import {Concert, Track} from "../../types/concert.ts";
 
 export const useConcerts = () => {
     const [concerts, setConcerts] = useState<Concert[]>([]);
@@ -16,11 +16,13 @@ export const useConcerts = () => {
             trackStrings.forEach(trackString => {
                 const musicianMatch = trackString.match(/\s*musician:\s*([^\n]+)/);
                 const compositionMatch = trackString.match(/\s*composition:\s*([^\n]+)/);
-                if (musicianMatch?.[1] && compositionMatch?.[1]) {
-                    if (musicianMatch && compositionMatch) {
+                const durationMatch = trackString.match(/\s*duration:\s*([^\n]+)/);
+                if (musicianMatch?.[1] && compositionMatch?.[1] && durationMatch?.[1]) {
+                    if (musicianMatch && compositionMatch && durationMatch) {
                         tracks.push({
                             musician: musicianMatch[1].trim(),
-                            composition: compositionMatch[1].trim()
+                            composition: compositionMatch[1].trim(),
+                            duration: durationMatch[1].trim()
                         });
                     }
                 }

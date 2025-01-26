@@ -4,7 +4,7 @@ import TrackList from "./sections/TrackList.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
 import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
-import useConcerts from "../../hooks/useConcerts.ts";
+import useConcerts from "../../hooks/cms/useConcerts.ts";
 import YandexMusic from "./sections/YandexMusic.tsx";
 import {SEO} from "../../components/SEO.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";

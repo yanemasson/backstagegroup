@@ -1,6 +1,7 @@
 export interface Track {
     musician: string,
     composition: string,
+    duration: string,
 }
 export interface Concert {
     title: string,

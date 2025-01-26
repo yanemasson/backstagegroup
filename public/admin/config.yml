@@ -6,6 +6,20 @@ media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  - name: "main"
+    label: "Главная страница"
+    files:
+      - file: "content/home.md"
+        label: "Контент главной страницы"
+        name: "main"
+        fields:
+          - label: "Видео"
+            name: "video"
+            widget: "file"
+            media_folder: "/public/videos"
+            public_folder: "/videos"
+          - { label: "Описание", name: "description", widget: "text" }
+
   - name: "concerts"
     label: "Концерты"
     folder: "content/concerts"
@@ -17,10 +31,7 @@ collections:
       - {label: "Место проведения", name: "location", widget: "string"}
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "text"}
-
-      - label: "Event ID"
-        name: "eventId"
-        widget: "number"
+      - {label: "Event ID", name: "eventId", widget: "number"}
 
       - label: "Дата и время"
         name: "date"
@@ -41,7 +52,7 @@ collections:
         widget: "list"
         required: false
         field:
-          label: "URL видео"
+          label: "Видео"
           name: "video"
           widget: "file"
           media_folder: "/public/videos"
@@ -83,3 +94,4 @@ collections:
         fields:
           - {label: "Музыкант", name: "musician", widget: "string"}
           - {label: "Композиция", name: "composition", widget: "string"}
+          - {label: "Длительность", name: "duration", widget: "string"}

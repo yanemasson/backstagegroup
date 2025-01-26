@@ -2,7 +2,7 @@ import ConcertCardDesktop from "../../../../components/ConcertCard/ConcertCardDe
 import Text, {TextVariant} from "../../../../components/Text.tsx";
 import {Link} from "react-router";
 import Button, {ButtonVariant} from "../../../../components/Button.tsx";
-import {useConcerts} from "../../../../hooks/useConcerts.ts";
+import {useConcerts} from "../../../../hooks/cms/useConcerts.ts";
 import {useMediaBreakpoint} from "../../../../hooks/useMediaBreakpoint.ts";
 import ConcertCardMobile from "../../../../components/ConcertCard/ConcertCardMobile.tsx";
 

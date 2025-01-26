@@ -1,5 +1,5 @@
 import ConcertCardDesktop from "../../components/ConcertCard/ConcertCardDesktop.tsx";
-import useConcerts from "../../hooks/useConcerts.ts";
+import useConcerts from "../../hooks/cms/useConcerts.ts";
 import {SEO} from "../../components/SEO.tsx";
 
 const ConcertListPage = () => {
