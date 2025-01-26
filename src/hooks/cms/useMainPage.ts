@@ -11,20 +11,25 @@ const useMainPage = () => {
                     eager: true,
                     as: 'raw'
                 });
+
                 if (Object.keys(mainPageContentFile).length === 0) {
                     console.error('No main.md file found');
                     return;
                 }
+
                 const rawContent = Object.values(mainPageContentFile)[0];
                 const frontMatter = rawContent.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+
                 if (!frontMatter) {
                     throw new Error('Failed to parse frontmatter');
                 }
-                const videoMatch = frontMatter[1].match(/video:\s*"([^"]+)"/);
-                const descriptionMatch = frontMatter[1].match(/description:\s*(.+)/);
+
+                // Обновляем регулярные выражения для поддержки значений с кавычками и без
+                const videoMatch = frontMatter[1].match(/video:\s*"?([^"\n]+)"?/);
+                const descriptionMatch = frontMatter[1].match(/description:\s*"?([^"\n]+)"?/);
 
                 const content: MainPage = {
-                    video: videoMatch ? videoMatch[1] : '',
+                    video: videoMatch ? videoMatch[1].trim() : '',
                     description: descriptionMatch ? descriptionMatch[1].trim() : '',
                 };
 
