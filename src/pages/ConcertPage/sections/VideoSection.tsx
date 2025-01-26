@@ -1,4 +1,4 @@
-import VideoPlayer from "../../../components/VideoPlayer.tsx";
+import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
 
 interface VideoSectionProps {
     videos: string[]

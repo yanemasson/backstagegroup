@@ -1,17 +1,18 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import LeftArrow from "./LeftArrow.tsx";
 import RightArrow from "./RightArrow.tsx";
-import CloseButton from "../../../components/CloseButton.tsx";
-import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
+import CloseButton from "../CloseButton.tsx";
+import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
 import { useSwipeable } from 'react-swipeable';
 
 interface SliderProps {
     mediaItems: string[]
-    index: number
+    currentIndex: number
+    setCurrentIndex: (arg1: number) => void
     isOpenSlider: boolean
     setIsOpenSlider: (arg0: boolean) => void
 }
-const Slider = ({mediaItems, index, isOpenSlider, setIsOpenSlider}:SliderProps) => {
+const Slider = ({mediaItems, currentIndex, setCurrentIndex, isOpenSlider, setIsOpenSlider}:SliderProps) => {
     useEffect(() => {
         if (isOpenSlider) {
             document.body.style.overflow = 'hidden';
@@ -24,7 +25,6 @@ const Slider = ({mediaItems, index, isOpenSlider, setIsOpenSlider}:SliderProps) 
     }, [isOpenSlider]);
 
     const xl = useMediaBreakpoint('xl')
-    const [currentIndex, setCurrentIndex] = useState(index);
 
     const goToPrevious = () => {
         setCurrentIndex(currentIndex === 0 ? mediaItems.length - 1 : currentIndex - 1);

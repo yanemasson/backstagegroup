@@ -10,6 +10,7 @@ export default {
       'white': 'rgb(235,235,235)',
       'yellow': 'rgb(236,165,48)',
       'red': 'rgb(222,77,68)',
+      'gray': 'rgba(134,136,138)'
     },
     extend: {},
   },

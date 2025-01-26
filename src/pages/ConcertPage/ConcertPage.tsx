@@ -7,6 +7,7 @@ import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import useConcerts from "../../hooks/useConcerts.ts";
 import YandexMusic from "./sections/YandexMusic.tsx";
 import {SEO} from "../../components/SEO.tsx";
+import Text, {TextVariant} from "../../components/Text.tsx";
 
 const VideoSection = lazy(() => import("./sections/VideoSection.tsx")) ;
 const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
@@ -38,12 +39,18 @@ const ConcertPage = () => {
             />
             <div className='bg-black pb-20'>
                 <Information item={item}/>
-                {item.trackList && <TrackList trackList={item.trackList}/>}
-                {item.playlistUrl && <YandexMusic playlist={item.playlistUrl}/>}
-                <Suspense fallback={<LoadingSpinner/>}>
-                    {item.videos && item.videos.length > 0 && (<VideoSection videos={item.videos} />)}
-                    {item.photos && item.photos.length > 0 && (<Gallery photos={item.photos} />)}
-                </Suspense>
+                <section id={'information'}>
+                    <div className={'text-white px-5 lg:px-40 pt-10'}>
+                        <Text variant={TextVariant.B}>О концерте:</Text>
+                        <Text variant={TextVariant.P}>{item.descriptionFull}</Text>
+                    </div>
+                    <Suspense fallback={<LoadingSpinner/>}>
+                        {item.videos && item.videos.length > 0 && (<VideoSection videos={item.videos} />)}
+                        {item.photos && item.photos.length > 0 && (<Gallery photos={item.photos} />)}
+                    </Suspense>
+                    {item.trackList && <TrackList trackList={item.trackList}/>}
+                    {item.playlistUrl && <YandexMusic playlist={item.playlistUrl}/>}
+                </section>
             </div>
         </>
 

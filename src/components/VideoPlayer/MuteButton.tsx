@@ -1,5 +1,5 @@
-import Mute from '../assets/icons/ic_mute.svg?react'
-import UnMute from '../assets/icons/ic_unmute.svg?react'
+import Mute from '../../assets/icons/ic_mute.svg?react'
+import UnMute from '../../assets/icons/ic_unmute.svg?react'
 
 interface MuteButtonProps {
     isMuted: boolean

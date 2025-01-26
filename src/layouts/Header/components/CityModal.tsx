@@ -18,7 +18,7 @@ export const CityModal = ({ isOpen, onClose }: CityModalProps) => {
         if (searchValue.length >= 2) {
             searchCities(searchValue);
         }
-    }, [searchValue]);
+    }, [searchValue, searchCities]);
 
     const handleCitySelect = (cityName: string) => {
         setSelectedCity(cityName);
@@ -31,17 +31,13 @@ export const CityModal = ({ isOpen, onClose }: CityModalProps) => {
         <>
             <div onClick={onClose} className="fixed inset-0 bg-black/50 z-40"/>
             <div className="border-white p-3 border-solid fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-     bg-black text-white rounded-3xl w-[90%] max-w-md h-[500px] flex flex-col z-50 shadow-white shadow-sm"> {/* Фиксированная высота всего модального окна */}
-
-                {/* Заголовок - фиксированная высота */}
+            bg-black text-white rounded-3xl w-[90%] max-w-md h-[500px] flex flex-col z-50 shadow-white shadow-sm">
                 <div className="shrink-0 p-5 border-b border-gray-200 flex justify-between items-center">
                     <Text variant={TextVariant.B}>Выберите город</Text>
                     <button className='w-10 h-10' onClick={onClose}>
                         <CloseButton/>
                     </button>
                 </div>
-
-                {/* Поиск - фиксированная высота */}
                 <div className="shrink-0 p-4 border-b border-gray-200">
                     <Text variant={TextVariant.P}>
                         <input
@@ -49,7 +45,8 @@ export const CityModal = ({ isOpen, onClose }: CityModalProps) => {
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                             placeholder="Введите название города"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                     </Text>
                 </div>

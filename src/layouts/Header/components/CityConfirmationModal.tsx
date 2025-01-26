@@ -1,5 +1,5 @@
-import Text, {TextVariant} from "./Text.tsx";
-import Button, {ButtonVariant} from "./Button.tsx";
+import Text, {TextVariant} from "../../../components/Text.tsx";
+import Button, {ButtonVariant} from "../../../components/Button.tsx";
 
 interface CityConfirmationModalProps {
     city?: string | null

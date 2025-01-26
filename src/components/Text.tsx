@@ -8,6 +8,7 @@ export enum TextVariant {
     H3 = 'H3',
     P = 'P',
     B = 'B',
+    CAPTION = 'CAPTION'
 }
 
 type TextProps = {
@@ -20,9 +21,10 @@ const Text = ({children, variant}:TextProps) => {
         [TextVariant.H2]: 'lg:text-[50px] text-[22px] font-bold',
         [TextVariant.H3]: 'lg:text-[20px] text-[16px] font-normal',
         [TextVariant.P]: 'lg:text-[20px] text-[16px] font-light',
-        [TextVariant.B]: 'lg:text-[20px] text-[16px] font-bold'
+        [TextVariant.B]: 'lg:text-[20px] text-[16px] font-bold',
+        [TextVariant.CAPTION]: 'lg:text-[16px] text-[12px] font-light',
     };
-    const Component = variant === TextVariant.P ? 'p'
+    const Component = (variant === TextVariant.P || variant === TextVariant.CAPTION) ? 'p'
         : variant === TextVariant.B ? 'strong'
             : variant.toLowerCase() as keyof IntrinsicElements;
 
