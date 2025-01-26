@@ -9,7 +9,7 @@ collections:
   - name: "main"
     label: "Главная страница"
     files:
-      - file: "content/home.md"
+      - file: "content/pages/main.md"
         label: "Контент главной страницы"
         name: "main"
         fields:
