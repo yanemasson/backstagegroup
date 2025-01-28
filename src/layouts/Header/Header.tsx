@@ -16,7 +16,7 @@ const Header = () => {
     const MenuItems = [
         {id: '/', label: 'Главная'},
         {id: 'events', label: 'Концерты'},
-        {id: 'about', label: 'О нас'}
+        // {id: 'about', label: 'О нас'}
     ]
 /*
     const handleConfirmCity = () => {
