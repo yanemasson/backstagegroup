@@ -30,7 +30,7 @@ collections:
       - {label: "Город", name: "city", widget: "string"}
       - {label: "Место проведения", name: "location", widget: "string"}
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
-      - {label: "Полное описание", name: "descriptionFull", widget: "text"}
+      - {label: "Полное описание", name: "descriptionFull", widget: "text", format: "raw"}
       - {label: "Event ID", name: "eventId", widget: "number"}
 
       - label: "Дата и время"
