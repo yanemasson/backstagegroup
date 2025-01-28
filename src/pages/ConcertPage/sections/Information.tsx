@@ -27,17 +27,17 @@ const Information = (({item}:InformationProps) => {
                             ? <TicketButton eventId={item.eventId}/>
                             : <Button variant={ButtonVariant.outline}>Пока недоступно</Button>
                         }
-                        {(item.videos?.length > 0 || item.photos?.length > 0) &&
-                        <a className='self-center' href={'#information'}>
-                            <Button variant={ButtonVariant.white}>
-                                <div className='flex items-center justify-center gap-5'>
-                                    Подробнее
-                                    <div className={'-translate-y-2'}>
-                                        <DownArrow hover={true} color={'black'} hoverColor={'black'}/>
+                        {((item.videos && item.videos.length > 0) || (item.photos && item.photos.length > 0)) &&
+                            <a className='self-center' href={'#information'}>
+                                <Button variant={ButtonVariant.white}>
+                                    <div className='flex items-center justify-center gap-5'>
+                                        Подробнее
+                                        <div className={'-translate-y-2'}>
+                                            <DownArrow hover={true} color={'black'} hoverColor={'black'}/>
+                                        </div>
                                     </div>
-                                </div>
-                            </Button>
-                        </a>}
+                                </Button>
+                            </a>}
                     </div>
                 </div>
             </div>
