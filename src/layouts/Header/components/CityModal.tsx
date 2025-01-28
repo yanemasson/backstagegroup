@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {useCity} from '../../../hooks/useCity.ts';
-import {useCitySearch} from '../../../hooks/useCitySearch';
+import {useCity} from '../../../hooks/location/useCity.ts';
+import {useCitySearch} from '../../../hooks/location/useCitySearch.ts';
 import CloseButton from "../../../components/CloseButton.tsx";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 

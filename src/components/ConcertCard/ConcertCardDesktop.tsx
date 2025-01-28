@@ -1,6 +1,6 @@
 import Text, {TextVariant} from "../Text.tsx";
 import Button, {ButtonVariant} from "../Button.tsx";
-import {useDate} from "../../hooks/useDate.ts";
+import {getDate} from "../../utils/getDate.ts";
 import {Link} from "react-router-dom";
 import TicketButton from "../TicketButton.tsx";
 import {useState} from "react";
@@ -15,7 +15,7 @@ interface ConcertCardProps {
     to: string
 }
 const ConcertCardDesktop = ({item, index, to}: ConcertCardProps) => {
-    const dateString = useDate(item.date)
+    const dateString = getDate(item.date)
     const [indexPhoto, setIndexPhoto] = useState(0)
     const [isOpenSlider, setIsOpenSlider] = useState(false)
 

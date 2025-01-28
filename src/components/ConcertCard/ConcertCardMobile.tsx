@@ -5,7 +5,7 @@ import Text, {TextVariant} from "../Text.tsx";
 import TicketButton from "../TicketButton.tsx";
 import Button, {ButtonVariant} from "../Button.tsx";
 import {Link} from "react-router-dom";
-import {useDate} from "../../hooks/useDate.ts";
+import {getDate} from "../../utils/getDate.ts";
 import Slider from "../PhotoGallery/Slider.tsx";
 import MediaItemPreview from "../PhotoGallery/MediaItemPreview.tsx";
 
@@ -15,7 +15,7 @@ interface ConcertCardProps {
     to: string
 }
 const ConcertCardMobile = ({item, index, to}: ConcertCardProps) => {
-    const dateString = useDate(item.date)
+    const dateString = getDate(item.date)
     const [isOpen, setIsOpen] = useState(false)
     const [indexPhoto, setIndexPhoto] = useState(0)
     const [isOpenSlider, setIsOpenSlider] = useState(false)

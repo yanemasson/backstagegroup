@@ -1,7 +1,7 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import Button, {ButtonVariant} from "../../../components/Button.tsx";
 import {Concert} from "../../../types/concert.ts";
-import {useDate} from "../../../hooks/useDate.ts";
+import {getDate} from "../../../utils/getDate.ts";
 import TicketButton from "../../../components/TicketButton.tsx";
 import DownArrow from "../../../components/DownArrow.tsx";
 
@@ -19,7 +19,7 @@ const Information = (({item}:InformationProps) => {
                     <div>
                         <Text variant={TextVariant.H1}>{item.title}</Text>
                         <Text variant={TextVariant.H3}>{item.city}, {item.location}</Text>
-                        <Text variant={TextVariant.H3}>{useDate(item.date)}</Text>
+                        <Text variant={TextVariant.H3}>{getDate(item.date)}</Text>
                     </div>
                     <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
                     <div className='flex lg:flex-row flex-col items-center gap-5'>

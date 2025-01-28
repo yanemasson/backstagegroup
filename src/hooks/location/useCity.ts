@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CityContext } from '../contexts/CityContext';
+import { CityContext } from '../../contexts/CityContext.tsx';
 
 export const useCity = () => {
     const context = useContext(CityContext);

@@ -8,6 +8,7 @@ import useConcerts from "../../hooks/cms/useConcerts.ts";
 import YandexMusic from "./sections/YandexMusic.tsx";
 import {SEO} from "../../components/SEO.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
+import createSlug from "../../utils/createSlug.ts";
 
 const VideoSection = lazy(() => import("./sections/VideoSection.tsx")) ;
 const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
@@ -16,16 +17,8 @@ const ConcertPage = () => {
     const {id} = useParams()
     const {concerts} = useConcerts()
 
-
-    const createSlug = (title: string, city: string) => {
-        return `${title}_${city}`
-            .toLowerCase()
-            .replace(/[^a-zа-яё0-9-\s]/g, '')
-            .replace(/\s+/g, '_')
-            .replace(/-+/g, '_');
-    };
     const item= concerts.find(
-        (c) => createSlug(c.title, c.city) === id)
+        (c) => createSlug(c.title, c.city, c.date) === id)
 
     if(!item) {return <NotFoundPage/>}
 

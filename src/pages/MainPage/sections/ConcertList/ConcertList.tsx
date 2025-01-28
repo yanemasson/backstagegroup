@@ -5,6 +5,7 @@ import Button, {ButtonVariant} from "../../../../components/Button.tsx";
 import {useConcerts} from "../../../../hooks/cms/useConcerts.ts";
 import {useMediaBreakpoint} from "../../../../hooks/useMediaBreakpoint.ts";
 import ConcertCardMobile from "../../../../components/ConcertCard/ConcertCardMobile.tsx";
+import createSlug from "../../../../utils/createSlug.ts";
 
 const ConcertList = () => {
 /*
@@ -14,21 +15,16 @@ const ConcertList = () => {
     const lg =  useMediaBreakpoint('lg')
     const selectedCity = 'Красноярск'
     const filteredConcerts = concerts.filter(item => item.city === selectedCity);
-    const createSlug = (title: string, city: string) => {
-        return `${title}_${city}`
-            .toLowerCase()
-            .replace(/[^a-zа-яё0-9-\s]/g, '')
-            .replace(/\s+/g, '_')
-            .replace(/-+/g, '_');
-    };
 
     return (
         <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
             {filteredConcerts.length > 0 ? (
                 filteredConcerts.map((item, index) => (
                     lg
-                        ? <ConcertCardDesktop key={index} item={item} index={index} to={createSlug(item.title, item.city)}/>
-                        : <ConcertCardMobile key={index} item={item} index={index} to={createSlug(item.title, item.city)}/>
+                        ? <ConcertCardDesktop key={index} item={item} index={index}
+                                              to={createSlug(item.title, item.city, item.date)}/>
+                        : <ConcertCardMobile key={index} item={item} index={index}
+                                             to={createSlug(item.title, item.city, item.date)}/>
                     )
                 )
             ) : (

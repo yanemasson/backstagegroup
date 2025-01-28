@@ -4,7 +4,7 @@ import BurgerButton from "./components/BurgerButton.tsx";
 import BurgerMenu from "./components/BurgerMenu.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
 import Logo from "/src/assets/icons/logo.svg?react"
-import {NavLink} from "react-router";
+import {Link, NavLink} from "react-router";
 
 const Header = () => {
 /*  const [isCityModalOpen, setIsCityModalOpen] = useState(false);
@@ -43,7 +43,7 @@ const Header = () => {
     return (
         <nav className={`fixed flex items-center justify-between transition-all duration-300 z-40 w-full h-20 text-white px-5 lg:px-40 
             ${activeSection == 'hero' ? ( isOpen ? 'bg-black/80' : 'bg-transparent') : 'bg-black/80'}`}>
-            <Logo/>
+            <Link to={'/'}><Logo/></Link>
             <BurgerButton isOpen={isOpen} toggleMenu={toggleMenu}/>
             <BurgerMenu isOpen={isOpen}>
                 <div className='flex lg:flex-row flex-col items-center justify-center gap-5'>
@@ -51,9 +51,7 @@ const Header = () => {
                         <NavLink
                             onClick={toggleMenu}
                             key={`#${item.id}`} to={`${item.id}`}
-                            className={
-                            `${activeSection === item.id ? 'text-white font-bold' : 'text-white'} 
-                            hover:text-yellow transition-colors px-4 py-2`}>
+                            className='hover:text-yellow transition-colors px-4 py-2'>
                             <Text variant={TextVariant.P}>{item.label}</Text></NavLink>
                     )}
 {/*                    <Button variant={ButtonVariant.white}  >

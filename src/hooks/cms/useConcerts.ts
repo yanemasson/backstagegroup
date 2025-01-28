@@ -62,7 +62,12 @@ export const useConcerts = () => {
                         date: frontMatter.match(/date:\s*(.*)/)?.[1]?.trim() || '',
                         poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
                         descriptionShort: frontMatter.match(/descriptionShort:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
-                        descriptionFull: frontMatter.match(/descriptionFull:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
+                        descriptionFull: frontMatter.match(/descriptionFull:\s*([\s\S]*?)(?=\n\w+:|$)/)?.[1]
+                            ?.replace(/^\|-\s*/, '')
+                            ?.split('\n')
+                            .map(line => line.trim())
+                            .join('\n')
+                            ?.trim() || '',
                         videos: frontMatter.match(/videos:/i) ?
                             parseArrayField(frontMatter, 'videos') : [],
                         photos: frontMatter.match(/photos:/i) ?
