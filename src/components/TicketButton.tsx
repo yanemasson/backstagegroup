@@ -26,7 +26,6 @@ const TicketButton: FC<TicketButtonProps> = ({eventId, buttonText = 'Купит�
                     });
                 }
             };
-
             document.head.appendChild(script);
         }
     }, [eventId]);
