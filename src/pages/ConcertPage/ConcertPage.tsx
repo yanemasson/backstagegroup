@@ -42,7 +42,7 @@ const ConcertPage = () => {
                 <section id={'information'}>
                     <div className={'text-white px-5 lg:px-40 pt-10'}>
                         <Text variant={TextVariant.B}>О концерте:</Text>
-                        <Text variant={TextVariant.P}>{item.descriptionFull}</Text>
+                        <Text variant={TextVariant.P} style={'whitespace-pre-wrap'}>{item.descriptionFull}</Text>
                     </div>
                     <Suspense fallback={<LoadingSpinner/>}>
                         {item.videos && item.videos.length > 0 && (<VideoSection videos={item.videos} />)}
