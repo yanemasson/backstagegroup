@@ -1,6 +1,6 @@
 import {useState} from "react";
-import MediaItemPreview from "../components/MediaItemPreview.tsx";
-import Slider from "../components/Slider.tsx";
+import MediaItemPreview from "../../../components/PhotoGallery/MediaItemPreview.tsx";
+import Slider from "../../../components/PhotoGallery/Slider.tsx";
 
 interface GalleryProps {
     photos: string[]
@@ -19,7 +19,8 @@ const Gallery = ({photos} : GalleryProps) => {
             <div className='grid grid-cols-2 xl:grid-cols-3 gap-5'>
                 {photos.map(((item, index) => (<MediaItemPreview key={item} onClick={toggleSlider} index={index} src={item}/>)))}
             </div>
-            <Slider mediaItems={photos} index={index} isOpenSlider={isOpenSlider} setIsOpenSlider={setIsOpenSlider}/>
+            <Slider mediaItems={photos} currentIndex={index} setCurrentIndex={setIndex}
+                    isOpenSlider={isOpenSlider} setIsOpenSlider={setIsOpenSlider}/>
         </section>
     );
 };

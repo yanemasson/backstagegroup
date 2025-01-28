@@ -1,5 +1,5 @@
-import ConcertCard from "../../components/ConcertCard.tsx";
-import useConcerts from "../../hooks/useConcerts.ts";
+import ConcertCardDesktop from "../../components/ConcertCard/ConcertCardDesktop.tsx";
+import useConcerts from "../../hooks/cms/useConcerts.ts";
 import {SEO} from "../../components/SEO.tsx";
 
 const ConcertListPage = () => {
@@ -23,7 +23,7 @@ const ConcertListPage = () => {
             />
             <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
                 {concerts.map((item, index) => (
-                    <ConcertCard
+                    <ConcertCardDesktop
                         key={index}
                         item={item}
                         index={index}
