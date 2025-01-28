@@ -25,7 +25,7 @@ const ConcertCardDesktop = ({item, index, to}: ConcertCardProps) => {
     }
 
     return (
-        <div className='flex items-start text-start flex-row gap-5 xl:gap-16 justify-between'>
+        <div className='flex items-start text-start flex-row gap-5 xl:gap-16'>
             <img className='xl:w-2/5 xl:h-2/5 md:w-1/2 md:h-1/2 shadow-white/10 shadow-sm rounded'
                  alt={item.poster} src={item.poster}/>
             <div className='flex flex-col gap-10'>

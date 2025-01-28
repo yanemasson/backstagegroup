@@ -12,7 +12,7 @@ interface InformationProps {
 const Information = (({item}:InformationProps) => {
     return (
         <section className='flex flex-col bg-black text-white px-5 lg:px-40 gap-20'>
-            <div className='flex flex-col lg:flex-row pt-20 lg:gap-16 justify-between '>
+            <div className='flex flex-col lg:flex-row pt-20 gap-5 xl:gap-16 '>
                 <img className='xl:w-1/3 xl:h-1/3 md:w-1/2 md:h-1/2 shadow-white/10 shadow-sm rounded'
                      alt={item.poster} src={item.poster}/>
                 <div className='flex flex-col gap-10'>
@@ -27,6 +27,7 @@ const Information = (({item}:InformationProps) => {
                             ? <TicketButton eventId={item.eventId}/>
                             : <Button variant={ButtonVariant.outline}>Пока недоступно</Button>
                         }
+                        {(item.videos?.length > 0 || item.photos?.length > 0) &&
                         <a className='self-center' href={'#information'}>
                             <Button variant={ButtonVariant.white}>
                                 <div className='flex items-center justify-center gap-5'>
@@ -36,7 +37,7 @@ const Information = (({item}:InformationProps) => {
                                     </div>
                                 </div>
                             </Button>
-                        </a>
+                        </a>}
                     </div>
                 </div>
             </div>

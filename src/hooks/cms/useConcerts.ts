@@ -63,7 +63,9 @@ export const useConcerts = () => {
                         poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
                         descriptionShort: frontMatter.match(/descriptionShort:\s*(.*?)(?=\n\w|$)/s)?.[1]?.trim() || '',
                         descriptionFull: frontMatter.match(/descriptionFull:\s*([\s\S]*?)(?=\n\w+:|$)/)?.[1]
-                            ?.replace(/^\|-\s*/, '')
+                            ?.replace(/^\|-?\s*/, '')
+                            ?.replace(/['"]/g, '')
+                            ?.replace(/\|/g, '')
                             ?.split('\n')
                             .map(line => line.trim())
                             .join('\n')
