@@ -29,7 +29,7 @@ const GoogleTagManager = ({id}:GoogleTagManagerProvider) => {
 
             f.parentNode?.insertBefore(j, f);
         })(window as unknown as Window, document, 'script', 'dataLayer', id);
-    }, []);
+    }, [id]);
 
     return (
         <noscript>
