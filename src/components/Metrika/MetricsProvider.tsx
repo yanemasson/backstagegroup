@@ -9,7 +9,7 @@ interface MetricsProviderProps {
 const MetricsProvider = ({ children }: MetricsProviderProps) => {
     return (
         <>
-            <GoogleTagManager id={import.meta.env.VITE_GTM_ID} />
+            <GoogleTagManager ga4Id={import.meta.env.VITE_GA4_ID} gtmId={import.meta.env.VITE_GTM_ID} />
             <YandexMetrika counterId={import.meta.env.VITE_YANDEX_ID}/>
             <MailRuMetrika counterId={import.meta.env.VITE_MAILRU_ID}/>
             {children}
