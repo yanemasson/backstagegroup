@@ -55,7 +55,7 @@ const ConcertCardMobile = ({item, index, to}: ConcertCardProps) => {
                     </>
                 }
                 <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
-                <div onClick={handleClick} className='flex lg:flex-row flex-col items-center gap-5'>
+                <div className='flex lg:flex-row flex-col items-center gap-5'>
                     {item.eventId != 0
                         ? <TicketButton eventId={item.eventId}/>
                         : <Button variant={ButtonVariant.outline}>Пока недоступно</Button>
