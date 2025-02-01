@@ -4,15 +4,11 @@ interface GoogleAnalyticsProps {
     gtmId: string,
     ga4Id: string
 }
-interface Window {
-    dataLayer: any[];
-    [key: string]: any;
-}
 
 const GoogleAnalytics = ({gtmId, ga4Id}:GoogleAnalyticsProps    ) => {
     useEffect(() => {
         // GTM initialization
-        (function(w: Window, d: Document, s: string, l: string, i: string) {
+        (function(w: any, d: Document, s: string, l: string, i: string) {
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
@@ -23,14 +19,13 @@ const GoogleAnalytics = ({gtmId, ga4Id}:GoogleAnalyticsProps    ) => {
             const j = d.createElement(s);
             const dl = l !== 'dataLayer' ? '&l=' + l : '';
 
-            // Правильная типизация для HTMLScriptElement
             if (j instanceof HTMLScriptElement) {
                 j.async = true;
                 j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             }
 
             f.parentNode?.insertBefore(j, f);
-        })(window as unknown as Window, document, 'script', 'dataLayer', gtmId);
+        })((window as any), document, 'script', 'dataLayer', gtmId);
         // GA4 initialization
         const script = document.createElement('script');
         script.async = true;

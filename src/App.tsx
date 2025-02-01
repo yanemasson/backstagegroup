@@ -5,12 +5,12 @@ import {CityProvider} from "./contexts/CityContext.tsx";
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from "./components/ScrollToTop.tsx";
 import AppRoutes from "./components/AppRoutes.tsx";
-import MetriksProvider from "./components/Metrika/MetricsProvider.tsx";
+import MetricsProvider from "./components/Metrika/MetricsProvider.tsx";
 
 function App() {
   return (
       <HelmetProvider>
-          <MetriksProvider>
+          <MetricsProvider>
               <CityProvider>
                   <BrowserRouter>
                       <ScrollToTop />
@@ -23,8 +23,7 @@ function App() {
                       </div>
                   </BrowserRouter>
               </CityProvider>
-          </MetriksProvider>
-
+          </MetricsProvider>
       </HelmetProvider>
 
   )

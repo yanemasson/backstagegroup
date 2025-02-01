@@ -26,8 +26,9 @@ const ConcertCardMobile = ({item, index, to}: ConcertCardProps) => {
     }
 
     return (
-        <div className={`border-white border-solid rounded-2xl p-4 transition-all flex flex-col items-start text-start gap-1 justify-between`}>
-            <div onClick={() => setIsOpen(!isOpen)} className={`flex flex-row ${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
+        <div className={`border-white border-solid rounded-2xl p-4 transition-all flex flex-col items-start text-start
+        gap-1 justify-between`} onClick={() => setIsOpen(!isOpen)}>
+            <div className={`flex flex-row ${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
                 <Text variant={TextVariant.H2}>{item.title}</Text>
             </div>
             <Text variant={TextVariant.H3}>{dateString}</Text>
