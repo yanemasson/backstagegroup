@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, MouseEvent} from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
 import {Concert} from "../../types/concert.ts";
 import Text, {TextVariant} from "../Text.tsx";
@@ -23,6 +23,10 @@ const ConcertCardMobile = ({item, index, to}: ConcertCardProps) => {
     const toggleSlider = (index:number) => {
         setIndexPhoto(index)
         setIsOpenSlider(!isOpenSlider)
+    }
+
+    const handleClick = (e: MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
     }
 
     return (
@@ -51,12 +55,12 @@ const ConcertCardMobile = ({item, index, to}: ConcertCardProps) => {
                     </>
                 }
                 <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
-                <div className='flex lg:flex-row flex-col items-center gap-5'>
+                <div onClick={handleClick} className='flex lg:flex-row flex-col items-center gap-5'>
                     {item.eventId != 0
                         ? <TicketButton eventId={item.eventId}/>
                         : <Button variant={ButtonVariant.outline}>Пока недоступно</Button>
                     }
-                    <Link className='self-center' to={`/events/${to}`}>
+                    <Link className='self-center' onClick={handleClick} to={`/events/${to}`}>
                         <Button variant={ButtonVariant.white}>Узнать больше</Button>
                     </Link>
                 </div>

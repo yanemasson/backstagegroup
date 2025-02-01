@@ -26,8 +26,10 @@ const Hero = () => {
                        href={'#list'} className='flex flex-row items-center w-max-5 justify-center gap-5'>
                         <Button variant={ButtonVariant.outline}>
                             <div className='flex items-center justify-center gap-5'>
-                                К списку
-                                <div className={'-translate-y-2'}><DownArrow hover={isButtonHovered}/></div>
+                                Афиша
+                                <div className={'-translate-y-2'}>
+                                    <DownArrow hover={isButtonHovered} hoverColor={'yellow'}/>
+                                </div>
                             </div>
                         </Button>
                     </a>

@@ -18,12 +18,12 @@ type TextProps = {
 };
 const Text = ({children, variant, style}:TextProps) => {
     const variantStyleMap = {
-        [TextVariant.H1]: 'lg:text-[52px] text-[40px] font-bold',
-        [TextVariant.H2]: 'lg:text-[50px] text-[22px] font-bold',
-        [TextVariant.H3]: 'lg:text-[20px] text-[16px] font-normal',
-        [TextVariant.P]: 'lg:text-[20px] text-[16px] font-light',
-        [TextVariant.B]: 'lg:text-[20px] text-[16px] font-bold',
-        [TextVariant.CAPTION]: 'lg:text-[16px] text-[12px] font-light',
+        [TextVariant.H1]: 'xl:text-[52px] text-[40px] font-bold',
+        [TextVariant.H2]: 'xl:text-[50px] text-[22px] font-bold',
+        [TextVariant.H3]: 'xl:text-[20px] text-[16px] font-normal',
+        [TextVariant.P]: 'xl:text-[20px] text-[16px] font-light',
+        [TextVariant.B]: 'xl:text-[20px] text-[16px] font-bold',
+        [TextVariant.CAPTION]: 'xl:text-[16px] text-[12px] font-light',
     };
     const Component = (variant === TextVariant.P || variant === TextVariant.CAPTION) ? 'p'
         : variant === TextVariant.B ? 'strong'
