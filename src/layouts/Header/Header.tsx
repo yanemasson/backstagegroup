@@ -16,6 +16,7 @@ const Header = () => {
     const MenuItems = [
         {id: '/', label: 'Главная'},
         {id: 'events', label: 'Концерты'},
+        {id: 'refund', label: 'Возврат билетов'}
         // {id: 'about', label: 'О нас'}
     ]
 /*
