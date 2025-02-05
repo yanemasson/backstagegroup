@@ -2,7 +2,14 @@ const months = ['января', 'февраля', 'марта', 'апреля', 
     'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
 
 export const getDate = (date:string)=> {
-    const dateArr = date.split(' ')[0].split('-')
-    const time = date.split(' ')[1]
-    return Number(dateArr[2]) + ' ' + months[Number(dateArr[1]) - 1] + ' в ' + time
+    const parsedDateTime = date.split(' ')
+    const parsedDateWithoutTime = parsedDateTime[0].split('-')
+    const dateTime = {
+        day: parsedDateWithoutTime[2],
+        month: parsedDateWithoutTime[1],
+        year: parsedDateWithoutTime[2],
+        time: parsedDateTime[1]
+    }
+    return `${dateTime.day} ${months[Number(dateTime.month) - 1]}, в ${dateTime.time}`;
+
 }

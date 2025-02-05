@@ -1,6 +1,6 @@
 import Hero from "./sections/Hero/Hero.tsx";
-import ConcertList from "./sections/ConcertList/ConcertList.tsx";
 import {SEO} from "../../components/SEO.tsx";
+import EventList from "./sections/EventList/EventList.tsx";
 
 
 const MainPage = () => {
@@ -13,7 +13,7 @@ const MainPage = () => {
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
             <Hero/>
-            <ConcertList/>
+            <EventList/>
         </>
     );
 };

@@ -1,6 +1,6 @@
 import Text, {TextVariant} from '../../../../components/Text.tsx'
-import Button, {ButtonVariant} from "../../../../components/Button.tsx";
-import DownArrow from "../../../../components/DownArrow.tsx";
+import Button, {ButtonVariant} from "../../../../components/Buttons/Button.tsx";
+import DownArrow from "../../../../components/Buttons/DownArrow.tsx";
 import {useState} from "react";
 import useMainPage from "../../../../hooks/cms/useMainPage.ts";
 
@@ -28,7 +28,7 @@ const Hero = () => {
                             <div className='flex items-center justify-center gap-5'>
                                 Афиша
                                 <div className={'-translate-y-2'}>
-                                    <DownArrow hover={isButtonHovered} hoverColor={'yellow'}/>
+                                    <DownArrow hover={isButtonHovered}/>
                                 </div>
                             </div>
                         </Button>

@@ -32,7 +32,6 @@ collections:
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "text", format: "raw"}
       - {label: "Event ID", name: "eventId", widget: "number"}
-
       - label: "Дата и время"
         name: "date"
         widget: "datetime"
@@ -40,13 +39,11 @@ collections:
         date_format: "DD.MM.YYYY"
         time_format: "HH:mm"
         picker_utc: false
-
       - label: "Постер"
         name: "poster"
         widget: "image"
         media_folder: "/public/images/posters"
         public_folder: "/images/posters"
-
       - label: "Видео"
         name: "videos"
         widget: "list"
@@ -57,7 +54,6 @@ collections:
           widget: "file"
           media_folder: "/public/videos"
           public_folder: "/videos"
-
       - label: "Фотографии"
         name: "photos"
         widget: "list"
@@ -68,13 +64,11 @@ collections:
           widget: "image"
           media_folder: "/public/images/photos"
           public_folder: "/images/photos"
-
       - label: "Тип треклиста"
         name: "trackListType"
         widget: "select"
         options: ["playlist", "tracks"]
         required: false
-
       - label: "Ссылка на плейлист"
         name: "playlistUrl"
         widget: "string"
@@ -83,7 +77,78 @@ collections:
         condition:
           field: "trackListType"
           value: "playlist"
+      - label: "Список треков"
+        name: "tracks"
+        widget: "list"
+        required: false
+        condition:
+          field: "trackListType"
+          value: "tracks"
+        fields:
+          - {label: "Музыкант", name: "musician", widget: "string"}
+          - {label: "Композиция", name: "composition", widget: "string"}
+          - {label: "Длительность", name: "duration", widget: "string"}
 
+  - name: "events"
+    label: "События"
+    folder: "content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Название", name: "title", widget: "string"}
+      - {label: "Город", name: "city", widget: "string"}
+      - {label: "Место проведения", name: "location", widget: "string"}
+      - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
+      - {label: "Полное описание", name: "descriptionFull", widget: "text", format: "raw"}
+      - label: "Концерты"
+        name: "Concerts"
+        fields:
+          - {label: "Event ID", name: "eventId", widget: "number"}
+          - label: "Дата и время"
+            name: "date"
+            widget: "datetime"
+            format: "YYYY-MM-DD HH:mm"
+            date_format: "DD.MM.YYYY"
+            time_format: "HH:mm"
+            picker_utc: false
+      - label: "Постер"
+        name: "poster"
+        widget: "image"
+        media_folder: "/public/images/posters"
+        public_folder: "/images/posters"
+      - label: "Видео"
+        name: "videos"
+        widget: "list"
+        required: false
+        field:
+          label: "Видео"
+          name: "video"
+          widget: "file"
+          media_folder: "/public/videos"
+          public_folder: "/videos"
+      - label: "Фотографии"
+        name: "photos"
+        widget: "list"
+        required: false
+        field:
+          label: "Фото"
+          name: "photo"
+          widget: "image"
+          media_folder: "/public/images/photos"
+          public_folder: "/images/photos"
+      - label: "Тип треклиста"
+        name: "trackListType"
+        widget: "select"
+        options: ["playlist", "tracks"]
+        required: false
+      - label: "Ссылка на плейлист"
+        name: "playlistUrl"
+        widget: "string"
+        required: false
+        hint: "Вставьте ссылку на плейлист Яндекс.Музыки"
+        condition:
+          field: "trackListType"
+          value: "playlist"
       - label: "Список треков"
         name: "tracks"
         widget: "list"
