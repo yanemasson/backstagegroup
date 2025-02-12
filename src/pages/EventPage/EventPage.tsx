@@ -15,10 +15,12 @@ const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
 
 const EventPage = () => {
     const {id} = useParams()
-    const {events} = useEvents()
+    const {events, isLoading} = useEvents()
 
-    const item= events.find(
-        (c) => createSlug(c.title, c.city, c.concerts[0].date) === id)
+    if(isLoading) {return <div><LoadingSpinner/></div>}
+
+    const item=
+        events.find((c) => createSlug(c.title, c.city, c.concerts[0].date) === id)
 
     if(!item) {return <NotFoundPage/>}
 

@@ -12,7 +12,7 @@ const TicketButtonsGroup = ({concerts}:TicketButtonGroupProps) => {
     return (
         <div className='flex flex-col w-full gap-10'>
             {concerts.map((item) =>
-                <div className='flex flex-col gap-5'>
+                <div className='flex flex-col gap-5' key={item.eventId}>
                     <div className='flex items-center gap-1 justify-between'>
                         <Text variant={TextVariant.H3}>{getDate(item.date)}</Text>
                         <div className='self-end'><TicketButton eventId={item.eventId}/></div>

@@ -3,6 +3,7 @@ import {Event, Concert, Track} from "../../types/event.ts";
 
 export const useEvents = () => {
     const [events, setEvents] = useState<Event[]>([]);
+    const [isLoading, setIsLoading] = useState(true)
     const parseConcerts = (frontMatter: string): Concert[] => {
         const concertsMatch = frontMatter.match(/concerts:\s*([\s\S]*?)(?=\n\w+:|$)/);
         if (!concertsMatch) return [];
@@ -103,8 +104,9 @@ export const useEvents = () => {
             setEvents(sortedEvents);
         };
         loadEvents();
-    }, []);
-    return { events };
+        setIsLoading(false)
+    }, [isLoading, setIsLoading]);
+    return { events, isLoading };
 };
 
 export default useEvents;

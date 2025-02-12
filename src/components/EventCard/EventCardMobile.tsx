@@ -16,7 +16,6 @@ interface ConcertCardProps {
 }
 const EventCardMobile = ({item, index, to}: ConcertCardProps) => {
     const dateString = getDatesString(item.concerts)
-    const [isOpen, setIsOpen] = useState(false)
     const [indexPhoto, setIndexPhoto] = useState(0)
     const [isOpenSlider, setIsOpenSlider] = useState(false)
 
@@ -30,15 +29,13 @@ const EventCardMobile = ({item, index, to}: ConcertCardProps) => {
     }
 
     return (
-        <div className={`border-white border-solid rounded-2xl p-4 transition-all flex flex-col items-start text-start
-        gap-1 justify-between`} onClick={() => setIsOpen(!isOpen)}>
+        <div className={`p-1 flex flex-col items-start text-start
+        gap-1 justify-between`}>
             <div className={`flex flex-row ${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
                 <Text variant={TextVariant.H2}>{item.title}</Text>
             </div>
             <Text variant={TextVariant.H3}>{dateString}</Text>
-            <div className={`flex flex-col gap-10 transition-all duration-300 ease-out overflow-hidden ${
-                isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-            }`}>
+            <div className={`flex flex-col gap-10 transition-all duration-300 ease-out overflow-hidden`}>
                 <Text variant={TextVariant.H3}>{item.city}, {item.location}</Text>
                 {(item.videos && item.videos.length > 0)
                     ? <VideoPlayer videos={item.videos}/>
