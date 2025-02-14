@@ -39,7 +39,7 @@ collections:
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "text", format: "raw"}
       - label: "Концерты"
-        name: "Concerts"
+        name: "concerts"
         widget: 'list'
         fields:
           - {label: "Event ID", name: "eventId", widget: "number"}
