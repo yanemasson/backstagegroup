@@ -10,17 +10,17 @@ import createSlug from "../../../../utils/createSlug.ts";
 const EventList = () => {
 /*
     const { selectedCity } = useCity();
-*/
-    const {events} = useEvents()
-    console.log(events)
-    const lg =  useMediaBreakpoint('lg')
     const selectedCity = 'Красноярск'
     const filteredEvents = events.filter(item => item.city === selectedCity);
 
+*/
+    const {events} = useEvents()
+    const lg =  useMediaBreakpoint('lg')
+
     return (
         <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
-            {filteredEvents.length > 0 ? (
-                filteredEvents.map((item, index) => (
+            {events.length > 0 ? (
+                events.map((item, index) => (
                     lg
                         ? <EventCardDesktop key={index} item={item} index={index}
                                             to={createSlug(item.title, item.city, item.concerts[0].date)}/>
@@ -30,8 +30,8 @@ const EventList = () => {
                 )
             ) : (
                 <div className="flex flex-col items-center justify-center gap-5 py-20">
-                    <Text variant={TextVariant.B}>В городе {selectedCity} пока нет концертов</Text>
-                    <Text variant={TextVariant.P}>Выберите другой город или следите за обновлениями</Text>
+                    {/*<Text variant={TextVariant.B}>В городе {selectedCity} пока нет концертов</Text>
+                    <Text variant={TextVariant.P}>Выберите другой город или следите за обновлениями</Text>*/}
                     <Link to={'events'}>
                         <Button variant={ButtonVariant.outline}>
                             <Text variant={TextVariant.P}>Все концерты</Text>

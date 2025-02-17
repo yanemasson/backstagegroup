@@ -13,18 +13,15 @@ collections:
         label: "Контент главной страницы"
         name: "main"
         fields:
-          - label: "Видео"
-            name: "video"
-            widget: "file"
-            media_folder: "/public/videos"
-            public_folder: "/videos"
           - label: "Фоновые изображения"
             name: 'images'
             widget: 'list'
+            media_folder: "/public/images/hero"
+            public_folder: "/images/hero"
             fields:
-              - label: "Изображение"
-                name: "image"
-                widget: "image"
+              label: "Изображение"
+              name: "image"
+              widget: "image"
           - { label: "Описание", name: "description", widget: "text" }
 
   - name: "events"

@@ -1,6 +1,6 @@
 interface MainPage {
-    video: string
     description: string
+    images: string[]
 }
 
 export default MainPage

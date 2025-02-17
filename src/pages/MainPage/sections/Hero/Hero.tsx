@@ -9,17 +9,13 @@ import SlideShow from "../../../../components/SlideShow.tsx";
 const Hero = () => {
     const [isButtonHovered, setIsButtonHovered] = useState(false)
     const mainPageContent = useMainPage();
-    // const videoSrc = mainPageContent?.video ? mainPageContent.video.replace(/^\//, '') : '';
+    console.log(mainPageContent)
     return (
         <section id='hero' className='bg-black h-screen text-white relative overflow-hidden'>
             <div className='absolute inset-0 w-full h-full object-cover'>
-                <SlideShow/>
+                {mainPageContent?.images && <SlideShow slides={mainPageContent.images}/>}
             </div>
-            {/*videoSrc && (
-                <video className='absolute inset-0 w-full h-full object-cover' autoPlay loop muted playsInline>
-                    <source src={videoSrc} type="video/mp4"/>
-                </video>
-            )*/}
+
             <div className='absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black z-10' />
             <div className='absolute inset-0 flex flex-col items-center justify-center z-20'>
                 <div className='container flex flex-col gap-5 px-4 lg:px-40 items-center text-center'>

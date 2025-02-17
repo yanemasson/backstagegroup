@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
-const SlideShow = () => {
-    const slides = [
-        '/images/hero/1240х760 (1).jpg',
-        '/images/hero/1240х760.jpg',
-        '/images/hero/1200х800_маэстро.jpg',
-    ];
+interface slideShowProps {
+    slides: string[]
+}
+
+const SlideShow = ({slides}:slideShowProps) => {
+
 
     const [index, setIndex] = useState(0);
 
@@ -15,7 +15,7 @@ const SlideShow = () => {
         }, 4000);
 
         return () => clearInterval(interval);
-    }, [slides.length]);
+    }, [slides]);
 
     return (
         <div className="w-full h-full flex items-center justify-center">
