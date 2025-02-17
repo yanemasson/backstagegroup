@@ -19,9 +19,10 @@ collections:
             media_folder: "/public/images/hero"
             public_folder: "/images/hero"
             fields:
-              label: "Изображение"
-              name: "image"
-              widget: "image"
+              -
+                label: "Изображение"
+                name: "image"
+                widget: "image"
           - { label: "Описание", name: "description", widget: "text" }
 
   - name: "events"
