@@ -32,18 +32,11 @@ const useMainPage = () => {
                 const rawContent = Object.values(mainPageContentFile)[0];
                 const frontMatter = rawContent.match(/^---\r?\n([\s\S]*?)\r?\n---/);
 
-                if (!frontMatter) {
-                    throw new Error('Failed to parse frontmatter');
-                }
-
-                // Обновляем регулярные выражения для поддержки значений с кавычками и без
-                const videoMatch = frontMatter[1].match(/video:\s*"?([^"\n]+)"?/);
                 const descriptionMatch = frontMatter[1].match(/description:\s*"?([^"\n]+)"?/);
                 const imagesMatch = frontMatter[1].match(/images:/i) ?
                         parseArrayField(frontMatter[1], 'images') : []
 
                 const content: MainPage = {
-                    video: videoMatch ? videoMatch[1].trim() : '',
                     description: descriptionMatch ? descriptionMatch[1].trim() : '',
                     images: imagesMatch
                 };
