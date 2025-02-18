@@ -16,13 +16,12 @@ collections:
           - label: "Фоновые изображения"
             name: 'images'
             widget: 'list'
-            media_folder: "/public/images/hero"
-            public_folder: "/images/hero"
-            fields:
-              -
-                label: "Изображение"
-                name: "image"
-                widget: "image"
+            field:
+              label: "Изображение"
+              name: "image"
+              widget: "image"
+              media_folder: "/public/images/hero"
+              public_folder: "/images/hero"
           - { label: "Описание", name: "description", widget: "text" }
 
   - name: "events"
