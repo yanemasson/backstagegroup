@@ -9,7 +9,7 @@ import SlideShow from "../../../../components/SlideShow.tsx";
 const Hero = () => {
     const [isButtonHovered, setIsButtonHovered] = useState(false)
     const mainPageContent = useMainPage();
-    console.log(mainPageContent)
+
     return (
         <section id='hero' className='bg-black h-screen text-white relative overflow-hidden'>
             <div className='absolute inset-0 w-full h-full object-cover'>

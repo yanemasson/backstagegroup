@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import {Event, Concert, Track} from "../../types/event.ts";
+import {parseArrayField} from "./utils/parseArrayField.ts";
+import {getCurrentDateString} from "./utils/getCurrentDateString.ts";
 
 export const useEvents = () => {
     const [events, setEvents] = useState<Event[]>([]);
     const [isLoading, setIsLoading] = useState(true)
+
     const parseConcerts = (frontMatter: string): Concert[] => {
         const concertsMatch = frontMatter.match(/concerts:\s*([\s\S]*?)(?=\n\w+:|$)/);
         if (!concertsMatch) return [];
@@ -46,17 +49,7 @@ export const useEvents = () => {
         }
         return [];
     };
-    const parseArrayField = (content: string, fieldName: string): string[] => {
-        const regex = new RegExp(`${fieldName}:\\s*\\n((\\s{2,}-.*\\n?)*)`);
-        const match = content.match(regex);
-        if (match && match[1]) {
-            return match[1]
-                .split('\n')
-                .map(line => line.trim().replace(/^-\s*/, ''))
-                .filter(line => line);
-        }
-        return [];
-    };
+
     useEffect(() => {
         const loadEvents = async () => {
             const eventFiles = import.meta.glob('/content/events/*.md', {
@@ -99,8 +92,9 @@ export const useEvents = () => {
                     loadedEvents.push(event);
                 }
             }
-            const sortedEvents = loadedEvents.sort((a, b) =>
-                a.concerts[0].date.localeCompare(b.concerts[0].date)
+            const sortedEvents = loadedEvents
+                .filter(a => a.concerts[a.concerts.length - 1].date >= getCurrentDateString())
+                .sort((a, b) => a.concerts[0].date.localeCompare(b.concerts[0].date)
             );
             setEvents(sortedEvents);
         };
