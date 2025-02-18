@@ -71,7 +71,8 @@ export const useEvents = () => {
                 if (frontMatterMatch) {
                     const frontMatter = frontMatterMatch[1];
                     const event: Event = {
-                        title: frontMatter.match(/title:\s*(.*)/)?.[1]?.trim() || '',
+                        title: frontMatter.match(/title:\s*(.*)/)?.[1]?.trim() || ''
+                            ?.replace(/['"]/g, ''),
                         city: frontMatter.match(/city:\s*(.*)/)?.[1]?.trim() || '',
                         location: frontMatter.match(/location:\s*(.*)/)?.[1]?.trim() || '',
                         poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
