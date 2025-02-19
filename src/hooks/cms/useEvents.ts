@@ -74,6 +74,7 @@ export const useEvents = () => {
                             ?.replace(/^\|-?\s*/, '')
                             ?.replace(/['"]/g, '')
                             ?.replace(/\|/g, '')
+                            ?.replace(/>-/g, '')
                             ?.split('\n')
                             .map(line => line.trim())
                             .join('\n')
