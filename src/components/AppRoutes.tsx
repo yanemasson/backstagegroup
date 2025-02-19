@@ -19,8 +19,8 @@ const AppRoutes = () => {
                 <Route path={'refund'} element={<RefundPage/>}/>
                 <Route path={'*'} element={<NotFoundPage />} />
                 <Route
-                    path="/events/концерт_саунтдреки_любви_красноярск_2025_03_02_1800"
-                    element={<Navigate to="/events/концерт_саундтреки_любви_красноярск_2025_03_02_1800" replace />} />
+                    path="events/концерт_саунтдреки_любви_красноярск_2025_03_02_1800"
+                    element={<Navigate to="events/концерт_саундтреки_любви_красноярск_2025_03_02_1800" replace />} />
             </Routes>
         </Suspense>
     );
