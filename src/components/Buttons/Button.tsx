@@ -2,24 +2,23 @@ import {ReactNode} from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export enum ButtonVariant {
-    yellow = 'yellow',
-    white = 'white',
+    primary = 'primary',
     outline = 'outline'
 }
 interface ButtonProps {
     children: ReactNode,
     variant?: ButtonVariant
     onClick?: () => void
+    className?: string
 }
-const Button = ({children, onClick, variant = ButtonVariant.white} : ButtonProps) => {
+const Button = ({children, onClick, className, variant = ButtonVariant.primary} : ButtonProps) => {
     const variantStyleMap = {
-        [ButtonVariant.white]: 'text-black bg-white active:bg-white/70 hover:bg-[#FFFFFF]',
-        [ButtonVariant.yellow]: 'text-white bg-yellow active:bg-black/70',
-        [ButtonVariant.outline]: 'border-solid border border-2 text-white hover:border-yellow hover:text-yellow'
+        [ButtonVariant.primary]: 'bg-light-brown text-white hover:bg-white hover:text-light-brown active:bg-black',
+        [ButtonVariant.outline]: 'text-light-brown border-solid border-[2px] border-light-brown hover:bg-black active:bg-gray ',
     }
     return (
         <button
-            className={`self-center rounded-full duration-200 hover:shadow-lg py-2 min-w-44 lg:min-w-40
+            className={`self-center text-[18px] duration-200 ${className} 
             ${variantStyleMap[variant]}`} onClick={()=> onClick} >{children}</button>
     );
 };

@@ -6,13 +6,20 @@ export default {
   ],
   theme: {
     colors: {
-      'black': 'rgb(20,20,20)',
-      'white': 'rgb(235,235,235)',
-      'yellow': 'rgb(236,165,48)',
-      'red': 'rgb(222,77,68)',
-      'gray': 'rgba(134,136,138)'
+      'light-brown': '#C47D42',
+      'brown': '#43260D',
+      'black': '#000000',
+      'darkgray': '#0F0F0F',
+      'gray': '#2D2D2D',
+      'lightgray': '#9A9A9A',
+      'white': '#FFFCF2',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+      }
+    },
   },
   plugins: [],
 }

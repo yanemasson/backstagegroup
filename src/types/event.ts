@@ -1,23 +1,28 @@
 export interface Track {
     musician: string,
     composition: string,
-    duration: string,
+    source: string,
 }
-export interface Concert {
-    eventId: number,
-    date: string,
+
+export interface Artist {
+    photo: string,
+    name: string,
+    role: string | 'Вокал',
 }
+
 export interface Event {
     title: string,
     city: string,
     location: string,
-    poster: string,
+    address: string,
     descriptionShort: string,
     descriptionFull: string,
-    concerts: Concert[],
-    videos?: string[],
+    video?: string,
     photos?: string[],
-    trackListType?: 'playlist' | 'tracks',
-    playlistUrl?: string;
     trackList?: Track[],
+    age?: number,
+    eventId: number,
+    date: string,
+    artists?: Artist[],
+    artistsTeam?: string,
 }

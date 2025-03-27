@@ -1,66 +1,63 @@
 import Text, {TextVariant} from "../Text.tsx";
-import Button, {ButtonVariant} from "../Buttons/Button.tsx";
-import {Link} from "react-router-dom";
-import TicketButton from "../Buttons/TicketButton.tsx";
-import {useState} from "react";
-import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
 import {Event} from "../../types/event.ts"
-import MediaItemPreview from "../PhotoGallery/MediaItemPreview.tsx";
-import Slider from "../PhotoGallery/Slider.tsx";
-import {getDatesString} from "../../utils/getDatesString.ts";
+import {getDate} from "../../utils/getDate.ts";
+import Button, {ButtonVariant} from "../Buttons/Button.tsx";
+import {Link} from "react-router";
+import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
+import TicketButton from "../Buttons/TicketButton.tsx";
 
-interface ConcertCardProps {
+interface EventCardProps {
     item: Event,
-    index: number,
     to: string
 }
-const EventCardDesktop = ({item, index, to}: ConcertCardProps) => {
-    const dateString = getDatesString(item.concerts)
-    const [indexPhoto, setIndexPhoto] = useState(0)
-    const [isOpenSlider, setIsOpenSlider] = useState(false)
 
-    const toggleSlider = (index:number) => {
-        setIndexPhoto(index)
-        setIsOpenSlider(!isOpenSlider)
-    }
+const EventCardDesktop = ({item, to}: EventCardProps) => {
+    const datetime = getDate(item.date)
 
     return (
-        <div className='flex items-start text-start flex-row gap-5 xl:gap-16'>
-            <img className='xl:w-2/5 xl:h-2/5 md:w-1/2 md:h-1/2 shadow-white/10 shadow-sm rounded'
-                 alt={item.poster} src={item.poster}/>
-            <div className='flex flex-col gap-10'>
-                <div>
-                    <div className={`${index % 2 === 0 ? 'text-yellow' : 'text-red'}`}>
-                        <Text variant={TextVariant.H2}>{item.title}</Text>
-                    </div>
-                    <div>
-                        <Text variant={TextVariant.H3}>{dateString}</Text>
-                        <Text variant={TextVariant.H3}>{item.city}, {item.location}</Text>
+        <div className='flex items-start text-start flex-row justify-between gap-[40px] min-h-[255px]'>
+
+            <div className='flex min-w-[198px] h-[255px] justify-between flex-col'>
+                <div className='flex leading-none h-[52px] gap-[13px]'>
+                    <p className='font-display font-medium text-[52px] lining-nums'>{datetime.day}</p>
+                    <div className=' '>
+                        <p className='font-display font-medium text-[28px] tracking-[0.07em]'>{datetime.time}</p>
+                        <p className='font-display font-medium text-[24px] tracking-[0.07em]'>{datetime.monthStr}</p>
                     </div>
                 </div>
-                <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
-                {(item.videos && item.videos.length > 0)
-                    ? <div className='w-2/3'><VideoPlayer videos={item.videos}/></div>
-                    : (item.photos && item.photos.length > 0) &&
-                        <div className='flex gap-5'>
-                            {item.photos.slice(0, 3).map((value, index) =>
-                                <MediaItemPreview key={value} src={value} onClick={toggleSlider}
-                                                  isLil={true} index={index}/>)
-                            }
-                            <Slider mediaItems={item.photos} currentIndex={indexPhoto} setCurrentIndex={setIndexPhoto}
-                                    isOpenSlider={isOpenSlider} setIsOpenSlider={setIsOpenSlider}/>
+                <div>
+                    <Text variant={TextVariant.B}>г. {item.city}</Text>
+                    <Text variant={TextVariant.P}>{item.location}</Text>
+                </div>
+            </div>
+
+            <div className='pl-10 border-solid border-gray border-l-2 border-y-0 border-r-0
+                flex flex-col justify-between h-[255px] min-w-[452px]'>
+                <div className='flex flex-col gap-5'>
+                    <div className='flex justify-between'>
+                        <Text className='leading-none whitespace-pre-line' variant={TextVariant.H3}>
+                            {item.title.toUpperCase().split(' ').join('\n')}
+                        </Text>
+                        <div className='h-11 w-11 bg-[#8A8A8A33] rounded-full flex justify-center items-center text-center'>
+                            <Text variant={TextVariant.P}>{item.age}+</Text>
+                        </div>
                     </div>
-                }
-                <div className='flex lg:flex-row flex-col items-center gap-5'>
-                    {item.concerts.length > 1
-                        ? <Link to={`/events/${to}`}><Button variant={ButtonVariant.white}>Купить билет</Button></Link>
-                        : <TicketButton eventId={item.concerts[0].eventId}/>
-                    }
-                    <Link className='self-center' to={`/events/${to}`}>
-                        <Button variant={ButtonVariant.white}>Узнать больше</Button>
+                    <Text className='w-[331px]' variant={TextVariant.P}>{item.descriptionShort}</Text>
+                </div>
+                <div className='flex gap-2.5'>
+                    <TicketButton className='w-[201px] h-[43px]' eventId={item.eventId}/>
+                    <Link to={`/events/${to}`}>
+                        <Button className='w-[201px] h-[43px]' variant={ButtonVariant.outline}>Подробнее</Button>
                     </Link>
                 </div>
             </div>
+
+            <div className="min-w-[454px] w-[454px] h-[255px]">
+                {item.video
+                    ? <VideoPlayer className='h-[255px] w-[454px]' video={item.video} />
+                    : <img className='h-full w-full object-cover' alt={''} src='/src/assets/example-image.png'/>}
+            </div>
+
         </div>
     );
 };

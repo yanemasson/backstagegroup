@@ -1,4 +1,4 @@
-import Header from "./layouts/Header/Header.tsx";
+import Navbar from "./layouts/Navbar/Navbar.tsx";
 import Footer from "./layouts/Footer/Footer.tsx";
 import {BrowserRouter} from "react-router";
 import {CityProvider} from "./contexts/CityContext.tsx";
@@ -14,12 +14,14 @@ function App() {
               <CityProvider>
                   <BrowserRouter>
                       <ScrollToTop />
-                      <div className="flex flex-col bg-black min-h-screen">
-                          <Header/>
-                          <main className="flex-grow">
-                              <AppRoutes/>
-                          </main>
-                          <Footer/>
+                      <div className='bg-darkgray text-white flex flex-col justify-center items-center'>
+                          <div className="flex flex-col items-center min-h-screen w-80 xl:w-[1166px] ">
+                              <Navbar/>
+                              <main className="flex-grow py-[64px] xl:py-[84px]">
+                                  <AppRoutes/>
+                              </main>
+                              <Footer/>
+                          </div>
                       </div>
                   </BrowserRouter>
               </CityProvider>

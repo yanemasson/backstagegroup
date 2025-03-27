@@ -4,7 +4,7 @@ import {Link} from "react-router";
 import Button, {ButtonVariant} from "../../../../components/Buttons/Button.tsx";
 import {useEvents} from "../../../../hooks/cms/useEvents.ts";
 import {useMediaBreakpoint} from "../../../../hooks/useMediaBreakpoint.ts";
-import ConcertCardMobile from "../../../../components/EventCard/EventCardMobile.tsx";
+import EventCardMobile from "../../../../components/EventCard/EventCardMobile.tsx";
 import createSlug from "../../../../utils/createSlug.ts";
 
 const EventList = () => {
@@ -15,17 +15,14 @@ const EventList = () => {
 
 */
     const {events} = useEvents()
-    const lg =  useMediaBreakpoint('lg')
-
+    const xl = useMediaBreakpoint('xl')
     return (
-        <section id='list' className='flex flex-col gap-10 lg:gap-40 px-5 py-20 lg:px-40 bg-black text-white'>
+        <section id='eventlist' className='flex flex-col gap-10 lg:gap-40 py-20 bg-darkgray text-white xl:w-[1166px]'>
             {events.length > 0 ? (
                 events.map((item, index) => (
-                    lg
-                        ? <EventCardDesktop key={index} item={item} index={index}
-                                            to={createSlug(item.title, item.city, item.concerts[0].date)}/>
-                        : <ConcertCardMobile key={index} item={item} index={index}
-                                             to={createSlug(item.title, item.city, item.concerts[0].date)}/>
+                    xl
+                        ? <EventCardDesktop key={index} item={item} to={createSlug(item.eventId)}/>
+                        : <EventCardMobile item={item} to={createSlug(item.eventId)}/>
                     )
                 )
             ) : (

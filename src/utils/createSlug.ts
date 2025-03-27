@@ -1,7 +1,7 @@
-const createSlug = (title: string, city: string, date: string) => {
-    return `${title}_${city}_${date}`
+const createSlug = (eventId: number) => {
+    return `${eventId}`
         .toLowerCase()
-        .replace(/[^a-zа-яё0-9-_\s]/g, '') // добавили _ в список разрешенных символов
+        .replace(/[^a-zа-яё0-9-_\s]/g, '')
         .replace(/\s+/g, '_')
         .replace(/-+/g, '_');
 };

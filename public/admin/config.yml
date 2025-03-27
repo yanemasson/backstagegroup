@@ -33,35 +33,22 @@ collections:
       - {label: "Название", name: "title", widget: "string"}
       - {label: "Город", name: "city", widget: "string"}
       - {label: "Место проведения", name: "location", widget: "string"}
+      - {label: "Адрес", name: "address", widget: "string"}
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "text", format: "raw"}
-      - label: "Концерты"
-        name: "concerts"
-        widget: 'list'
-        fields:
-          - {label: "Event ID", name: "eventId", widget: "number"}
-          - label: "Дата и время"
-            name: "date"
-            widget: "datetime"
-            format: "YYYY-MM-DD HH:mm"
-            date_format: "DD.MM.YYYY"
-            time_format: "HH:mm"
-            picker_utc: false
-      - label: "Постер"
-        name: "poster"
-        widget: "image"
-        media_folder: "/public/images/posters"
-        public_folder: "/images/posters"
+      - {label: "Event ID", name: "eventId", widget: "number"}
+      - label: "Дата и время"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+        date_format: "DD.MM.YYYY"
+        time_format: "HH:mm"
+        picker_utc: false
       - label: "Видео"
-        name: "videos"
-        widget: "list"
-        required: false
-        field:
-          label: "Видео"
-          name: "video"
-          widget: "file"
-          media_folder: "/public/videos"
-          public_folder: "/videos"
+        name: "video"
+        widget: "file"
+        media_folder: "/public/videos/events"
+        public_folder: "/videos/events"
       - label: "Фотографии"
         name: "photos"
         widget: "list"
@@ -72,27 +59,49 @@ collections:
           widget: "image"
           media_folder: "/public/images/photos"
           public_folder: "/images/photos"
-      - label: "Тип треклиста"
-        name: "trackListType"
-        widget: "select"
-        options: ["playlist", "tracks"]
-        required: false
-      - label: "Ссылка на плейлист"
-        name: "playlistUrl"
-        widget: "string"
-        required: false
-        hint: "Вставьте ссылку на плейлист Яндекс.Музыки"
-        condition:
-          field: "trackListType"
-          value: "playlist"
       - label: "Список треков"
         name: "tracks"
         widget: "list"
         required: false
-        condition:
-          field: "trackListType"
-          value: "tracks"
         fields:
           - {label: "Музыкант", name: "musician", widget: "string"}
           - {label: "Композиция", name: "composition", widget: "string"}
-          - {label: "Длительность", name: "duration", widget: "string"}
+          - {label: "Откуда", name: "source", widget: "string", required: false}
+      - label: "Список артистов"
+        name: "artists"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Имя", name: "name", widget: "string" }
+          - { label: "Роль\Инструмент", name: "role", widget: "string" }
+          - { label: "Фото", name: "photo", widget: "image"}
+
+  - name: "reviews"
+    label: "Отзывы посетителей"
+    folder: "content/reviews"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "id"
+    fields:
+      - {label: "ID", name: "id", widget: "string", readonly: true}
+      - {label: "Имя посетителя", name: "name", widget: "string"}
+      - {label: "Дата", name: "date", widget: "datetime"}
+      - {label: "Статус", name: "status", widget: "select", options: ["pending", "approved", "rejected"], default: "pending"}
+      - {label: "Текст отзыва", name: "body", widget: "markdown"}
+      - {label: "Источник", name: "source", widget: "select", options: ["VK", "TG", "site"], default: "site"}
+
+  - name: "reports"
+    label: "Репортажи и видео-отзывы"
+    folder: "content/reports"
+    media_folder: "/public/videos/reports"
+    public_folder: "/videos/reports"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "id"
+    fields:
+      - { label: "ID", name: "id", widget: "string", readonly: true }
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Дата", name: "date", widget: "datetime" }
+      - { label: "Текст отзыва", name: "body", widget: "markdown" }
+      - { label: "Источник", name: "source", widget: "select", options: [ "VK", "TG", "site" ], default: "site" }
+      - { label: "Видео", name: "video", widget: "file" }

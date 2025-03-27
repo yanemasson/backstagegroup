@@ -6,6 +6,7 @@ export enum TextVariant {
     H1 = 'H1',
     H2 = 'H2',
     H3 = 'H3',
+    H4 = 'H4',
     P = 'P',
     B = 'B',
     CAPTION = 'CAPTION'
@@ -14,23 +15,24 @@ export enum TextVariant {
 type TextProps = {
     children: ReactNode;
     variant: TextVariant;
-    style?: string;
+    className?: string;
 };
-const Text = ({children, variant, style}:TextProps) => {
+const Text = ({children, variant, className}:TextProps) => {
     const variantStyleMap = {
-        [TextVariant.H1]: 'xl:text-[52px] text-[40px] font-bold',
-        [TextVariant.H2]: 'xl:text-[50px] text-[22px] font-bold',
-        [TextVariant.H3]: 'xl:text-[20px] text-[16px] font-normal',
-        [TextVariant.P]: 'xl:text-[20px] text-[16px] font-light',
+        [TextVariant.H1]: 'font-display font-semibold text-[36px] xl:text-[60px] tracking-[0.07em]',
+        [TextVariant.H2]: 'font-display font-semibold text-[28px] xl:text-[40px] tracking-[0.07em]',
+        [TextVariant.H3]: 'font-display font-medium text-[24px] xl:text-[32px] tracking-[0.07em]',
+        [TextVariant.H4]: 'font-medium text-[18px] xl:text-[24px] tracking-[0em]',
+        [TextVariant.P]: 'text-[16px] xl:text-[18px] font-light tracking-[0em]',
         [TextVariant.B]: 'xl:text-[20px] text-[16px] font-bold',
-        [TextVariant.CAPTION]: 'xl:text-[16px] text-[12px] font-light',
+        [TextVariant.CAPTION]: 'text-[16px] font-light',
     };
     const Component = (variant === TextVariant.P || variant === TextVariant.CAPTION) ? 'p'
         : variant === TextVariant.B ? 'strong'
             : variant.toLowerCase() as keyof IntrinsicElements;
 
     return (
-        <Component className={`${variantStyleMap[variant]} ${style}`}>
+        <Component className={`${variantStyleMap[variant]} ${className}`}>
             {children}
         </Component>
     );

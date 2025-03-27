@@ -1,22 +1,73 @@
 /// <reference types="vite-plugin-svgr/client" />
 import Text, {TextVariant} from "../../components/Text.tsx";
+import Logo from '/src/assets/icons/logo.svg?react'
 import TelegramLogo from '/src/assets/icons/ic_telegram.svg?react'
 import VKLogo from '/src/assets/icons/ic_vkontakte.svg?react'
 
 const Footer = () => {
     return (
-        <section className='text-white flex flex-col lg:flex-row gap-5 lg:justify-between p-5 lg:px-20 bg-black z-30'>
-            <div>
-                <Text variant={TextVariant.P}>Организатор: ИП Волик Михаил Александрович</Text>
-                <Text variant={TextVariant.P}>Адрес: 662313, Красноярский край, г. Шарыпово, мкр. 4-й</Text>
-                <Text variant={TextVariant.P}>ИНН: 245904917048</Text>
-                <Text variant={TextVariant.P}>ОГРН/ОРГНИП: 323246800154125</Text>
+        <section className='flex flex-col-reverse gap-[60px] xl:gap-0 xl:flex-row xl:justify-between xl:w-[1166px] py-[50px]'>
+            <div className='flex flex-col gap-10'>
+                <div className='flex flex-col gap-[25px] xl:gap-5'>
+                    <Text variant={TextVariant.H4}>Концертное агенство</Text>
+                    <div className='flex flex-col gap-[30px] xl:gap-[15px]'>
+                        <div className='flex flex-col gap-[5px]'>
+                            <Text className='text-lightgray' variant={TextVariant.CAPTION}>Организатор:</Text>
+                            <Text variant={TextVariant.P}>ИП Волик Михаил Александрович</Text>
+                        </div>
+                        <div className='flex flex-col gap-[5px]'>
+                            <Text className='text-lightgray' variant={TextVariant.CAPTION}>Адрес:</Text>
+                            <Text variant={TextVariant.P}>662313,</Text>
+                            <Text variant={TextVariant.P}>Красноярский край,</Text>
+                            <Text variant={TextVariant.P}>г. Шарыпово, мкр. 4-й</Text>
+                        </div>
+                        <div className='flex flex-col gap-[5px]'>
+                            <Text className='text-lightgray' variant={TextVariant.CAPTION}>ИНН:</Text>
+                            <Text variant={TextVariant.P}>245904917048</Text>
+                        </div>
+                        <div className='flex flex-col gap-[5px]'>
+                            <Text className='text-lightgray' variant={TextVariant.CAPTION}>ОГРН/ОРГНИП:</Text>
+                            <Text variant={TextVariant.P}>323246800154125</Text>
+                        </div>
+                    </div>
+
+                </div>
+                <div className='flex gap-[15px]'>
+                    <Logo/>
+                    <div>
+                        <Text variant={TextVariant.CAPTION}>Концертное</Text>
+                        <Text variant={TextVariant.CAPTION}>агенство</Text>
+                    </div>
+                </div>
             </div>
-            <div className='flex flex-col justify-center items-center'>
-                <Text variant={TextVariant.B}>Мы в социальных сетях:</Text>
-                <div className='flex gap-6 p-4 justify-center'>
-                    <a target="_blank" className='hover:text-[#0077FF] flex items-center justify-center' href={'https://vk.com/backstagegroup'}><VKLogo/></a>
-                    <a target="_blank" className='hover:text-[#2AABEE] flex items-center justify-center' href={'https://t.me/backstagegroup24'}><TelegramLogo/></a>
+            <div className='flex flex-col gap-[60px]'>
+                <div className='flex flex-col gap-[30px] xl:flex-row xl:gap-[43px] '>
+                    <div className='flex flex-col gap-[15px] xl:gap-5'>
+                        <Text variant={TextVariant.H4}>Меню</Text>
+                        <div className='flex flex-col gap-2'>
+                            <Text variant={TextVariant.P}>Афиша</Text>
+                            <Text variant={TextVariant.P}>Отзывы</Text>
+                            <Text variant={TextVariant.P}>Об организаторах</Text>
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-[15px] xl:gap-5'>
+                        <Text variant={TextVariant.H4}>Контакты</Text>
+                        <Text variant={TextVariant.P}>+7 (987) 487-87-76</Text>
+                    </div>
+                    <div className='flex flex-col gap-[15px] xl:gap-5'>
+                        <Text variant={TextVariant.H4}>Документация</Text>
+                        <div className='flex flex-col gap-2'>
+                            <Text variant={TextVariant.P}>Политика конфидециальности</Text>
+                            <Text variant={TextVariant.P}>Договор офферты</Text>
+                        </div>
+                    </div>
+                </div>
+                <div className='flex flex-col gap-5'>
+                    <Text variant={TextVariant.H4}>Мы в соцсетях</Text>
+                    <div className='flex flex-row xl:flex-col xl:w-10 items-center gap-[25px] text-light-brown'>
+                        <a target="_blank" className='hover:text-[#0077FF] flex items-center justify-center' href={'https://vk.com/backstagegroup'}><VKLogo/></a>
+                        <a target="_blank" className='hover:text-[#2AABEE] flex items-center justify-center' href={'https://t.me/backstagegroup24'}><TelegramLogo/></a>
+                    </div>
                 </div>
             </div>
         </section>

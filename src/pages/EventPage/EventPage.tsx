@@ -1,26 +1,30 @@
-import Information from "./sections/Information.tsx";
 import {useParams} from "react-router";
-import TrackList from "./sections/TrackList.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
-import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import useEvents from "../../hooks/cms/useEvents.ts";
-import YandexMusic from "./sections/YandexMusic.tsx";
 import {SEO} from "../../components/SEO.tsx";
-import Text, {TextVariant} from "../../components/Text.tsx";
 import createSlug from "../../utils/createSlug.ts";
-
-const VideoSection = lazy(() => import("./sections/VideoSection.tsx")) ;
-const Gallery = lazy(() => import("./sections/Gallery.tsx")) ;
+import UpcomingEvents from "./sections/UpcomingEvents.tsx";
+import ReviewsSection from "./sections/ReviewsSection.tsx";
+import ReportsSection from "./sections/ReportsSection.tsx";
+import AboutUsSection from "./sections/AboutUsSection.tsx";
+import LocationSection from "./sections/LocationSection.tsx";
+import TrackList from "./sections/TrackList.tsx";
+import ArtistsSection from "./sections/ArtistsSection.tsx";
+import Information from "./sections/Information.tsx";
+import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
+import HeroDesktop from "./sections/HeroDesktop.tsx";
+import HeroMobile from "./sections/HeroMobile.tsx";
+import Header from "./sections/Header.tsx";
 
 const EventPage = () => {
     const {id} = useParams()
     const {events, isLoading} = useEvents()
+    const xl = useMediaBreakpoint('xl')
 
     if(isLoading) {return <div><LoadingSpinner/></div>}
 
-    const item=
-        events.find((c) => createSlug(c.title, c.city, c.concerts[0].date) === id)
+    const item= events.find((c) => createSlug(c.eventId) === id)
 
     if(!item) {return <NotFoundPage/>}
 
@@ -32,20 +36,19 @@ const EventPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <div className='bg-black pb-20'>
-                <Information item={item}/>
-                <section id={'information'}>
-                    <div className={'text-white px-5 lg:px-40 pt-10'}>
-                        <Text variant={TextVariant.B}>О концерте:</Text>
-                        <Text variant={TextVariant.P} style={'whitespace-pre-wrap'}>{item.descriptionFull}</Text>
-                    </div>
-                    <Suspense fallback={<LoadingSpinner/>}>
-                        {item.videos && item.videos.length > 0 && (<VideoSection videos={item.videos} />)}
-                        {item.photos && item.photos.length > 0 && (<Gallery photos={item.photos} />)}
-                    </Suspense>
-                    {item.trackList && <TrackList trackList={item.trackList}/>}
-                    {item.playlistUrl && <YandexMusic playlist={item.playlistUrl}/>}
+            <Header item={item}/>
+            <div className='flex flex-col gap-[100px] w-[320px] xl:w-[1166px] xl:gap-40'>
+                {xl ? <HeroDesktop item={item}/> : <HeroMobile item={item} />}
+                <Information description={item.descriptionFull} eventId={item.eventId}/>
+                {item.trackList && item.trackList.length > 0 && <TrackList trackList={item.trackList}/>}
+                {item.artists?.length && <ArtistsSection artists={item.artists} artistsTeam={item.artistsTeam ? item.artistsTeam : undefined} />}
+                <LocationSection location={item.location} eventId={item.eventId} address={item.address}/>
+                <AboutUsSection/>
+                <section id='reviews'>
+                    <ReportsSection/>
+                    <ReviewsSection/>
                 </section>
+                <UpcomingEvents item={item} events={events} />
             </div>
         </>
 
