@@ -3,6 +3,7 @@ import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import TicketButton from "../../../components/Buttons/TicketButton.tsx";
 import {getDate} from "../../../utils/getDate.ts";
+import exampleImage from '../../../assets/example-image.png'
 
 interface HeroProps {
     item: Event
@@ -20,7 +21,7 @@ const HeroMobile = ({item}: HeroProps) => {
                 </div>
                 {item.video
                     ? <VideoPlayer video={item.video} className='' />
-                    : <img className='h-full w-full object-cover' alt={''} src='/src/assets/example-image.png'/>}
+                    : <img className='h-full w-full object-cover' alt={''} src={exampleImage}/>}
             </div>
             <div className='flex flex-col gap-[50px]'>
                 <div className='flex flex-col gap-10'>
