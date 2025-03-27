@@ -4,6 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /^grid-rows-[1-9]/,
+      variants: ['xl'],
+    }
+  ],
   theme: {
     colors: {
       'light-brown': '#C47D42',
