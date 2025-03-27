@@ -6,6 +6,8 @@ import Button, {ButtonVariant} from "../Buttons/Button.tsx";
 import {Link} from "react-router";
 import {useState} from "react";
 import TicketButton from "../Buttons/TicketButton.tsx";
+import exampleImage from '../../assets/example-image.png'
+
 
 interface EventCardProps {
     item: Event,
@@ -41,7 +43,9 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
                    }}>
 
                 <div  className='flex flex-col items-center justify-center gap-[25px]'>
-                    {item.video && <VideoPlayer className='w-80' video={item.video} />}
+                    {item.video
+                        ? <VideoPlayer className='w-80' video={item.video} />
+                        : <img className='w-80' alt={''} src={exampleImage}/>}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start w-2/3'>
                             <Text className='text-light-brown' variant={TextVariant.H4}>Описание:</Text>

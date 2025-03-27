@@ -1,6 +1,7 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import TicketButton from "../../../components/Buttons/TicketButton.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
+import image from '/public/images/image 56.png'
 
 interface InformationProps {
     description: string;
@@ -20,7 +21,7 @@ const Information = ({description, eventId}: InformationProps) => {
                     <Text className='whitespace-pre-wrap' variant={TextVariant.P}>{description}</Text>
                     <TicketButton className='w-[321px] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
                 </div>
-                {xl && <img alt='' className='w-[572px]' src='/public/images/image 56.png'/>}
+                {xl && <img alt='' className='w-[572px]' src={image}/>}
 
             </div>
         </section>

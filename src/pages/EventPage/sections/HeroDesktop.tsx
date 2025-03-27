@@ -4,6 +4,7 @@ import Text, {TextVariant} from "../../../components/Text.tsx";
 import TicketButton from "../../../components/Buttons/TicketButton.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import CountdownTimer from "../components/CountdownTimer.tsx";
+import exampleImage from '../../../assets/example-image.png'
 
 interface HeroProps {
     item: Event
@@ -21,7 +22,7 @@ const HeroDesktop = ({item}: HeroProps) => {
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
                     {item.video
                         ? <VideoPlayer video={item.video} className='w-full object-cover' />
-                        : <img className='h-full w-full object-cover' alt={''} src='/src/assets/example-image.png'/>}
+                        : <img className='h-full w-full object-cover' alt={''} src={exampleImage} />}
                 </div>
             </div>
 
