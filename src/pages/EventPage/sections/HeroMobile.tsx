@@ -47,7 +47,7 @@ const HeroMobile = ({item}: HeroProps) => {
                     </div>
                 </div>
 
-                <TicketButton className='w-80 h-[45px]' eventId={item.eventId}/>
+                <TicketButton className='w-[90vw] h-[45px]' eventId={item.eventId}/>
             </div>
 
         </section>

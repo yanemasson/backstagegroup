@@ -37,7 +37,7 @@ const EventPage = () => {
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
             <Header item={item}/>
-            <div className='flex flex-col gap-[100px] w-[320px] xl:w-[1166px] xl:gap-40'>
+            <div className='flex flex-col gap-[100px] w-[90vw] xl:w-[1166px] xl:gap-40'>
                 {xl ? <HeroDesktop item={item}/> : <HeroMobile item={item} />}
                 <Information description={item.descriptionFull} eventId={item.eventId}/>
                 {item.trackList && item.trackList.length > 0 && <TrackList trackList={item.trackList}/>}

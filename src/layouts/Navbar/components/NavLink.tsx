@@ -11,7 +11,7 @@ const NavLink = ({href, children, isActive, onClick}: NavLinkProps) => {
     return (
         <a
             onClick={onClick}
-            className={` ${isActive ? 'text-white' : 'text-lightgray'} hover:text-white transition-colors px-4 py-2`}
+            className={` ${isActive ? 'text-white' : 'text-lightgray'} hover:text-white transition-colors py-2`}
             href={href}>
             {children}
         </a>

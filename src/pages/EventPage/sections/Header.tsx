@@ -47,9 +47,9 @@ const Header = ({item}: HeaderProps) => {
         <div className={`flex justify-center bg-darkgray z-30 fixed flex-col xl:flex-row
             ${visible && !isHero ? 'transform-none' : 'transform -translate-y-[200px]'}  transition-all duration-300
             border-solid border-x-0 border-b-0 border-t-0.5 border-gray 
-            w-[320px] h-[133px] top-[64px]  xl:w-[1166px] xl:h-[110px] xl:top-[84px]`}>
+            w-[90vw] h-[133px] top-[64px] xl:w-[1166px] xl:h-[110px] xl:top-[84px]`}>
             <div className="w-full flex flex-col items-center xl:flex-row gap-[15px] justify-between">
-                <div className='flex gap-5 xl:gap-[73px]'>
+                <div className='flex w-full gap-5 justify-between xl:gap-[73px]'>
                     <div className='flex leading-none h-[52px] gap-[13px]'>
                         <p className='font-display font-medium text-[40px] xl:text-[52px] lining-nums'>{datetime.day}</p>
                         <div>
@@ -67,7 +67,7 @@ const Header = ({item}: HeaderProps) => {
                         <Text className='text-lightgray' variant={TextVariant.CAPTION}>{item.location}</Text>
                     </div>
                 }
-                <TicketButton className='w-80 h-[45px] xl:w-[286px] xl:h-[43px]' eventId={item.eventId}/>
+                <TicketButton className='w-[90vw] h-[45px] xl:w-[286px] xl:h-[43px]' eventId={item.eventId}/>
             </div>
         </div>
     );

@@ -5,12 +5,12 @@ const AboutUsSection = () => {
     return (
         <section id='about' className='flex flex-col gap-[100px] xl:gap-40'>
             <div className='flex flex-col gap-[50px]'>
-                <div className='xl:w-[629px] leading-none'>
+                <div className='xl:w-[629px]'>
                     <Text variant={TextVariant.H2}>BACKSTAGE GROUP</Text>
                     <Text variant={TextVariant.H2}>ДАРИТ ВАМ</Text>
                     <Text variant={TextVariant.H2}>НЕЗАБЫВАЕМЫЕ ЭМОЦИИ</Text>
                 </div>
-                <div className='flex flex-col self-center items-center gap-[42px] max-w-80 xl:max-w-[774px]'>
+                <div className='flex flex-col self-center items-center gap-[42px] max-w-[90vw] xl:max-w-[774px]'>
                     <img  alt='about' src={image}/>
                     <div className='flex flex-col xl:flex-row gap-[25px] justify-between w-full '>
                         <div className='flex flex-col leading-tight w-[181px] xl:w-[200px] '>

@@ -16,7 +16,7 @@ const UpcomingEvents = ({events, item}: UpcomingEventsProps) => {
 
     return (
         <section id='eventlist'>
-            <Text className='leading-none pb-[30px] xl:pb-[50px]' variant={TextVariant.H2}>БЛИЖАЙШИЕ КОНЦЕРТЫ</Text>
+            <Text className='pb-[30px] xl:pb-[50px]' variant={TextVariant.H2}>БЛИЖАЙШИЕ КОНЦЕРТЫ</Text>
             <div id='eventlist' className='flex flex-col gap-0 lg:gap-40 bg-darkgray text-white '>
                 {events.filter((event) => event.eventId != item.eventId).map((item, index) => (
                     xl

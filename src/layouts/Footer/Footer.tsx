@@ -6,7 +6,7 @@ import VKLogo from '/src/assets/icons/ic_vkontakte.svg?react'
 
 const Footer = () => {
     return (
-        <section className='flex flex-col-reverse gap-[60px] xl:gap-0 xl:flex-row xl:justify-between xl:w-[1166px] py-[50px]'>
+        <section className='flex flex-col-reverse gap-[60px] xl:gap-0 xl:flex-row xl:justify-between w-[90vw] xl:w-[1166px] py-[50px]'>
             <div className='flex flex-col gap-10'>
                 <div className='flex flex-col gap-[25px] xl:gap-5'>
                     <Text variant={TextVariant.H4}>Концертное агенство</Text>

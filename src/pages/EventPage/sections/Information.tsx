@@ -19,7 +19,7 @@ const Information = ({description, eventId}: InformationProps) => {
             <div className='flex gap-[60px]'>
                 <div className='flex flex-col gap-10 justify-between'>
                     <Text className='whitespace-pre-wrap' variant={TextVariant.P}>{description}</Text>
-                    <TicketButton className='w-[321px] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
+                    <TicketButton className='w-[90vw] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
                 </div>
                 {xl && <img alt='' className='w-[572px]' src={image}/>}
 

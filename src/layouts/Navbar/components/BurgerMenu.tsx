@@ -18,7 +18,7 @@ const BurgerMenu = ({children, isOpen}: BurgerMenuProps) => {
     }
     return (
         <div className={`${menuStyle} bg-darkgray h-full
-            w-full p-10 z-30 top-[64px] xl:top-[84px] left-0 fixed flex-col
+            w-full px-[5vw] py-10 z-30 top-[64px] xl:top-[84px] left-0 fixed flex-col
             ${!isOpen && 'opacity-0 pointer-events-none'}`}>
             {children}
         </div>

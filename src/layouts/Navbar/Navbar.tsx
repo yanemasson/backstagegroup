@@ -49,7 +49,7 @@ const Navbar = () => {
     return (
         <nav className={`bg-darkgray fixed flex items-center justify-center z-40 w-full h-[64px] xl:h-[84px]
             ${visible ? 'transform-none' : 'transform -translate-y-full'}  transition-all duration-300`}>
-            <div className='flex justify-between w-80 xl:w-[1166px]'>
+            <div className='flex justify-between w-[90vw] xl:w-[1166px]'>
                 <div className='flex gap-[15px]'>
                     <Logo/>
                     <div>

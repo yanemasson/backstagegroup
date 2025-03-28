@@ -15,7 +15,7 @@ function App() {
                   <BrowserRouter>
                       <ScrollToTop />
                       <div className='bg-darkgray text-white flex flex-col justify-center items-center'>
-                          <div className="flex flex-col items-center min-h-screen w-80 xl:w-[1166px] ">
+                          <div className="flex flex-col items-center min-h-screen w-[90vw] xl:w-[1166px] ">
                               <Navbar/>
                               <main className="flex-grow py-[64px] xl:py-[84px]">
                                   <AppRoutes/>

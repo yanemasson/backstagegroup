@@ -27,7 +27,7 @@ const LocationSection = ({location, address, eventId}: LocationSectionProps) => 
                         <Text className='text-light-brown leading-none' variant={TextVariant.H4}>{location}</Text>
                         <Text className='' variant={TextVariant.P}>{address}</Text>
                     </div>
-                    <TicketButton className='w-[320px] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
+                    <TicketButton className='w-[90vw] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
                 </div>
 
             </div>
