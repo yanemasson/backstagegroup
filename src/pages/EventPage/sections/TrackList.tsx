@@ -8,10 +8,12 @@ const TrackList = ({trackList} : {trackList: Track[]}) => {
             <div className={`flex flex-col gap-[25px] justify-between
                  xl:grid grid-flow-col grid-rows-${Math.ceil(trackList.length / 3)} xl:gap-[30px] `}>
                 {trackList.map((track: Track, index) => (
-                    <div className='w-[300px]' key={index}>
+                    <div className='flex flex-col gap-2.5 w-[300px]' key={index}>
                         <Text className='text-light-brown' variant={TextVariant.H4}>{index + 1}. {track.composition}</Text>
-                        <Text variant={TextVariant.P}>{track.source}</Text>
-                        <Text className='text-lightgray' variant={TextVariant.CAPTION}>{track.musician}</Text>
+                        <div className='flex flex-col gap-[5px]'>
+                            <Text variant={TextVariant.P}>{track.source}</Text>
+                            <Text className='text-lightgray' variant={TextVariant.CAPTION}>{track.musician}</Text>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -44,7 +44,7 @@ const EventPage = () => {
                 {item.artists?.length && <ArtistsSection artists={item.artists} artistsTeam={item.artistsTeam ? item.artistsTeam : undefined} />}
                 <LocationSection location={item.location} eventId={item.eventId} address={item.address}/>
                 <AboutUsSection/>
-                <section id='reviews'>
+                <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
                     <ReportsSection/>
                     <ReviewsSection/>
                 </section>

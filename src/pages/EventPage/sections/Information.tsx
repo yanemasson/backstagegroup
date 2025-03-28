@@ -12,7 +12,7 @@ const Information = ({description, eventId}: InformationProps) => {
     const xl = useMediaBreakpoint('xl')
     return (
         <section className='flex flex-col gap-10 xl:gap-[50px]' id='description'>
-            <Text className='flex flex-col xl:flex-row xl:gap-3' variant={TextVariant.H2}>
+            <Text className='leading-none flex flex-col xl:flex-row xl:gap-3' variant={TextVariant.H2}>
                 <p className='text-light-brown'>ОПИСАНИЕ</p>
                 <p>ПРОГРАММЫ</p>
             </Text>

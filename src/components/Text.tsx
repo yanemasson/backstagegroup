@@ -19,11 +19,11 @@ type TextProps = {
 };
 const Text = ({children, variant, className}:TextProps) => {
     const variantStyleMap = {
-        [TextVariant.H1]: 'font-display font-semibold text-[36px] xl:text-[60px] tracking-[0.07em]',
-        [TextVariant.H2]: 'font-display font-semibold text-[28px] xl:text-[40px] tracking-[0.07em]',
-        [TextVariant.H3]: 'font-display font-medium text-[24px] xl:text-[32px] tracking-[0.07em]',
-        [TextVariant.H4]: 'font-medium text-[18px] xl:text-[24px] tracking-[0em]',
-        [TextVariant.P]: 'text-[16px] xl:text-[18px] font-light tracking-[0em]',
+        [TextVariant.H1]: 'font-display font-semibold text-[36px] xl:text-[60px] tracking-[0.07em] leading-none',
+        [TextVariant.H2]: 'font-display font-semibold text-[28px] xl:text-[40px] tracking-[0.07em] leading-none',
+        [TextVariant.H3]: 'font-display font-medium text-[24px] xl:text-[32px] tracking-[0.07em] leading-none',
+        [TextVariant.H4]: 'font-medium text-[18px] xl:text-[24px] tracking-[0em] leading-none',
+        [TextVariant.P]: 'text-[16px] xl:text-[18px] font-light tracking-[0em] leading-tight',
         [TextVariant.B]: 'xl:text-[20px] text-[16px] font-bold',
         [TextVariant.CAPTION]: 'text-[16px] font-light',
     };

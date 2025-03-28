@@ -14,7 +14,7 @@ const HeroMobile = ({item}: HeroProps) => {
     const datetime = getDate(item.date)
 
     return (
-        <section id='hero' className='gap-[17px]'>
+        <section id='hero' className='flex flex-col gap-10'>
             <div className='relative'>
                 <div className='h-11 w-11 bg-darkgray rounded-full absolute top-2.5 right-[7px] z-10 flex justify-center items-center text-center'>
                     <Text variant={TextVariant.P}>{item.age}+</Text>
@@ -23,9 +23,9 @@ const HeroMobile = ({item}: HeroProps) => {
                     ? <VideoPlayer video={item.video} className='' />
                     : <img className='h-full w-full object-cover' alt={''} src={exampleImage}/>}
             </div>
-            <div className='flex flex-col gap-[50px]'>
-                <div className='flex flex-col gap-10'>
-                    <Text variant={TextVariant.H1}>{item.title.toUpperCase()}</Text>
+            <div className='flex flex-col gap-10'>
+                <div className='flex flex-col gap-7'>
+                    <Text className='leading-none' variant={TextVariant.H1}>{item.title.toUpperCase()}</Text>
                     <div className='flex flex-col gap-[30px]'>
                         <div className='flex leading-none h-[52px] gap-[13px]'>
                             <p className='font-display font-medium text-[52px] lining-nums'>{datetime.day}</p>

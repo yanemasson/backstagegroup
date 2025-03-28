@@ -15,7 +15,7 @@ const LocationSection = ({location, address, eventId}: LocationSectionProps) => 
     const xl = useMediaBreakpoint('xl')
 
     return (
-        <section id='location' className='flex flex-col xl:gap-[52px]'>
+        <section id='location' className='flex flex-col gap-10 xl:gap-[52px]'>
             <Text variant={TextVariant.H2}>ПЛОЩАДКА</Text>
             <div className='flex flex-col gap-[23px]'>
                 <div className='flex gap-2.5'>

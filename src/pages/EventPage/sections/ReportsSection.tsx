@@ -7,7 +7,7 @@ const ReportsSection = () => {
     const { reports } = useReports()
     return (
         <section className='flex flex-col gap-10 xl:gap-[50px]'>
-            <Text variant={TextVariant.H2}>РЕПОРТАЖИ И ВИДЕООТЗЫВЫ</Text>
+            <Text className='leading-none' variant={TextVariant.H2}>РЕПОРТАЖИ И ВИДЕООТЗЫВЫ</Text>
             <div className='flex flex-col gap-2.5 xl:flex-row xl:justify-between'>
                 {reports
                     .sort((a, b) => b.date.localeCompare(a.date))

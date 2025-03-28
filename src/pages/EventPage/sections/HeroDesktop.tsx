@@ -29,7 +29,7 @@ const HeroDesktop = ({item}: HeroProps) => {
             <div className='flex w-full gap-[108px] items-end space-between'>
                 <div className='flex flex-col gap-[62px]'>
                     <div className='flex flex-col gap-5'>
-                        <Text variant={TextVariant.H1}>{item.title.toUpperCase()}</Text>
+                        <Text className='leading-none' variant={TextVariant.H1}>{item.title.toUpperCase()}</Text>
                         <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
                     </div>
                     <div className='flex gap-2.5 items-end'>
