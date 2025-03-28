@@ -39,7 +39,7 @@ const ReportComponent = ({report}: {report: Report}) => {
     }
 
     return (
-        <div className='flex flex-col gap-5 w-80 xl:gap-[25px] xl:w-[774px]'>
+        <div className='flex flex-col gap-5 w-[90vw] xl:gap-[25px] xl:w-[774px]'>
             <VideoPlayer video={report.video} />
             <div className='flex flex-col gap-[30px] xl:w-3/4'>
                 <div className='flex flex-col gap-[15px] xl:gap-5'>
