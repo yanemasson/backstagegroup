@@ -49,16 +49,6 @@ collections:
         widget: "file"
         media_folder: "/public/videos/events"
         public_folder: "/videos/events"
-      - label: "Фотографии"
-        name: "photos"
-        widget: "list"
-        required: false
-        field:
-          label: "Фото"
-          name: "photo"
-          widget: "image"
-          media_folder: "/public/images/photos"
-          public_folder: "/images/photos"
       - label: "Список треков"
         name: "tracks"
         widget: "list"
