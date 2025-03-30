@@ -73,7 +73,7 @@ collections:
         required: false
         fields:
           - { label: "Имя", name: "name", widget: "string" }
-          - { label: "Роль\Инструмент", name: "role", widget: "string" }
+          - { label: "Роль (Инструмент)", name: "role", widget: "string" }
           - { label: "Фото", name: "photo", widget: "image"}
 
   - name: "reviews"
