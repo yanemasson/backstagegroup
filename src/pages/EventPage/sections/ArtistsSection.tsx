@@ -18,7 +18,7 @@ const ArtistsSection = ({artists, artistsTeam}: ArtistsSectionProps) => {
                 <Text className='text-light-brown' variant={TextVariant.H4}>Музыканты</Text>
                 <div className='grid grid-cols-2 gap-x-2.5 gap-y-5 xl:flex xl:flex-wrap xl:gap-[12px]'>
                     {artists.filter((item: Artist) => item.role !== 'Вокал').map((item) => (
-                        <div className='flex flex-col gap-2.5 xl:gap-5'>
+                        <div key={`${item.name}-${item.role}-desktop`} className='flex flex-col gap-2.5 xl:gap-5'>
                             <div className='relative w-full pb-[100%] xl:w-[223px] xl:h-[223px] xl:pb-0'>
                                 <img
                                     className='absolute top-0 left-0 w-full h-full object-cover'
@@ -39,9 +39,10 @@ const ArtistsSection = ({artists, artistsTeam}: ArtistsSectionProps) => {
                 <Text className='text-light-brown' variant={TextVariant.H4}>Вокалисты</Text>
                 <div className='grid grid-cols-2 gap-x-2.5 gap-y-5 xl:flex xl:flex-wrap xl:gap-[12px]'>
                     {artists.filter((item: Artist) => item.role === 'Вокал').map((item) => (
-                        <div className='flex flex-col gap-2.5 xl:gap-5'>
+                        <div key={`${item.name}-${item.role}-mobile`} className='flex flex-col gap-2.5 xl:gap-5'>
                             <div className='relative w-full pb-[100%] xl:w-[223px] xl:h-[223px] xl:pb-0'>
                                 <img
+                                    key={item.name}
                                     className='absolute top-0 left-0 w-full h-full object-cover'
                                     alt={item.photo}
                                     src={item.photo}
