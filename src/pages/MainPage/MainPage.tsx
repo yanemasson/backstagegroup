@@ -16,13 +16,13 @@ const MainPage = () => {
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
             <Hero/>
-            <div className='flex flex-col items-center gap-40'>
+            <div className='flex flex-col items-center gap-[100px] xl:gap-40'>
+                <EventList/>
                 <AboutUsSection/>
-                <section className='flex flex-col gap-40' id='reviews'>
+                <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
                     <ReportsSection/>
                     <ReviewsSection/>
                 </section>
-                <EventList/>
             </div>
         </div>
     );

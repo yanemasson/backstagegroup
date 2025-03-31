@@ -96,6 +96,9 @@ const EventPage = () => {
                     }
                 </Suspense>
                 <Suspense fallback={<LoadingSpinner />}>
+                    <UpcomingEvents item={item} events={events} />
+                </Suspense>
+                <Suspense fallback={<LoadingSpinner />}>
                     <AboutUsSection />
                 </Suspense>
                 <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
@@ -106,9 +109,6 @@ const EventPage = () => {
                         <ReviewsSection />
                     </Suspense>
                 </section>
-                <Suspense fallback={<LoadingSpinner />}>
-                    <UpcomingEvents item={item} events={events} />
-                </Suspense>
             </div>
         </>
     );
