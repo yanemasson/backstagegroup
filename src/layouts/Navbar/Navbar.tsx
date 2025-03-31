@@ -24,7 +24,7 @@ const Navbar = () => {
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen && !xl) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'auto';
@@ -32,7 +32,7 @@ const Navbar = () => {
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isOpen]);
+    }, [isOpen, xl]);
 
     useEffect(() => {
         const controlNavbar = () => {

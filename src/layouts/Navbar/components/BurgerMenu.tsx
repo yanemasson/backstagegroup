@@ -8,7 +8,7 @@ type BurgerMenuProps = {
 
 const BurgerMenu = ({children, isOpen}: BurgerMenuProps) => {
     const xl = useMediaBreakpoint('xl')
-    const menuStyle =  `flex items-start xl:items-center gap-5 text-white transition-all duration-300 `
+    const menuStyle =  `flex items-start xl:items-center gap-5 text-white transition-all duration-300`
     if(xl) {
         return (
             <div className={`${menuStyle} `}>
