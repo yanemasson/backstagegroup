@@ -95,8 +95,8 @@ export const useEvents = () => {
                             .join('\n')
                             ?.trim() || '',
                         video: frontMatter.match(/video:\s*(.*)/)?.[1]?.trim() || '',
-                        photos: frontMatter.match(/photos:/i) ?
-                            parseArrayField(frontMatter, 'photos') : [],
+                        locationPhotos: frontMatter.match(/location_photos:/i) ?
+                            parseArrayField(frontMatter, 'location_photos') : [],
                         trackList: frontMatter.match(/tracks:/i) ?
                             parseTrackList(frontMatter) : undefined,
                         eventId: Number(frontMatter.match(/eventId:\s*(\d+)/)?.[1]) || 0,
@@ -104,7 +104,8 @@ export const useEvents = () => {
                         age: Number(frontMatter.match(/age:\s*(\d+)/)?.[1]) || 6,
                         artists: frontMatter.match(/artists:/i) ?
                             parseArtists(frontMatter) : undefined,
-                        artistsTeam: frontMatter.match(/artistsTeam:\s*(.*)/)?.[1]?.trim() || ''
+                        artistsTeam: frontMatter.match(/artistsTeam:\s*(.*)/)?.[1]?.trim() || '',
+                        duration: frontMatter.match(/duration:\s*(.*)/)?.[1]?.trim() || '',
                     };
                     loadedEvents.push(event);
                 }

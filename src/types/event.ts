@@ -14,6 +14,8 @@ export interface Event {
     title: string,
     city: string,
     location: string,
+    locationPhotos: string[],
+    duration: string,
     address: string,
     descriptionShort: string,
     descriptionFull: string,

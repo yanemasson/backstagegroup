@@ -32,16 +32,27 @@ collections:
     fields:
       - {label: "Название", name: "title", widget: "string"}
       - {label: "Город", name: "city", widget: "string"}
+      - {label: "Адрес", name: "address", widget: "string" }
       - {label: "Место проведения", name: "location", widget: "string"}
-      - {label: "Адрес", name: "address", widget: "string"}
+      - label: "Фото локации (до двух штук)"
+        name: "location_photos"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Фото", name: "photo", widget: "image" }
       - {label: "Краткое описание", name: "descriptionShort", widget: "text"}
       - {label: "Полное описание", name: "descriptionFull", widget: "text", format: "raw"}
-      - {label: "Event ID", name: "eventId", widget: "number"}
       - label: "Дата и время"
         name: "date"
         widget: "datetime"
         format: "YYYY-MM-DD HH:mm"
         date_format: "DD.MM.YYYY"
+        time_format: "HH:mm"
+        picker_utc: false
+      - label: "Продолжительность концерта"
+        name: "duration"
+        widget: datetime
+        date_format: false
         time_format: "HH:mm"
         picker_utc: false
       - label: "Видео"
@@ -65,6 +76,8 @@ collections:
           - { label: "Имя", name: "name", widget: "string" }
           - { label: "Роль (Инструмент)", name: "role", widget: "string" }
           - { label: "Фото", name: "photo", widget: "image"}
+      - {label: "Event ID", name: "eventId", widget: "number"}
+
 
   - name: "reviews"
     label: "Отзывы посетителей"
