@@ -3,6 +3,7 @@ import Text, {TextVariant} from "../../components/Text.tsx";
 import Logo from '/src/assets/icons/logo.svg?react'
 import TelegramLogo from '/src/assets/icons/ic_telegram.svg?react'
 import VKLogo from '/src/assets/icons/ic_vkontakte.svg?react'
+import {Link} from "react-router";
 
 const Footer = () => {
     return (
@@ -45,9 +46,9 @@ const Footer = () => {
                     <div className='flex flex-col gap-[15px] xl:gap-5'>
                         <Text variant={TextVariant.H4}>Меню</Text>
                         <div className='flex flex-col gap-2'>
-                            <Text variant={TextVariant.P}>Афиша</Text>
-                            <Text variant={TextVariant.P}>Отзывы</Text>
-                            <Text variant={TextVariant.P}>Об организаторах</Text>
+                            <Link to='/refund'><Text variant={TextVariant.P}>Возврат билетов</Text></Link>
+                            <Link to='/events'><Text variant={TextVariant.P}>Афиша</Text></Link>
+
                         </div>
                     </div>
                     <div className='flex flex-col gap-[15px] xl:gap-5'>

@@ -14,7 +14,7 @@ const HeroDesktop = ({item}: HeroProps) => {
     const datetime = getDate(item.date)
 
     return (
-        <section id='hero' className='flex flex-col gap-[30px]'>
+        <section id='hero' className='flex flex-col h-full gap-[30px]'>
             <div className='h-[436px] relative'>
                 <div className='h-11 w-11 bg-darkgray rounded-full absolute top-[15px] right-6 z-10 flex justify-center items-center text-center'>
                     <Text variant={TextVariant.P}>{item.age}+</Text>
@@ -26,8 +26,8 @@ const HeroDesktop = ({item}: HeroProps) => {
                 </div>
             </div>
 
-            <div className='flex w-full gap-[108px] items-end space-between'>
-                <div className='flex flex-col gap-[62px]'>
+            <div className='flex w-full h-[286px] gap-[108px] items-end space-between'>
+                <div className='flex flex-col h-full justify-between'>
                     <div className='flex flex-col gap-5'>
                         <Text className='leading-none' variant={TextVariant.H1}>{item.title.toUpperCase()}</Text>
                         <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
@@ -40,6 +40,7 @@ const HeroDesktop = ({item}: HeroProps) => {
                         </div>
                     </div>
                 </div>
+
 
                 <div className='flex w-[284px] h-[306px] justify-between pt-5 flex-col'>
                     <div className='flex leading-none h-[52px] gap-[13px]'>

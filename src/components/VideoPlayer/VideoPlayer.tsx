@@ -23,7 +23,7 @@ const VideoPlayer = ({video, className}:VideoPlayerProps) => {
 
     return (
             <div className={` overflow-hidden flex items-center justify-center ${className} `}>
-                <video className='object-cover' ref={videoRef} preload="auto">
+                <video className='object-cover' ref={videoRef} preload="metadata">
                     <source src={video} type={'video/mp4'} />
                 </video>
                 <div className='absolute'>

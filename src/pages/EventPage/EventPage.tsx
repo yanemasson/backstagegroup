@@ -95,9 +95,11 @@ const EventPage = () => {
                         </>
                     }
                 </Suspense>
-                <Suspense fallback={<LoadingSpinner />}>
-                    <UpcomingEvents item={item} events={events} />
-                </Suspense>
+                {events.length > 1 &&
+                    <Suspense fallback={<LoadingSpinner />}>
+                        <UpcomingEvents item={item} events={events} />
+                    </Suspense>
+                }
                 <Suspense fallback={<LoadingSpinner />}>
                     <AboutUsSection />
                 </Suspense>

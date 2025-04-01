@@ -21,7 +21,7 @@ const Information = ({description, eventId}: InformationProps) => {
                     <Text className='whitespace-pre-wrap' variant={TextVariant.P}>{description}</Text>
                     <TicketButton className='w-[90vw] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
                 </div>
-                {xl && <img alt='' className='w-[572px]' src={image}/>}
+                {xl && <img alt='' className='w-[572px] h-[326px]' src={image}/>}
 
             </div>
         </section>
