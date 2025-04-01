@@ -46,14 +46,12 @@ const EventPage = () => {
             case 'Трек-лист':
                 return item.trackList && item.trackList.length ? <TrackList trackList={item.trackList} /> : null
             case 'Исполнители':
-                return item.artists && item.artists.length
-                    ? <ArtistsSection
+                return <ArtistsSection
                         artists={item.artists ? item.artists : []}
                         artistsTeam={item.artistsTeam ? item.artistsTeam : ''}
                     />
-                    : null
             case 'Площадка':
-                return <LocationSection location={item.location} eventId={item.eventId} address={item.address}/>
+                return <LocationSection photos={item.locationPhotos} location={item.location} eventId={item.eventId} address={item.address}/>
             default:
                 return null
         }
@@ -87,12 +85,21 @@ const EventPage = () => {
                         : <>
                             <Information description={item.descriptionFull} eventId={item.eventId} />
                             <TrackList trackList={item.trackList ? item.trackList : []} />
-                            <ArtistsSection
-                                artists={item.artists ? item.artists : []}
-                                artistsTeam={item.artistsTeam ? item.artistsTeam : undefined}
-                            />
-                            <LocationSection location={item.location} eventId={item.eventId} address={item.address}/>
-                        </>
+                            {item.artists && item.artists?.length > 0 &&
+                                <ArtistsSection
+                                    artists={item.artists}
+                                    artistsTeam={item.artistsTeam ? item.artistsTeam : undefined}
+                                />
+                            }
+                            {item.locationPhotos.length > 0 &&
+                                <LocationSection
+                                    photos={item.locationPhotos}
+                                    location={item.location}
+                                    eventId={item.eventId}
+                                    address={item.address}
+                                />
+                            }
+                            </>
                     }
                 </Suspense>
                 {events.length > 1 &&
