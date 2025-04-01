@@ -31,7 +31,9 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
                             <p className='font-display font-medium text-[24px] tracking-[0.07em]'>{datetime.monthStr.substring(0,3)}</p>
                         </div>
                     </div>
-                    <Text className='leading-none whitespace-pre-line' variant={TextVariant.H3}>{item.title.toUpperCase().split(' ').join('\n')}</Text>
+                    <Text className='leading-none whitespace-pre-line' variant={TextVariant.H3}>
+                        {item.title.toUpperCase().split(' ').join('\n')}
+                    </Text>
                     <svg className={`text-light-brown absolute top-10 right-0 transition-all duration-50 ${isOpen ? 'rotate-180' : ''}`}
                          width="24" height="18"
                          viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +51,7 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
 
                 <div  className='flex flex-col items-center justify-center gap-[25px]'>
                     {item.video
-                        ? <VideoPlayer className='w-full' video={item.video} />
+                        ? <VideoPlayer key={item.video} className='w-full' video={item.video} />
                         : <img className='w-80' alt={''} src={exampleImage}/>}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start w-2/3'>
