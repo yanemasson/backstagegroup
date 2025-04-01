@@ -16,7 +16,7 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
     const datetime = getDate(item.date)
 
     return (
-        <div className='flex items-start text-start flex-row justify-between gap-[40px] min-h-[255px]'>
+        <div className='flex items-start text-start flex-row justify-between min-h-[255px]'>
 
             <div className='flex min-w-[198px] h-[255px] justify-between flex-col'>
                 <div className='flex leading-none h-[52px] gap-[13px]'>
