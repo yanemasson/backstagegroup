@@ -39,6 +39,7 @@ const EventPage = () => {
 
     if(!item) {return <NotFoundPage/>}
 
+
     const renderContent = () => {
         switch(activeSection) {
             case 'Описание':
@@ -49,6 +50,7 @@ const EventPage = () => {
                 return <ArtistsSection
                         artists={item.artists ? item.artists : []}
                         artistsTeam={item.artistsTeam ? item.artistsTeam : ''}
+                        artistsGroupPhoto={item.artistsGroupPhoto && item.artistsGroupPhoto}
                     />
             case 'Площадка':
                 return <LocationSection photos={item.locationPhotos} location={item.location} eventId={item.eventId} address={item.address}/>
@@ -87,8 +89,9 @@ const EventPage = () => {
                             <TrackList trackList={item.trackList ? item.trackList : []} />
                             {item.artists && item.artists?.length > 0 &&
                                 <ArtistsSection
+                                    artistsGroupPhoto={item.artistsGroupPhoto && item.artistsGroupPhoto}
                                     artists={item.artists}
-                                    artistsTeam={item.artistsTeam ? item.artistsTeam : undefined}
+                                    artistsTeam={item.artistsTeam && item.artistsTeam}
                                 />
                             }
                             {item.locationPhotos.length > 0 &&
