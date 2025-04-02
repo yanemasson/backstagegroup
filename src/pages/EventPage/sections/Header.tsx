@@ -44,11 +44,12 @@ const Header = ({item}: HeaderProps) => {
     const datetime = getDate(item.date)
 
     return (
-        <div className={`flex justify-center bg-darkgray z-30 fixed flex-col xl:flex-row
-            ${visible && !isHero ? 'transform-none' : 'transform -translate-y-[200px]'}  transition-all duration-300
-            border-solid border-x-0 border-b-0 border-t-0.5 border-gray 
-            w-full h-[133px] top-[64px] xl:w-[1166px] xl:h-[110px] xl:top-[84px]`}>
-            <div className="w-[90vw] flex flex-col items-center xl:flex-row gap-[15px] xl:justify-between">
+        <header className={`flex justify-center bg-darkgray z-30 fixed flex-col xl:flex-row 
+              ${visible && !isHero ? 'transform-none' : 'transform -translate-y-[200px]'} transition-all duration-300
+              
+              w-screen left-0 right-0 h-[133px] top-[64px] xl:h-[110px] xl:top-[84px]`}>
+            <div className="w-[90vw] mx-auto xl:max-w-[1166px] flex flex-col items-center xl:flex-row gap-[15px] xl:justify-between
+            border-solid border-x-0 border-b-0 border-t-0.5 border-gray ">
                 <div className='flex xl:w-8/12 gap-5 justify-between xl:gap-[70px]'>
                     <div className='flex leading-none h-[52px] gap-[13px]'>
                         <p className='font-display font-medium text-[40px] xl:text-[52px] lining-nums'>{datetime.day}</p>
@@ -67,10 +68,9 @@ const Header = ({item}: HeaderProps) => {
                         </div>
                     }
                 </div>
-
                 <TicketButton className='w-[90vw] h-[45px] xl:w-[286px] xl:h-[43px]' eventId={item.eventId}/>
             </div>
-        </div>
+        </header>
     );
 };
 
