@@ -21,7 +21,7 @@ const HeroDesktop = ({item}: HeroProps) => {
                 </div>
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
                     {item.video
-                        ? <VideoPlayer key={item.video} video={item.video} className='w-full object-cover' />
+                        ? <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />
                         : <img className='h-full w-full object-cover' alt={''} src={exampleImage} />}
                 </div>
             </div>

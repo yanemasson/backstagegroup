@@ -1,12 +1,14 @@
 interface PlayButtonProps {
     isPlaying: boolean
     togglePlay: () => void
+    isHovered: boolean
 }
 
-const PlayButton = ({isPlaying, togglePlay}: PlayButtonProps) => {
+const PlayButton = ({isPlaying, togglePlay, isHovered}: PlayButtonProps) => {
     return (
         <button onClick={togglePlay}
-             className='flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown'>
+             className={`flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown
+             ${isHovered ? ('opacity-90') : ('opacity-30')} `}>
             {isPlaying
                 ? <div className="flex gap-2">
                     <div className="w-2 h-8 bg-white"></div>
