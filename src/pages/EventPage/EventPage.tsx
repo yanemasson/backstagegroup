@@ -27,8 +27,8 @@ const EventPage = () => {
     const {id} = useParams()
     const {events, isLoading} = useEvents()
 
-    type menuItemType = 'Описание' | 'Трек-лист' | 'Исполнители' | 'Площадка';
-    const [activeSection, setActiveSection] = useState<menuItemType>('Описание')
+    type menuItemType = 'Описание' | 'Трек-лист' | 'Исполнители' | 'Площадка' | null
+    const [activeSection, setActiveSection] = useState<menuItemType>(null)
     const menuItems: menuItemType[] = ['Описание', 'Трек-лист', 'Исполнители', 'Площадка']
 
     const xl = useMediaBreakpoint('xl')
