@@ -26,5 +26,6 @@ export interface Event {
     eventId: number,
     date: string,
     artists?: Artist[],
+    artistsGroupPhoto?: string,
     artistsTeam?: string,
 }

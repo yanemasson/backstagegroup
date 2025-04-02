@@ -68,6 +68,13 @@ collections:
           - {label: "Музыкант", name: "musician", widget: "string"}
           - {label: "Композиция", name: "composition", widget: "string"}
           - {label: "Откуда", name: "source", widget: "string", required: false}
+      - label: "Название группы артистов"
+        name: "artists_team"
+        widget: "image"
+        required: false
+      - label: "Групповое фото артистов"
+        name: "artists_group_photo"
+        required: false
       - label: "Список артистов"
         name: "artists"
         widget: "list"

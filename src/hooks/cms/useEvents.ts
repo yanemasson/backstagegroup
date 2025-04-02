@@ -104,7 +104,8 @@ export const useEvents = () => {
                         age: Number(frontMatter.match(/age:\s*(\d+)/)?.[1]) || 6,
                         artists: frontMatter.match(/artists:/i) ?
                             parseArtists(frontMatter) : undefined,
-                        artistsTeam: frontMatter.match(/artistsTeam:\s*(.*)/)?.[1]?.trim() || '',
+                        artistsTeam: frontMatter.match(/artists_team:\s*(.*)/)?.[1]?.trim() || '',
+                        artistsGroupPhoto: frontMatter.match(/artists_group_photo:\s*(.*)/)?.[1]?.trim() || '',
                         duration: frontMatter.match(/duration:\s*(.*)/)?.[1]?.trim() || '',
                     };
                     loadedEvents.push(event);
