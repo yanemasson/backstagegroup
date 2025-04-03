@@ -6,18 +6,17 @@ const AboutUsSection = () => {
         <section id='about' className='flex flex-col gap-[100px] xl:gap-40'>
             <div className='flex flex-col gap-[50px]'>
                 <div className='xl:w-[629px]'>
-                    <Text variant={TextVariant.H2}>BACKSTAGE GROUP <br/> ДАРИТ ВАМ НЕЗАБЫВАЕМЫЕ ЭМОЦИИ</Text>
+                    <Text variant={TextVariant.H2}>BACKSTAGE GROUP<br/>ДАРИТ ВАМ НЕЗАБЫВАЕМЫЕ ЭМОЦИИ</Text>
                 </div>
                 <div className='flex flex-col xl:flex-row-reverse self-center items-center gap-[42px] xl:w-full max-w-[90vw] '>
                     <img  alt='about' src={image}/>
-                    <div className='flex flex-col gap-[25px] justify-between w-full '>
+                    <div className='flex flex-col md:flex-row md:gap-[90px] xl:flex-col gap-[25px] xl:justify-between w-full '>
                         <div className='flex flex-col leading-tight w-[181px] xl:w-[200px] '>
                             <Text variant={TextVariant.P}>Количество концертов в разных городах</Text>
                             <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>10</p>
                         </div>
                         <div className='flex flex-col leading-tight xl:w-[260px] '>
-                            <Text variant={TextVariant.P}>Зрителей</Text>
-                            <Text variant={TextVariant.P}>в общей сумме</Text>
+                            <Text variant={TextVariant.P}>Зрителей<br/>в общей сумме</Text>
                             <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>4000</p>
                         </div>
                     </div>

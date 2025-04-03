@@ -13,7 +13,6 @@ interface UpcomingEventsProps {
 
 const UpcomingEvents = ({events, item}: UpcomingEventsProps) => {
     const xl = useMediaBreakpoint('xl')
-
     return (
         <section id='eventlist'>
             <Text className='pb-[30px] xl:pb-[50px]' variant={TextVariant.H2}>БЛИЖАЙШИЕ КОНЦЕРТЫ</Text>

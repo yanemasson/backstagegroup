@@ -11,7 +11,7 @@ interface LocationSectionProps {
 }
 
 const LocationSection = ({location, address, eventId, photos}: LocationSectionProps) => {
-    const xl = useMediaBreakpoint('xl')
+    const md = useMediaBreakpoint('md')
     console.log(photos)
 
     if(photos.length === 0) {
@@ -24,9 +24,9 @@ const LocationSection = ({location, address, eventId, photos}: LocationSectionPr
         <section id='location' className='flex flex-col gap-10 xl:gap-[52px]'>
             <Text variant={TextVariant.H2}>ПЛОЩАДКА</Text>
             <div className='flex flex-col gap-[23px]'>
-                <div className='flex gap-2.5'>
-                    <img className='xl:w-[578px]' src={photos[0]} alt='location1' />
-                    {xl && <img className='xl:w-[578px]' src={photos[1]} alt='location2' />}
+                <div className='flex justify-between '>
+                    <img className='md:w-[49%]' src={photos[0]} alt='location1' />
+                    {md && <img className='md:w-[49%]' src={photos[1]} alt='location2' />}
                 </div>
                 <div className='flex flex-col gap-10 xl:gap-[50px] w-[284px]'>
                     <div className='flex flex-col gap-2.5 w-3/4 xl:w-full'>

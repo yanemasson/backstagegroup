@@ -1,20 +1,19 @@
+import {useState} from 'react';
 import {getDate} from "../../utils/getDate.ts";
 import Text, {TextVariant} from "../Text.tsx";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
-import {Event} from "../../types/event.ts";
-import Button, {ButtonVariant} from "../Buttons/Button.tsx";
-import {Link} from "react-router";
-import {useState} from "react";
+import exampleImage from "../../assets/example-image.png";
 import TicketButton from "../Buttons/TicketButton.tsx";
-import exampleImage from '../../assets/example-image.png'
-
+import {Link} from "react-router";
+import Button, {ButtonVariant} from "../Buttons/Button.tsx";
+import {Event} from "../../types/event.ts";
 
 interface EventCardProps {
     item: Event,
     to: string
 }
 
-const EventCardMobile = ({item, to}: EventCardProps) => {
+const EventCardTabletop = ({item, to}: EventCardProps) => {
     const datetime = getDate(item.date)
     const [isOpen, setIsOpen] = useState(false);
 
@@ -31,7 +30,7 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
                             <p className='font-display font-medium text-[24px] tracking-[0.07em]'>{datetime.monthStr.substring(0,3)}</p>
                         </div>
                     </div>
-                    <Text className='leading-none whitespace-pre-line md:whitespace-normal' variant={TextVariant.H3}>
+                    <Text className='leading-none md:whitespace-normal whitespace-pre-line' variant={TextVariant.H3}>
                         {item.title.toUpperCase().split(' ').join('\n')}
                     </Text>
                     <svg className={`text-light-brown absolute top-10 right-0 transition-all duration-50 ${isOpen ? 'rotate-180' : ''}`}
@@ -43,22 +42,22 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
             </div>
 
             <div   className={`flex flex-col items-center justify-center gap-[30px] overflow-hidden origin-top
-              ${isOpen ? 'pb-[30px] max-h-[1000px] opacity-100 scale-y-100' 
+              ${isOpen ? 'pb-[30px] max-h-[1000px] opacity-100 scale-y-100'
                 : 'max-h-0 opacity-0 scale-y-0 pointer-events-none'}`}
                    style={{transition:
                            `max-height 300ms ease-in-out, opacity 100ms ease-in-out, transform 100ms ease-out`
                    }}>
 
-                <div  className='flex flex-col md:flex-row-reverse items-center justify-center w-[90vw] md:justify-between md:gap-0 gap-[25px]'>
+                <div  className='flex flex-col items-center justify-center gap-[25px]'>
                     {item.video
-                        ? <VideoPlayer key={item.video} className='w-full md:w-[44vw]' video={item.video} />
+                        ? <VideoPlayer key={item.video} className='w-full' video={item.video} />
                         : <img className='w-80' alt={''} src={exampleImage}/>}
                     <div className='flex flex-col gap-5'>
-                        <div className='flex flex-col items-start justify-start text-start md:w-[44vw] w-2/3'>
+                        <div className='flex flex-col items-start justify-start text-start w-2/3'>
                             <Text className='text-light-brown' variant={TextVariant.H4}>Описание:</Text>
                             <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
                         </div>
-                        <div className='flex flex-col items-start justify-start text-start md:w-[44vw] w-2/3'>
+                        <div className='flex flex-col items-start justify-start text-start w-2/3'>
                             <Text className='text-light-brown' variant={TextVariant.H4}>г. {item.city}</Text>
                             <Text variant={TextVariant.P}>{item.location}</Text>
                         </div>
@@ -77,5 +76,4 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
         </div>
     );
 };
-
-export default EventCardMobile;
+export default EventCardTabletop;

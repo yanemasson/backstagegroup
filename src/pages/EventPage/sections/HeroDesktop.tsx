@@ -5,6 +5,7 @@ import TicketButton from "../../../components/Buttons/TicketButton.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import CountdownTimer from "../components/CountdownTimer.tsx";
 import exampleImage from '../../../assets/example-image.png'
+import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 
 interface HeroProps {
     item: Event
@@ -12,6 +13,7 @@ interface HeroProps {
 
 const HeroDesktop = ({item}: HeroProps) => {
     const datetime = getDate(item.date)
+    const xl = useMediaBreakpoint('xl')
 
     return (
         <section id='hero' className='flex flex-col h-full gap-[30px]'>
@@ -33,11 +35,14 @@ const HeroDesktop = ({item}: HeroProps) => {
                         <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
                     </div>
                     <div className='flex gap-2.5 items-end'>
-                        <TicketButton className='xl:w-[284px] h-[53px]' eventId={item.eventId}/>
-                        <div className='flex flex-col gap-4'>
-                            <Text variant={TextVariant.P}>До концерта осталось:</Text>
-                            <CountdownTimer dateString={item.date} />
-                        </div>
+                        <TicketButton className='w-[284px] h-[53px]' eventId={item.eventId}/>
+                        {xl &&
+                            <div className='flex flex-col gap-4'>
+                                <Text variant={TextVariant.P}>До концерта осталось:</Text>
+                                <CountdownTimer dateString={item.date} />
+                            </div>
+                        }
+
                     </div>
                 </div>
 

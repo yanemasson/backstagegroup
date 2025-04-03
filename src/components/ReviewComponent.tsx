@@ -38,7 +38,7 @@ const ReviewComponent = ({review}: {review: Review}) => {
     }
 
     return (
-        <div className='flex flex-col xl:w-[382px] xl:border-0 gap-[30px]
+        <div className='flex flex-col xl:w-[382px] md:border-0 gap-[30px]
             border-solid border-b-1 border-gray border-x-0 border-t-0 pb-5'>
             <div className='flex flex-col gap-[15px] xl:gap-5'>
                 <Text className='text-lightgray' variant={TextVariant.CAPTION}>

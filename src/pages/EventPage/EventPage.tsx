@@ -32,6 +32,7 @@ const EventPage = () => {
     const menuItems: menuItemType[] = ['Описание', 'Трек-лист', 'Исполнители', 'Площадка']
 
     const xl = useMediaBreakpoint('xl')
+    const md = useMediaBreakpoint('md')
 
     if(isLoading) {return <div><LoadingSpinner/></div>}
 
@@ -69,10 +70,10 @@ const EventPage = () => {
             />
             <Header item={item}/>
             <div className='flex flex-col gap-[100px] w-[90vw] xl:w-[1166px] xl:gap-40'>
-                {xl ? <HeroDesktop item={item}/> : <HeroMobile item={item} />}
+                {md ? <HeroDesktop item={item}/> : <HeroMobile item={item} />}
                 <Suspense fallback={<LoadingSpinner />}>
                     {!xl ? <div className='flex flex-col items-center gap-[50px]'>
-                            <div className='grid grid-cols-2 gap-2.5'>
+                            <div className='grid grid-cols-2 md:grid-cols-4 gap-2.5'>
                                 {menuItems.map((item) => (
                                     <MenuItem
                                         key={item}

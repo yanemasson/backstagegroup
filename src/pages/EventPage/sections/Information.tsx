@@ -9,19 +9,19 @@ interface InformationProps {
 }
 
 const Information = ({description, eventId}: InformationProps) => {
-    const xl = useMediaBreakpoint('xl')
+    const md = useMediaBreakpoint('md')
     return (
         <section className='flex flex-col gap-10 xl:gap-[50px]' id='description'>
             <Text className='leading-none flex flex-col xl:flex-row xl:gap-3' variant={TextVariant.H2}>
                 <p className='text-light-brown'>ОПИСАНИЕ</p>
                 <p>ПРОГРАММЫ</p>
             </Text>
-            <div className='flex gap-[60px]'>
+            <div className='xl:flex md:grid grid-cols-2 gap-[108px] xl:gap-[60px]'>
                 <div className='flex flex-col gap-10 justify-between'>
                     <Text className='whitespace-pre-wrap' variant={TextVariant.P}>{description}</Text>
                     <TicketButton className='w-[90vw] h-[45px] xl:w-[284px] xl:h-[53px]' eventId={eventId}/>
                 </div>
-                {xl && <img alt='' className='w-[572px] h-[326px]' src={image}/>}
+                {md && <img alt='' className='xl:w-[572px] xl:h-[326px]' src={image}/>}
 
             </div>
         </section>

@@ -42,13 +42,12 @@ const Footer = () => {
                 </div>
             </div>
             <div className='flex flex-col gap-[60px]'>
-                <div className='flex flex-col gap-[30px] xl:flex-row xl:gap-[43px] '>
+                <div className='flex flex-col gap-[30px] md:justify-between md:flex-row xl:gap-[43px] '>
                     <div className='flex flex-col gap-[15px] xl:gap-5'>
                         <Text variant={TextVariant.H4}>Меню</Text>
                         <div className='flex flex-col gap-2'>
                             <Link to='/refund'><Text variant={TextVariant.P}>Возврат билетов</Text></Link>
                             <Link to='/events'><Text variant={TextVariant.P}>Афиша</Text></Link>
-
                         </div>
                     </div>
                     <div className='flex flex-col gap-[15px] xl:gap-5'>
