@@ -8,9 +8,9 @@ const AboutUsSection = () => {
                 <div className='xl:w-[629px]'>
                     <Text variant={TextVariant.H2}>BACKSTAGE GROUP<br/>ДАРИТ ВАМ НЕЗАБЫВАЕМЫЕ ЭМОЦИИ</Text>
                 </div>
-                <div className='flex flex-col xl:flex-row-reverse self-center items-center gap-[42px] xl:w-full max-w-[90vw] '>
-                    <img  alt='about' src={image}/>
-                    <div className='flex flex-col md:flex-row md:gap-[90px] xl:flex-col gap-[25px] xl:justify-between w-full '>
+                <div className='flex flex-col lg:flex-row-reverse self-center items-center gap-[42px] xl:w-full max-w-[90vw] '>
+                    <img className='lg:w-3/4' alt='about' src={image}/>
+                    <div className='flex flex-col md:flex-row md:gap-[90px] lg:flex-col gap-[25px] lg:justify-between w-full '>
                         <div className='flex flex-col leading-tight w-[181px] xl:w-[200px] '>
                             <Text variant={TextVariant.P}>Количество концертов в разных городах</Text>
                             <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>10</p>

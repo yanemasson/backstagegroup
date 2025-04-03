@@ -47,23 +47,22 @@ const HeroDesktop = ({item}: HeroProps) => {
                 </div>
 
 
-                <div className='flex w-[284px] h-[306px] justify-between pt-5 flex-col'>
+                <div className='flex w-[284px] h-full justify-between pt-5 flex-col'>
                     <div className='flex leading-none h-[52px] gap-[13px]'>
                         <p className='font-display font-medium text-[52px] lining-nums'>{datetime.day}</p>
                         <div className=' '>
                             <p className='font-display font-medium text-[28px] tracking-[0.07em]'>{datetime.time}</p>
                             <p className='font-display font-medium text-[24px] tracking-[0.07em]'>{datetime.monthStr}</p>
                         </div>
+
                     </div>
-                    <div className='flex flex-col gap-[30px]'>
-                        <div>
-                            <Text variant={TextVariant.B}>1 час 20 минут</Text>
-                            <Text variant={TextVariant.P}>Продолжительность концерта</Text>
-                        </div>
-                        <div>
-                            <Text variant={TextVariant.B}>г. {item.city}</Text>
-                            <Text variant={TextVariant.P}>{item.location}</Text>
-                        </div>
+                    <div>
+                        <Text variant={TextVariant.B}>г. {item.city}</Text>
+                        <Text variant={TextVariant.P}>{item.location}</Text>
+                    </div>
+                    <div>
+                        <Text variant={TextVariant.B}>1 час 20 минут</Text>
+                        <Text variant={TextVariant.P}>Продолжительность концерта</Text>
                     </div>
                 </div>
             </div>
