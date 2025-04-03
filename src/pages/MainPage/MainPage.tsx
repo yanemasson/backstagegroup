@@ -1,9 +1,12 @@
 import Hero from "./sections/Hero/Hero.tsx";
 import {SEO} from "../../components/SEO.tsx";
 import EventList from "./sections/EventList/EventList.tsx";
-import AboutUsSection from "../EventPage/sections/AboutUsSection.tsx";
-import ReviewsSection from "../EventPage/sections/ReviewsSection.tsx";
-import ReportsSection from "../EventPage/sections/ReportsSection.tsx";
+import {lazy, Suspense} from "react";
+import LoadingSpinner from "../../components/LoadingSpinner.tsx";
+
+const AboutUsSection = lazy(() => import('../EventPage/sections/AboutUsSection'));
+const ReviewsSection = lazy(() => import('../EventPage/sections/ReviewsSection'));
+const ReportsSection = lazy(() => import('../EventPage/sections/ReportsSection'));
 
 
 const MainPage = () => {
@@ -17,12 +20,12 @@ const MainPage = () => {
             />
             <Hero/>
             <div className='flex flex-col items-center gap-[100px] xl:gap-40'>
-                <EventList/>
-                <AboutUsSection/>
+                <Suspense fallback={<LoadingSpinner />}><AboutUsSection/></Suspense>
                 <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
-                    <ReportsSection/>
-                    <ReviewsSection/>
+                    <Suspense fallback={<LoadingSpinner />}><ReportsSection/></Suspense>
+                    <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
                 </section>
+                <Suspense fallback={<LoadingSpinner />}><EventList/></Suspense>
             </div>
         </div>
     );
