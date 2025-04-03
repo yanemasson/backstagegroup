@@ -7,6 +7,7 @@ import NavLink from "./components/NavLink.tsx";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
 import {useLocation} from "react-router-dom";
+import {Link} from "react-router";
 
 const Navbar = () => {
 
@@ -54,19 +55,16 @@ const Navbar = () => {
         <nav className={`bg-darkgray fixed flex items-center justify-center z-40 w-full h-[64px] xl:h-[84px]
             ${visible ? 'transform-none' : 'transform -translate-y-full'}  transition-all duration-300`}>
             <div className='flex justify-between w-[90vw] xl:w-[1166px]'>
-                <div className='flex gap-[15px]'>
+                <Link className='flex gap-[15px]' to="/">
                     <Logo/>
-                    <div>
-                        <Text variant={TextVariant.CAPTION}>Концертное</Text>
-                        <Text variant={TextVariant.CAPTION}>агенство</Text>
-                    </div>
-                </div>
+                    <Text variant={TextVariant.CAPTION}>Концертное<br/>агенство</Text>
+                </Link>
                 <BurgerButton isOpen={isOpen} toggleMenu={toggleMenu}/>
                 <BurgerMenu isOpen={isOpen}>
                     <div className='flex flex-col items-start xl:flex-row xl:items-center gap-5'>
                         {MenuItems.map((item) =>
                             <NavLink onClick={toggleMenu} isActive={isActive === item.id} key={`#${item.id}`} href={`#${item.id}`}>
-                                    <Text variant={TextVariant.CAPTION}>{item.label}</Text>
+                                <Text variant={TextVariant.CAPTION}>{item.label}</Text>
                             </NavLink>
                         )}
                     </div>
