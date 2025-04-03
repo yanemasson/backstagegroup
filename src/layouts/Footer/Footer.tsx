@@ -46,8 +46,12 @@ const Footer = () => {
                     <div className='flex flex-col gap-[15px] xl:gap-5'>
                         <Text variant={TextVariant.H4}>Меню</Text>
                         <div className='flex flex-col gap-2'>
-                            <Link to='/refund'><Text variant={TextVariant.P}>Возврат билетов</Text></Link>
-                            <Link to='/events'><Text variant={TextVariant.P}>Афиша</Text></Link>
+                            <Link className='hover:text-lightgray' to='/refund'>
+                                <Text variant={TextVariant.P}>Возврат билетов</Text>
+                            </Link>
+                            <Link className='hover:text-lightgray' to='/events'>
+                                <Text variant={TextVariant.P}>Афиша</Text>
+                            </Link>
                         </div>
                     </div>
                     <div className='flex flex-col gap-[15px] xl:gap-5'>
@@ -65,8 +69,16 @@ const Footer = () => {
                 <div className='flex flex-col gap-5'>
                     <Text variant={TextVariant.H4}>Мы в соцсетях</Text>
                     <div className='flex flex-row xl:flex-col xl:w-10 items-center gap-[25px] text-light-brown'>
-                        <a target="_blank" className='hover:text-[#0077FF] flex items-center justify-center' href={'https://vk.com/backstagegroup'}><VKLogo/></a>
-                        <a target="_blank" className='hover:text-[#2AABEE] flex items-center justify-center' href={'https://t.me/backstagegroup24'}><TelegramLogo/></a>
+                        <a target="_blank"
+                           className='hover:text-[#0077FF] flex items-center justify-center'
+                           href={'https://vk.com/backstagegroup'}>
+                            <VKLogo/>
+                        </a>
+                        <a target="_blank"
+                           className='hover:text-[#2AABEE] flex items-center justify-center'
+                           href={'https://t.me/backstagegroup24'}>
+                            <TelegramLogo/>
+                        </a>
                     </div>
                 </div>
             </div>
