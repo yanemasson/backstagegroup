@@ -31,6 +31,13 @@ const EventPage = () => {
     const [activeSection, setActiveSection] = useState<menuItemType>(null)
     const menuItems: menuItemType[] = ['Описание', 'Трек-лист', 'Исполнители', 'Площадка']
 
+    const toggleMenu = (item: menuItemType) => {
+        if(item === activeSection) {
+            return setActiveSection(null)
+        }
+        setActiveSection(item)
+    }
+
     const xl = useMediaBreakpoint('xl')
     const md = useMediaBreakpoint('md')
 
@@ -78,7 +85,7 @@ const EventPage = () => {
                                     <MenuItem
                                         key={item}
                                         isActive={item === activeSection}
-                                        onClick={() => setActiveSection(item)}>
+                                        onClick={() => toggleMenu(item)}>
                                         <Text variant={TextVariant.P}>{item}</Text>
                                     </MenuItem>
                                 ))}
