@@ -12,7 +12,6 @@ interface LocationSectionProps {
 
 const LocationSection = ({location, address, eventId, photos}: LocationSectionProps) => {
     const md = useMediaBreakpoint('md')
-    console.log(photos)
 
     if(photos.length === 0) {
         return <Text className='text-lightgray' variant={TextVariant.CAPTION}>
