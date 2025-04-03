@@ -6,20 +6,24 @@ import Logo from "/src/assets/icons/logo.svg?react"
 import NavLink from "./components/NavLink.tsx";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
+import {useLocation} from "react-router-dom";
 
 const Navbar = () => {
-    const MenuItems = [
-        {id: 'hero', label: 'О концерте'},
-        {id: 'about', label: 'Организаторы'},
-        {id: 'reviews', label: 'Отзывы'},
-        {id: 'eventlist', label: 'Афиша'}
-    ]
+
 
     const [isOpen, setIsOpen] = useState(false)
     const [visible, setVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const isActive = useActiveSection()
     const xl = useMediaBreakpoint('xl')
+    const location = useLocation();
+
+    const MenuItems = [
+        {id: 'hero', label: location.pathname === '/' ? 'Начало' : 'О концерте'},
+        {id: 'about', label: 'Организаторы'},
+        {id: 'reviews', label: 'Отзывы'},
+        {id: 'eventlist', label: 'Афиша'}
+    ]
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
