@@ -1,11 +1,15 @@
 /// <reference types="vite-plugin-svgr/client" />
 import Text, {TextVariant} from "../../components/Text.tsx";
-import Logo from '/src/assets/icons/logo.svg?react'
+import LogoMobile from "/src/assets/icons/logo_mobile.svg?react"
+import LogoDesktop from "/src/assets/icons/logo_desktop.svg?react"
 import TelegramLogo from '/src/assets/icons/ic_telegram.svg?react'
 import VKLogo from '/src/assets/icons/ic_vkontakte.svg?react'
 import {Link} from "react-router";
+import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
 
 const Footer = () => {
+    const xl = useMediaBreakpoint('xl')
+
     return (
         <section className='flex flex-col-reverse gap-[60px] xl:gap-0 xl:flex-row xl:justify-between w-[90vw] xl:w-[1166px] py-[50px]'>
             <div className='flex flex-col gap-10'>
@@ -34,7 +38,7 @@ const Footer = () => {
 
                 </div>
                 <div className='flex gap-[15px]'>
-                    <Logo/>
+                    {xl ? <LogoDesktop /> : <LogoMobile />}
                     <div>
                         <Text variant={TextVariant.CAPTION}>Концертное</Text>
                         <Text variant={TextVariant.CAPTION}>агенство</Text>

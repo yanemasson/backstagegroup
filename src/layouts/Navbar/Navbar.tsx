@@ -2,7 +2,8 @@ import {useEffect, useState} from "react";
 import BurgerButton from "./components/BurgerButton.tsx";
 import BurgerMenu from "./components/BurgerMenu.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
-import Logo from "/src/assets/icons/logo.svg?react"
+import LogoMobile from "/src/assets/icons/logo_mobile.svg?react"
+import LogoDesktop from "/src/assets/icons/logo_desktop.svg?react"
 import NavLink from "./components/NavLink.tsx";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
@@ -56,7 +57,7 @@ const Navbar = () => {
             ${visible ? 'transform-none' : 'transform -translate-y-full'}  transition-all duration-300`}>
             <div className='flex justify-between w-[90vw] xl:w-[1166px]'>
                 <Link className='flex gap-[15px]' to="/">
-                    <Logo/>
+                    {xl ? <LogoDesktop /> : <LogoMobile />}
                     <Text variant={TextVariant.CAPTION}>Концертное<br/>агенство</Text>
                 </Link>
                 <BurgerButton isOpen={isOpen} toggleMenu={toggleMenu}/>
