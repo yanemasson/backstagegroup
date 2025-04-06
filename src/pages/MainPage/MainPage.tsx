@@ -20,12 +20,12 @@ const MainPage = () => {
             />
             <Hero/>
             <div className='flex flex-col items-center gap-[100px] xl:gap-40'>
+                <Suspense fallback={<LoadingSpinner />}><EventList/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><AboutUsSection/></Suspense>
                 <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
                     <Suspense fallback={<LoadingSpinner />}><ReportsSection/></Suspense>
                     <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
                 </section>
-                <Suspense fallback={<LoadingSpinner />}><EventList/></Suspense>
             </div>
         </div>
     );
