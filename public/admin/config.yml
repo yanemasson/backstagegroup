@@ -34,6 +34,7 @@ collections:
       - {label: "Город", name: "city", widget: "string"}
       - {label: "Адрес", name: "address", widget: "string" }
       - {label: "Место проведения", name: "location", widget: "string"}
+      - {label: "Рекомендованный возраст (только число)", name: "age", widget: "number"}
       - label: "Фото локации (до двух штук)"
         name: "location_photos"
         widget: "list"
@@ -70,10 +71,11 @@ collections:
           - {label: "Откуда", name: "source", widget: "string", required: false}
       - label: "Название группы артистов"
         name: "artists_team"
-        widget: "image"
+        widget: "string"
         required: false
       - label: "Групповое фото артистов"
         name: "artists_group_photo"
+        widget: "image"
         required: false
       - label: "Список артистов"
         name: "artists"
