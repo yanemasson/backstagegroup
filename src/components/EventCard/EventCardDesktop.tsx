@@ -55,7 +55,11 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
 
             <div className="min-w-[454px] w-[454px] h-[255px]">
                 {!item.video || item.video?.length === 0
-                    ? <img className='h-full w-full object-cover' alt={''} src={videoPosterDesktop} />
+                    ? <img
+                        className='h-full w-full object-cover'
+                        alt={item.poster ? item.poster : videoPosterDesktop}
+                        src={item.poster ? item.poster : videoPosterDesktop}
+                    />
                     : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
             </div>
 

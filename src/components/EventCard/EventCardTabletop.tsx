@@ -50,7 +50,11 @@ const EventCardTabletop = ({item, to}: EventCardProps) => {
 
                 <div  className='flex flex-col items-center justify-center gap-[25px]'>
                     {!item.video || item.video?.length === 0
-                        ? <img className='h-full w-full object-cover' alt={''} src={videoPosterMobile} />
+                        ? <img
+                            className='h-full w-full object-cover'
+                            alt={item.poster ? item.poster : videoPosterMobile}
+                            src={item.poster ? item.poster : videoPosterMobile}
+                        />
                         : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start w-2/3'>

@@ -20,7 +20,7 @@ const HeroMobile = ({item}: HeroProps) => {
                     <Text variant={TextVariant.P}>{item.age}+</Text>
                 </div>
                 {!item.video || item.video?.length === 0
-                    ? <img className='h-full w-full object-cover' alt={''} src={videoPosterMobile} />
+                    ? <img className='h-full w-full object-cover' alt={item.poster ? item.poster : videoPosterMobile}  src={item.poster ? item.poster : videoPosterMobile} />
                     : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
             </div>
             <div className='flex flex-col gap-10'>

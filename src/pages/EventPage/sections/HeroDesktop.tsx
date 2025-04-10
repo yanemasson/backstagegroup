@@ -16,7 +16,6 @@ const HeroDesktop = ({item}: HeroProps) => {
     const datetime = getDate(item.date)
     const xl = useMediaBreakpoint('xl')
 
-    console.log(item)
     return (
         <section id='hero' className='flex flex-col h-full gap-[30px]'>
             <div className='h-[436px] relative'>
@@ -25,7 +24,7 @@ const HeroDesktop = ({item}: HeroProps) => {
                 </div>
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
                     {!item.video || item.video === ''
-                        ? <img className='h-full w-full object-cover' alt={videoPosterDesktop} src={videoPosterDesktop} />
+                        ? <img className='h-full w-full object-cover object-top' alt={item.poster ? item.poster : videoPosterDesktop}  src={item.poster ? item.poster : videoPosterDesktop}  />
                         : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
                 </div>
             </div>

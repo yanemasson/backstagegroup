@@ -8,7 +8,6 @@ import {useState} from "react";
 import TicketButton from "../Buttons/TicketButton.tsx";
 import videoPosterMobile from "../../assets/video_poster_mobile.png";
 
-
 interface EventCardProps {
     item: Event,
     to: string
@@ -51,7 +50,10 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
 
                 <div  className='flex flex-col md:flex-row-reverse items-center justify-center w-[90vw] md:justify-between md:gap-0 gap-[25px]'>
                     {!item.video || item.video?.length === 0
-                        ? <img className='h-full w-full object-cover' alt={''} src={videoPosterMobile} />
+                        ? <img
+                            className='h-full w-full object-cover'
+                            alt={item.poster ? item.poster : videoPosterMobile}
+                            src={item.poster ? item.poster : videoPosterMobile} />
                         : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start md:w-[44vw] w-2/3'>
