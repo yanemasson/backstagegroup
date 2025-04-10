@@ -1,14 +1,15 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import TicketButton from "../../../components/Buttons/TicketButton.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
-import image from '/public/images/image 56.png'
+import defaultPoster from '/public/images/default_poster.png'
 
 interface InformationProps {
     description: string;
     eventId: number;
+    poster?: string;
 }
 
-const Information = ({description, eventId}: InformationProps) => {
+const Information = ({description, eventId, poster}: InformationProps) => {
     const md = useMediaBreakpoint('md')
     return (
         <section className='flex flex-col gap-10 xl:gap-[50px]' id='description'>
@@ -21,8 +22,8 @@ const Information = ({description, eventId}: InformationProps) => {
                     <Text className='whitespace-pre-wrap' variant={TextVariant.P}>{description}</Text>
                     <TicketButton className='w-[90vw] h-[45px] lg:w-[284px] lg:h-[53px]' eventId={eventId}/>
                 </div>
-                {md && <img alt='' className='xl:w-[572px] xl:h-[326px]' src={image}/>}
-
+                {md && <img alt={poster === '' ? defaultPoster : poster} className='xl:w-[572px] xl:h-[326px]' src={poster === '' ? defaultPoster : poster} />
+                }
             </div>
         </section>
     );

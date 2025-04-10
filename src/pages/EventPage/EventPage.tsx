@@ -47,13 +47,12 @@ const EventPage = () => {
 
     if(!item) {return <NotFoundPage/>}
 
-
     const renderContent = () => {
         switch(activeSection) {
             case 'Описание':
-                return <Information description={item.descriptionFull} eventId={item.eventId} />
+                return <Information description={item.descriptionFull} poster={item.poster && item.poster} eventId={item.eventId} />
             case 'Трек-лист':
-                return item.trackList && item.trackList.length ? <TrackList trackList={item.trackList} /> : null
+                return <TrackList trackList={item.trackList ? item.trackList : []} />
             case 'Исполнители':
                 return <ArtistsSection
                         artists={item.artists ? item.artists : []}
@@ -93,8 +92,8 @@ const EventPage = () => {
                             {renderContent()}
                     </div>
                         : <>
-                            <Information description={item.descriptionFull} eventId={item.eventId} />
-                            <TrackList trackList={item.trackList ? item.trackList : []} />
+                            <Information description={item.descriptionFull} poster={item.poster && item.poster} eventId={item.eventId} />
+                            {item.trackList && <TrackList trackList={item.trackList} />}
                             {item.artists && item.artists?.length > 0 &&
                                 <ArtistsSection
                                     artistsGroupPhoto={item.artistsGroupPhoto && item.artistsGroupPhoto}

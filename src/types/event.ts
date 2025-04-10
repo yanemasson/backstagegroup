@@ -12,6 +12,7 @@ export interface Artist {
 
 export interface Event {
     title: string,
+    poster?: string,
     city: string,
     location: string,
     locationPhotos: string[],

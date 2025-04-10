@@ -2,11 +2,11 @@ import {useState} from 'react';
 import {getDate} from "../../utils/getDate.ts";
 import Text, {TextVariant} from "../Text.tsx";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
-import exampleImage from "../../assets/example-image.png";
 import TicketButton from "../Buttons/TicketButton.tsx";
 import {Link} from "react-router";
 import Button, {ButtonVariant} from "../Buttons/Button.tsx";
 import {Event} from "../../types/event.ts";
+import videoPosterMobile from "../../assets/video_poster_mobile.png";
 
 interface EventCardProps {
     item: Event,
@@ -49,9 +49,9 @@ const EventCardTabletop = ({item, to}: EventCardProps) => {
                    }}>
 
                 <div  className='flex flex-col items-center justify-center gap-[25px]'>
-                    {item.video
-                        ? <VideoPlayer key={item.video} className='w-full' video={item.video} />
-                        : <img className='w-80' alt={''} src={exampleImage}/>}
+                    {!item.video || item.video?.length === 0
+                        ? <img className='h-full w-full object-cover' alt={''} src={videoPosterMobile} />
+                        : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start w-2/3'>
                             <Text className='text-light-brown' variant={TextVariant.H4}>Описание:</Text>

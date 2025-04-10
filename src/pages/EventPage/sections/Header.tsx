@@ -45,9 +45,9 @@ const Header = ({item}: HeaderProps) => {
 
     return (
         <header className={`flex justify-center items-center bg-darkgray z-30 fixed flex-col md:flex-row
-            ${visible && !isHero ? 'transform-none' : 'transform -translate-y-[200px]'}  transition-all duration-300
+            ${visible && !isHero ? 'transform-none' : 'transform -translate-y-[300px]'}  transition-all duration-300
             border-solid border-x-0 border-b-0 border-t-0.5 border-gray 
-            w-[90vw] h-[133px] top-[64px] xl:w-[1166px] xl:h-[110px] xl:top-[84px]`}>
+            w-[90vw] py-[15px] min-h-[133px] top-[64px] xl:w-[1166px] xl:min-h-[110px] xl:top-[84px]`}>
             <div className="w-full flex flex-col md:flex-row gap-[15px] xl:items-center md:items-start md:justify-between">
                 <div className='flex xl:w-8/12 md:w-3/5 gap-5  xl:justify-between xl:gap-[70px]'>
                     <div className='flex leading-none h-[52px] gap-[13px]'>

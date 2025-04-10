@@ -5,7 +5,7 @@ import Button, {ButtonVariant} from "../Buttons/Button.tsx";
 import {Link} from "react-router";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
 import TicketButton from "../Buttons/TicketButton.tsx";
-import exampleImage from '../../assets/example-image.png'
+import videoPosterDesktop from "../../assets/video_poster_desktop.png";
 
 interface EventCardProps {
     item: Event,
@@ -54,9 +54,9 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
             </div>
 
             <div className="min-w-[454px] w-[454px] h-[255px]">
-                {item.video
-                    ? <VideoPlayer key={item.video} className='h-[255px] w-[454px]' video={item.video} />
-                    : <img className='h-full w-full object-cover' alt={''} src={exampleImage}/>}
+                {!item.video || item.video?.length === 0
+                    ? <img className='h-full w-full object-cover' alt={''} src={videoPosterDesktop} />
+                    : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
             </div>
 
         </div>

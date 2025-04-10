@@ -24,7 +24,7 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
                 {artistsTeam && <Text className='text-light-brown' variant={TextVariant.H2}>{artistsTeam?.toUpperCase()}</Text>}
             </div>
 
-            {artists.length === 1 && artistsGroupPhoto &&
+            {artists.length === 1 &&
                 <div className='flex flex-col gap-[30px] xl:gap-10'>
                     {artistsGroupPhoto &&
                         <div className='flex flex-col gap-[15px] xl:gap-5'>
@@ -41,7 +41,7 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
                 </div>
             }
 
-            {musicians.length > 1 &&
+            {artists.length > 1 &&
                 <div className='flex flex-col gap-[30px] xl:gap-10'>
                     <Text className='text-light-brown' variant={TextVariant.H4}>Музыканты</Text>
                     <div className='grid grid-cols-2 gap-x-2.5 gap-y-5 xl:flex xl:flex-wrap xl:gap-[12px]'>
@@ -52,7 +52,7 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
                 </div>
             }
 
-            {vocals.length > 1 &&
+            {artists.length > 1 &&
                 <div className='flex flex-col gap-[30px] xl:gap-10'>
                     <Text className='text-light-brown' variant={TextVariant.H4}>Вокалисты</Text>
                     <div className='grid grid-cols-2 gap-x-2.5 gap-y-5 xl:flex xl:flex-wrap xl:gap-[12px]'>

@@ -4,8 +4,9 @@ import Text, {TextVariant} from "../../../components/Text.tsx";
 import TicketButton from "../../../components/Buttons/TicketButton.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import CountdownTimer from "../components/CountdownTimer.tsx";
-import exampleImage from '../../../assets/example-image.png'
+import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
+import {getDuration} from "../../../utils/getDuration.ts";
 
 interface HeroProps {
     item: Event
@@ -15,6 +16,7 @@ const HeroDesktop = ({item}: HeroProps) => {
     const datetime = getDate(item.date)
     const xl = useMediaBreakpoint('xl')
 
+    console.log(item)
     return (
         <section id='hero' className='flex flex-col h-full gap-[30px]'>
             <div className='h-[436px] relative'>
@@ -22,9 +24,9 @@ const HeroDesktop = ({item}: HeroProps) => {
                     <Text variant={TextVariant.P}>{item.age}+</Text>
                 </div>
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
-                    {item.video
-                        ? <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />
-                        : <img className='h-full w-full object-cover' alt={''} src={exampleImage} />}
+                    {!item.video || item.video === ''
+                        ? <img className='h-full w-full object-cover' alt={videoPosterDesktop} src={videoPosterDesktop} />
+                        : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
                 </div>
             </div>
 
@@ -46,7 +48,6 @@ const HeroDesktop = ({item}: HeroProps) => {
                     </div>
                 </div>
 
-
                 <div className='flex w-[284px] h-full justify-between pt-5 flex-col'>
                     <div className='flex leading-none h-[52px] gap-[13px]'>
                         <p className='font-display font-medium text-[52px] lining-nums'>{datetime.day}</p>
@@ -61,7 +62,7 @@ const HeroDesktop = ({item}: HeroProps) => {
                         <Text variant={TextVariant.P}>{item.location}</Text>
                     </div>
                     <div>
-                        <Text variant={TextVariant.B}>1 час 20 минут</Text>
+                        <Text variant={TextVariant.B}>{getDuration(item.duration)}</Text>
                         <Text variant={TextVariant.P}>Продолжительность концерта</Text>
                     </div>
                 </div>

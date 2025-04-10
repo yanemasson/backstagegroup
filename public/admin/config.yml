@@ -31,6 +31,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Название", name: "title", widget: "string"}
+      - {label: "Постер", name: "poster", widget: "image", required: false}
       - {label: "Город", name: "city", widget: "string"}
       - {label: "Адрес", name: "address", widget: "string" }
       - {label: "Место проведения", name: "location", widget: "string"}

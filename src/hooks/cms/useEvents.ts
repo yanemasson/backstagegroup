@@ -31,6 +31,7 @@ export const useEvents = () => {
                     }
                 }
             });
+
             return tracks;
         }
         return [];
@@ -81,6 +82,7 @@ export const useEvents = () => {
                     const event: Event = {
                         title: frontMatter.match(/title:\s*(.*)/)?.[1]?.trim() || ''
                             ?.replace(/['"]/g, ''),
+                        poster: frontMatter.match(/poster:\s*(.*)/)?.[1]?.trim() || '',
                         city: frontMatter.match(/city:\s*(.*)/)?.[1]?.trim() || '',
                         location: frontMatter.match(/location:\s*(.*)/)?.[1]?.trim() || '',
                         address: frontMatter.match(/address:\s*(.*)/)?.[1]?.trim() || '',
@@ -94,7 +96,7 @@ export const useEvents = () => {
                             .map(line => line.trim())
                             .join('\n')
                             ?.trim() || '',
-                        video: frontMatter.match(/video:\s*(.*)/)?.[1]?.trim() || '',
+                        video: frontMatter.match(/video:\s*(.*)/)?.[1].trim() || '',
                         locationPhotos: frontMatter.match(/location_photos:/i) ?
                             parseArrayField(frontMatter, 'location_photos') : [],
                         trackList: frontMatter.match(/tracks:/i) ?

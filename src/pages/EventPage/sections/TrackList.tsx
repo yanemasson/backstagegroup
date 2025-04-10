@@ -2,6 +2,9 @@ import {Track} from "../../../types/event.ts";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 
 const TrackList = ({trackList} : {trackList: Track[]}) => {
+
+    if (trackList.length === 0) return <Text className='text-lightgray' variant={TextVariant.CAPTION}>Трек-лист уточняется. Следите за обновлениями!</Text>;
+
     return (
         <section className='flex flex-col w-full gap-[40px] xl:gap-[53px]' id='tracklist'>
             <Text variant={TextVariant.H2}>ТРЕК-ЛИСТ</Text>
