@@ -73,12 +73,12 @@ const Footer = () => {
                 <div className='flex flex-col gap-5'>
                     <Text variant={TextVariant.H4}>Мы в соцсетях</Text>
                     <div className='flex flex-row xl:flex-col xl:w-10 items-center gap-[25px] text-light-brown'>
-                        <a target="_blank"
+                        <a target="_blank" aria-label="Мы ВКонтакте"
                            className='hover:text-[#0077FF] flex items-center justify-center'
                            href={'https://vk.com/backstagegroup'}>
                             <VKLogo/>
                         </a>
-                        <a target="_blank"
+                        <a target="_blank" aria-label="Мы в Telegram"
                            className='hover:text-[#2AABEE] flex items-center justify-center'
                            href={'https://t.me/backstagegroup24'}>
                             <TelegramLogo/>

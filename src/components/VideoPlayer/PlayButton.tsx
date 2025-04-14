@@ -6,9 +6,13 @@ interface PlayButtonProps {
 
 const PlayButton = ({isPlaying, togglePlay, isHovered}: PlayButtonProps) => {
     return (
-        <button onClick={togglePlay}
-             className={`flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown
-             ${isHovered ? ('opacity-90') : ('opacity-30')} `}>
+        <button
+            aria-label={isPlaying ? "Приостановить" : 'Воспроизвести'}
+            aria-pressed={isPlaying ? "true" : "false"}
+            onClick={togglePlay}
+            className={`flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown
+            ${isHovered ? ('opacity-90') : ('opacity-30')} `}
+        >
             {isPlaying
                 ? <div className="flex gap-2">
                     <div className="w-2 h-8 bg-white"></div>

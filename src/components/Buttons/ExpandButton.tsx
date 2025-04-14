@@ -7,7 +7,10 @@ interface ExpandButtonProps {
 
 const ExpandButton = ({onClick, isOpen}: ExpandButtonProps) => {
     return (
-        <button onClick={onClick}>
+        <button
+            aria-label={isOpen ? "Свернуть" : 'Развернуть'}
+            aria-pressed={isOpen ? "false" : "true"}
+            onClick={onClick}>
             <Text className='flex gap-1.5 items-center text-lightgray hover:text-white focus:text-white' variant={TextVariant.CAPTION}>
                 {!isOpen ? <>Развернуть</> : <>Свернуть</>}
 

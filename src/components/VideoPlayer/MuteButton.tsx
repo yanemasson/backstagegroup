@@ -8,9 +8,12 @@ interface MuteButtonProps {
 }
 const MuteButton = ({isMuted, toggleMute, isHovered}: MuteButtonProps) => {
     return (
-        <button onClick={toggleMute} className={`text-white flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown
-        ${isHovered ? ('opacity-90') : ('opacity-30')} 
-        ${isMuted ? ('bg-light-brown') : ('bg-transparent')}`}>
+        <button
+            aria-label={isMuted ? "Включить звук" : 'Отключить звук'}
+            aria-pressed={isMuted ? "false" : "true"}
+            onClick={toggleMute}
+            className={`text-white flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown 
+            ${isHovered ? ('opacity-90') : ('opacity-30')} ${isMuted ? ('bg-light-brown') : ('bg-transparent')}`}>
             {isMuted ? (<Mute/>) : (<UnMute/>)}
         </button>
     );
