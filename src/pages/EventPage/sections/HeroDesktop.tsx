@@ -7,13 +7,17 @@ import CountdownTimer from "../components/CountdownTimer.tsx";
 import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 import {getDuration} from "../../../utils/getDuration.ts";
+import {memo, useMemo} from "react";
 
 interface HeroProps {
     item: Event
 }
 
-const HeroDesktop = ({item}: HeroProps) => {
+const HeroDesktop = memo(({item}: HeroProps) => {
     const datetime = getDate(item.date)
+    const title = useMemo(() => item.title.toUpperCase(), [item.title]);
+    const posterSrc = item.poster || videoPosterDesktop;
+    const hasVideo = item.video && item.video.length > 0;
     const xl = useMediaBreakpoint('xl')
 
     return (
@@ -23,8 +27,13 @@ const HeroDesktop = ({item}: HeroProps) => {
                     <Text variant={TextVariant.P}>{item.age}+</Text>
                 </div>
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
-                    {!item.video || item.video === ''
-                        ? <img className='h-full w-full object-cover object-top' alt={item.poster ? item.poster : videoPosterDesktop}  src={item.poster ? item.poster : videoPosterDesktop}  />
+                    {!hasVideo
+                        ? <img
+                            className='h-full w-full object-cover object-top'
+                            alt={posterSrc}
+                            src={posterSrc}
+                            loading="eager"
+                            fetchPriority="high"  />
                         : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
                 </div>
             </div>
@@ -32,7 +41,7 @@ const HeroDesktop = ({item}: HeroProps) => {
             <div className='flex w-full h-[286px] gap-[108px] items-end space-between'>
                 <div className='flex flex-col h-full justify-between'>
                     <div className='flex flex-col gap-5'>
-                        <Text className='leading-none' variant={TextVariant.H1}>{item.title.toUpperCase()}</Text>
+                        <Text className='leading-none' variant={TextVariant.H1}>{title}</Text>
                         <Text variant={TextVariant.P}>{item.descriptionShort}</Text>
                     </div>
                     <div className='flex gap-2.5 items-end'>
@@ -68,6 +77,6 @@ const HeroDesktop = ({item}: HeroProps) => {
             </div>
         </section>
     );
-};
+});
 
 export default HeroDesktop;
