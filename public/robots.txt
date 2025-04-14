@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /events/
+Allow: /refund
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://backstagegroup.ru/sitemap.xml
+
+Crawl-delay: 10
