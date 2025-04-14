@@ -57,9 +57,9 @@ const Header = ({item}: HeaderProps) => {
                             <p className='font-display font-medium text-[24px] tracking-[0.07em]'>{xl ? datetime.monthStr : datetime.monthStr.substring(0,3)}</p>
                         </div>
                     </div>
-                    <Text className='leading-none whitespace-pre-line' variant={TextVariant.H3}>
+                    <p className='font-display font-medium text-[24px] md:text-[32px] tracking-[0.07em] leading-none whitespace-pre-line'>
                         {item.title.toUpperCase().split(' ').join('\n')}
-                    </Text>
+                    </p>
                     {xl &&
                         <div className='w-[198px]'>
                             <Text variant={TextVariant.P}>г. {item.city}</Text>
