@@ -55,7 +55,7 @@ const EventCardTabletop = ({item, to}: EventCardProps) => {
                             alt={item.poster ? item.poster : videoPosterMobile}
                             src={item.poster ? item.poster : videoPosterMobile}
                         />
-                        : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
+                        : <VideoPlayer buttonType='play' key={item.video} video={item.video} className='w-full object-cover' />}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start w-2/3'>
                             <Text className='text-light-brown' variant={TextVariant.H4}>Описание:</Text>

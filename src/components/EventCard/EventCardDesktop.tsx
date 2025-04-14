@@ -60,7 +60,7 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
                         alt={item.poster ? item.poster : videoPosterDesktop}
                         src={item.poster ? item.poster : videoPosterDesktop}
                     />
-                    : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
+                    : <VideoPlayer buttonType='play' key={item.video} video={item.video} className='w-full object-cover' />}
             </div>
 
         </div>

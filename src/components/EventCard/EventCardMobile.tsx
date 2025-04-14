@@ -54,7 +54,7 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
                             className='h-full w-full object-cover'
                             alt={item.poster ? item.poster : videoPosterMobile}
                             src={item.poster ? item.poster : videoPosterMobile} />
-                        : <VideoPlayer buttonType='mute' key={item.video} video={item.video} className='w-full object-cover' />}
+                        : <VideoPlayer buttonType='play' key={item.video} video={item.video} className='w-full object-cover' />}
                     <div className='flex flex-col gap-5'>
                         <div className='flex flex-col items-start justify-start text-start md:w-[44vw] w-2/3'>
                             <Text className='text-light-brown' variant={TextVariant.H4}>Описание:</Text>
