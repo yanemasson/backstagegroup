@@ -1,5 +1,5 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
-import image from '/public/images/about/image 52.png'
+import image from '/public/images/about/image-52.webp'
 
 const AboutUsSection = () => {
     return (
@@ -8,7 +8,7 @@ const AboutUsSection = () => {
                 <div className='xl:w-[629px]'>
                     <Text variant={TextVariant.H2}>BACKSTAGE GROUP<br/>ДАРИТ ВАМ НЕЗАБЫВАЕМЫЕ ЭМОЦИИ</Text>
                 </div>
-                <div className='flex flex-col lg:flex-row-reverse self-center items-center gap-[42px] xl:w-full max-w-[90vw] '>
+                <div className='flex flex-col lg:flex-row-reverse self-center items-center gap-[42px] xl:gap-0 xl:w-full max-w-[90vw] '>
                     <img className='lg:w-3/4' alt='about' src={image}/>
                     <div className='flex flex-col md:flex-row md:gap-[90px] lg:flex-col gap-[25px] lg:justify-between w-full '>
                         <div className='flex flex-col leading-tight w-[181px] xl:w-[200px] '>
