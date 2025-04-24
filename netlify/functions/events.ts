@@ -6,6 +6,7 @@ import {parseTrackList} from "../../src/hooks/cms/utils/parseTrackList";
 import {parseArrayField} from "../../src/hooks/cms/utils/parseArrayField";
 import {parseArtists} from "../../src/hooks/cms/utils/parseArtists";
 
+
 let eventsCache: Event[] | null = null;
 let lastCacheTime = 0;
 const CACHE_TTL = 5 * 60 * 1000;
@@ -15,9 +16,16 @@ const handler: Handler = async () => {
         // Проверяем кэш
         const now = Date.now();
         if (!eventsCache || now - lastCacheTime > CACHE_TTL) {
-            const eventsDirectory = path.join(__dirname, '../../content/events');
+            const eventsDirectory = path.join(process.cwd(), 'content/events');
+
+            console.log('Путь к директории событий:', eventsDirectory);
+
+            if (!fs.existsSync(eventsDirectory)) {
+                throw new Error(`Директория ${eventsDirectory} не найдена`);
+            }
 
             const fileNames = fs.readdirSync(eventsDirectory);
+            console.log('Найдено файлов:', fileNames.length);
             const eventFiles = fileNames.filter(fileName => fileName.endsWith('.md'));
             const loadedEvents: Event[] = [];
 
