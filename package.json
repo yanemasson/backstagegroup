@@ -19,7 +19,7 @@
     "react-helmet-async": "^2.0.5",
     "react-lazy": "^1.1.0",
     "react-router": "^7.1.0",
-    "react-router-dom": "^7.1.0",
+    "react-router-dom": "^7.1.0"
   },
   "devDependencies": {
     "@netlify/vite-plugin-react-router": "^1.0.0",
