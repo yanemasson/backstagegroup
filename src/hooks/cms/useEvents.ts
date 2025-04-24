@@ -1,70 +1,13 @@
 import { useState, useEffect } from 'react';
-import {Artist, Event, Track} from "../../types/event.ts";
+import {Event} from "../../types/event.ts";
 import {parseArrayField} from "./utils/parseArrayField.ts";
 import {getCurrentDateString} from "./utils/getCurrentDateString.ts";
+import {parseArtists} from "./utils/parseArtists.ts";
+import {parseTrackList} from "./utils/parseTrackList.ts";
 
 export const useEvents = () => {
     const [events, setEvents] = useState<Event[]>([]);
     const [isLoading, setIsLoading] = useState(true)
-
-    const parseTrackList = (content: string): Track[] => {
-        const regex = /tracks:\s*(\n\s*-[^]*?)(?=\n\w|$)/;
-        const match = content.match(regex);
-        if (match && match[1]) {
-            const tracksSection = match[1];
-            const tracks: Track[] = [];
-            const trackStrings = tracksSection
-                .split('\n  -')
-                .filter(str => str.trim());
-
-            trackStrings.forEach(trackString => {
-                const musicianMatch = trackString.match(/\s*musician:\s*([^\n]+)/);
-                const compositionMatch = trackString.match(/\s*composition:\s*([^\n]+)/);
-                const sourceMatch = trackString.match(/\s*source:\s*([^\n]+)/);
-                if (musicianMatch?.[1] && compositionMatch?.[1] && sourceMatch?.[1]) {
-                    if (musicianMatch && compositionMatch && sourceMatch) {
-                        tracks.push({
-                            musician: musicianMatch[1].trim()?.replace(/['"]/g, ''),
-                            composition: compositionMatch[1].trim()?.replace(/['"]/g, ''),
-                            source: sourceMatch[1].trim()?.replace(/['"]/g, '')
-                        });
-                    }
-                }
-            });
-
-            return tracks;
-        }
-        return [];
-    };
-
-    const parseArtists = (content: string): Artist[] => {
-        const regex = /artists:\s*(\n\s*-[^]*?)(?=\n\w|$)/;
-        const match = content.match(regex);
-        if (match && match[1]) {
-            const artistsSection = match[1];
-            const artists: Artist[] = [];
-            const artistStrings = artistsSection
-                .split('\n  -')
-                .filter(str => str.trim());
-
-            artistStrings.forEach(artistString => {
-                const nameMatch = artistString.match(/\s*name:\s*([^\n]+)/);
-                const photoMatch = artistString.match(/\s*photo:\s*([^\n]+)/);
-                const roleMatch = artistString.match(/\s*role:\s*([^\n]+)/);
-                if (nameMatch?.[1] && photoMatch?.[1] && roleMatch?.[1]) {
-                    if (nameMatch && photoMatch && roleMatch) {
-                        artists.push({
-                            name: nameMatch[1].trim()?.replace(/['"]/g, ''),
-                            photo: photoMatch[1].trim()?.replace(/['"]/g, ''),
-                            role: roleMatch[1].trim()?.replace(/['"]/g, '')
-                        });
-                    }
-                }
-            });
-            return artists;
-        }
-        return [];
-    };
 
     useEffect(() => {
         const loadEvents = async () => {
