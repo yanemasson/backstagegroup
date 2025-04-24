@@ -1,11 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { glob } from 'glob';
-
-// Получаем эквивалент __dirname в ES модулях
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Базовый URL вашего сайта
 const SITE_URL = 'https://backstagegroup.ru';
