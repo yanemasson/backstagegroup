@@ -13,11 +13,11 @@ const AboutUsSection = () => {
                     <div className='flex flex-col md:flex-row md:gap-[90px] lg:flex-col gap-[25px] lg:justify-between w-full '>
                         <div className='flex flex-col leading-tight w-[181px] xl:w-[200px] '>
                             <Text variant={TextVariant.P}>Количество концертов в разных городах</Text>
-                            <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>10</p>
+                            <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>11</p>
                         </div>
                         <div className='flex flex-col leading-tight xl:w-[260px] '>
                             <Text variant={TextVariant.P}>Зрителей<br/>в общей сумме</Text>
-                            <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>4000</p>
+                            <p className='font-display lining-nums text-light-brown text-[68px] xl:text-[100px] tracking-[0.07em]'>4434</p>
                         </div>
                     </div>
                 </div>
