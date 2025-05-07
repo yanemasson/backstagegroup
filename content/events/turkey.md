@@ -51,10 +51,10 @@ tracks:
   - musician: 'Atakan Ilgazdag'
     composition: "Baska Bir Hayat"
     source: 'Чужое счастье'
-  - musician: 'Неизвестный композитор'
+  - musician: ''
     composition: "Kosem's Theme"
     source: 'Великолепный век: Кёсем'
-  - musician: 'Неизвестный композитор'
+  - musician: ''
     composition: "Ask Laftan Anlamaz"
     source: 'Любовь напрокат'
 
