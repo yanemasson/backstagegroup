@@ -1,8 +1,8 @@
 ---
 title: Симфония Рамштайн
-city: Екатеринбург
-location: Свердловский ДК Железнодорожников
-address: ул. Челюскинцев, 102
+city: Омск
+location: Концерт Холл РЦСО
+address: ул. Красный Путь, 9
 descriptionShort: Симфония Rammstein при свечах
 descriptionFull: >-
   Backstage Group представляет уникальный эксперимент: мощь Rammstein, переплавленную в симфоническое полотно. При свечах, в таинственном полумраке, зазвучат культовые хиты группы — от мрачных баллад до эпичных гимнов — в исполнении камерного оркестра.
@@ -10,10 +10,12 @@ descriptionFull: >-
   — Симфонические аранжировки «Du hast», «Sonne», «Ohne dich» и других треков;
   — Диалог тяжелых риффов и изысканной классики;
   — Мерцание сотен свечей, усиливающее драматургию музыки.
-eventId: 2430151
+eventId: 2425391
 poster: /images/posters/4.jpg
+location_photos:
+  - /images/location/rcso_omsk.jpeg
 age: 6
-date: 2025-12-11 19:00
+date: 2025-11-06 19:00
 artists_team: Оркестр «Backstage Group»
 artists_group_photo: /images/artists/1.jpg
 artists:
