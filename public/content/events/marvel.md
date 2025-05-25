@@ -19,7 +19,7 @@ artists:
     role: Дирижер
     photo: /images/artists/skripnikov.jpg
 duration: 01:30
-tag: 'Фильмы'
+tag: Фильмы
 tracks:
   - musician: Алан Сильвестри
     composition: "The Avengers (Main Theme)"
