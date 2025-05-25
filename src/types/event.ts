@@ -29,4 +29,5 @@ export interface Event {
     artists?: Artist[],
     artistsGroupPhoto?: string,
     artistsTeam?: string,
+    tag: string,
 }
