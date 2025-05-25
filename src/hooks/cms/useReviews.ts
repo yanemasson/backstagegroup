@@ -8,7 +8,7 @@ export const useReviews = () => {
     useEffect(() => {
         const loadReviews = async () => {
             try {
-                const reviewFiles = import.meta.glob('/content/reviews/*.md', {
+                const reviewFiles = import.meta.glob('/public/content/reviews/*.md', {
                     eager: true,
                     as: 'raw'
                 });

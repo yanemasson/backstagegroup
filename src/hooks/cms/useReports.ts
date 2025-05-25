@@ -8,7 +8,7 @@ export const useReports = () => {
     useEffect(() => {
         const loadReports = async () => {
             try {
-                const reportFiles = import.meta.glob('/content/reports/*.md', {
+                const reportFiles = import.meta.glob('/public/content/reports/*.md', {
                     eager: true,
                     as: 'raw'
                 });

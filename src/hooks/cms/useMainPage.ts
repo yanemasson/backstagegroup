@@ -8,7 +8,7 @@ const useMainPage = () => {
     useEffect(() => {
         const loadMainPage = async () => {
             try {
-                const mainPageContentFile = import.meta.glob('/content/pages/main.md', {
+                const mainPageContentFile = import.meta.glob('/public/content/pages/main.md', {
                     eager: true,
                     as: 'raw'
                 });

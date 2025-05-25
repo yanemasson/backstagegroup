@@ -11,7 +11,7 @@ export const useEvents = () => {
 
     useEffect(() => {
         const loadEvents = async () => {
-            const eventFiles = import.meta.glob('/content/events/*.md', {
+            const eventFiles = import.meta.glob('/public/content/events/*.md', {
                 eager: true,
                 as: 'raw'
             });
@@ -52,6 +52,7 @@ export const useEvents = () => {
                         artistsTeam: frontMatter.match(/artists_team:\s*(.*)/)?.[1]?.trim() || '',
                         artistsGroupPhoto: frontMatter.match(/artists_group_photo:\s*(.*)/)?.[1]?.trim() || '',
                         duration: frontMatter.match(/duration:\s*(.*)/)?.[1]?.trim() || '',
+                        tag: frontMatter.match(/tag:\s*(.*)/)?.[1]?.trim() || '',
                     };
                     loadedEvents.push(event);
                 }
