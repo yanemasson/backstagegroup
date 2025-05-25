@@ -1,18 +1,6 @@
 <!doctype html>
 <html lang="ru">
   <head>
-    <script async src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script async >
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backstage Group</title>
