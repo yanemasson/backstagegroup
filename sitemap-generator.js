@@ -2,30 +2,23 @@ import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
 
-// Базовый URL вашего сайта
 const SITE_URL = 'https://backstagegroup.ru';
 
-// Функция для получения всех eventId из markdown файлов
 async function getEventIds() {
     try {
-        // Убедитесь, что путь к файлам событий правильный
-        const eventFiles = await glob('content/events/*.md');
+        const eventFiles = await glob('public/content/events/*.md');
         const eventIds = [];
-
         for (const filePath of eventFiles) {
             const content = fs.readFileSync(filePath, 'utf8').trim();
             const frontMatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-
             if (frontMatterMatch) {
                 const frontMatter = frontMatterMatch[1];
                 const eventIdMatch = frontMatter.match(/eventId:\s*(\d+)/);
-
                 if (eventIdMatch && eventIdMatch[1]) {
                     eventIds.push(Number(eventIdMatch[1]));
                 }
             }
         }
-
         console.log(`Найдено ${eventIds.length} событий:`, eventIds);
         return eventIds;
     } catch (error) {
@@ -34,23 +27,45 @@ async function getEventIds() {
     }
 }
 
-// Функция для генерации sitemap
+async function getNewsIds() {
+    try {
+        const newsFiles = await glob('public/content/news/*.md');
+        const newsIds = [];
+        for (const filePath of newsFiles) {
+            const content = fs.readFileSync(filePath, 'utf8').trim();
+            const frontMatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+            if (frontMatterMatch) {
+                const frontMatter = frontMatterMatch[1];
+                const newsIdMatch = frontMatter.match(/id:\s*(\d+)/);
+                if (newsIdMatch && newsIdMatch[1]) {
+                    newsIds.push(Number(newsIdMatch[1]));
+                }
+            }
+        }
+            console.log(`Найдено ${newsIds.length} новостей`, newsIds);
+            return newsIds;
+        } catch (error) {
+            console.error('Ошибка при получении newsId:', error);
+            return [];
+        }
+}
+
 async function generateSitemap() {
     try {
-        // Получаем все eventId
         const eventIds = await getEventIds();
-
-        // Статические маршруты
+        const newsIds = await getNewsIds();
         const staticRoutes = [
-            '',           // Главная страница
-            '/refund',    // Страница возврата
+            '',
+            '/refund',
+            '/news'
         ];
 
-        // Добавляем динамические маршруты для событий
+        // Добавляем динамические маршруты для событий и новостей
         const eventRoutes = eventIds.map(id => `/events/${id}`);
+        const newsRoutes = newsIds.map(id => `/events/${id}`);
 
         // Объединяем все маршруты
-        const allRoutes = [...staticRoutes, ...eventRoutes];
+        const allRoutes = [...staticRoutes, ...eventRoutes, ...newsRoutes];
 
         console.log(`Генерация sitemap для ${allRoutes.length} маршрутов`);
 
