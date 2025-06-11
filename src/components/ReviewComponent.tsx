@@ -4,9 +4,9 @@ import {getDate} from "../utils/getDate.ts";
 import ExpandButton from "./Buttons/ExpandButton.tsx";
 import {useState} from "react";
 import Anchor from "./Anchor.tsx";
+import {truncateToWord} from "../utils/truncateToWord.ts";
 
 const ReviewComponent = ({review}: {review: Review}) => {
-    const dateObj = getDate(review.date);
     const [isOpen, setIsOpen] = useState(false)
 
     enum Source {
@@ -30,19 +30,12 @@ const ReviewComponent = ({review}: {review: Review}) => {
         );
     }
 
-    const truncateToWord = (str: string, maxLength: number) => {
-        if (str.length <= maxLength) return str;
-        const lastSpace = str.lastIndexOf(' ', maxLength);
-        if (lastSpace === -1) return str.slice(0, maxLength);
-        return str.slice(0, lastSpace);
-    }
-
     return (
         <div className='flex flex-col xl:w-[382px] md:border-0 gap-[30px]
             border-solid border-b-1 border-gray border-x-0 border-t-0 pb-5'>
             <div className='flex flex-col gap-[15px] xl:gap-5'>
                 <Text className='text-lightgray' variant={TextVariant.CAPTION}>
-                    {dateObj.day}.{dateObj.monthNum}.{dateObj.year}
+                    {getDate(review.date).formattedDate}
                 </Text>
                 <div className='flex flex-col gap-2.5'>
                     <Text className='text-light-brown' variant={TextVariant.H4}>{review.name}</Text>
