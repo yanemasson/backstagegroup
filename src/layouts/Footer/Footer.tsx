@@ -62,13 +62,6 @@ const Footer = () => {
                         <Text variant={TextVariant.H4}>Контакты</Text>
                         <Text variant={TextVariant.P}>+7 (987) 487-87-76</Text>
                     </div>
-                    <div className='flex flex-col gap-[15px] xl:gap-5'>
-                        <Text variant={TextVariant.H4}>Документация</Text>
-                        <div className='flex flex-col gap-2'>
-                            <Text variant={TextVariant.P}>Политика конфидециальности</Text>
-                            <Text variant={TextVariant.P}>Договор офферты</Text>
-                        </div>
-                    </div>
                 </div>
                 <div className='flex flex-col gap-5'>
                     <Text variant={TextVariant.H4}>Мы в соцсетях</Text>

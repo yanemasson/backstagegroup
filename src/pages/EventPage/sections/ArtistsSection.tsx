@@ -9,7 +9,7 @@ interface ArtistsSectionProps {
 }
 
 const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectionProps) => {
-    if (artists.length === 0) {
+    if (artists.length === 0 && artistsGroupPhoto === null) {
         return <Text className='text-lightgray' variant={TextVariant.CAPTION}>Состав исполнителей уточняется. Следите за обновлениями!</Text> ;
     }
 
@@ -23,6 +23,16 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
                 <Text variant={TextVariant.H2}>ИСПОЛНИТЕЛИ</Text>
                 {artistsTeam && <Text className='text-light-brown' variant={TextVariant.H2}>{artistsTeam?.toUpperCase()}</Text>}
             </div>
+
+            {artists.length === 0 &&
+                <div className='flex flex-col gap-[30px] xl:gap-10'>
+                    {artistsGroupPhoto &&
+                        <div className='flex flex-col gap-[15px] xl:gap-5'>
+                            <img src={artistsGroupPhoto} alt={artistsGroupPhoto} />
+                        </div>
+                    }
+                </div>
+            }
 
             {artists.length === 1 &&
                 <div className='flex flex-col gap-[30px] xl:gap-10'>
@@ -62,6 +72,7 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
                     </div>
                 </div>
             }
+
 
         </section>
     );

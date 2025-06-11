@@ -28,7 +28,7 @@ const EventPage = () => {
     const {events, isLoading} = useEvents()
 
     type menuItemType = 'Описание' | 'Трек-лист' | 'Исполнители' | 'Площадка' | null
-    const [activeSection, setActiveSection] = useState<menuItemType>(null)
+    const [activeSection, setActiveSection] = useState<menuItemType>('Описание')
     const menuItems: menuItemType[] = ['Описание', 'Трек-лист', 'Исполнители', 'Площадка']
 
     const toggleMenu = (item: menuItemType) => {
@@ -46,6 +46,7 @@ const EventPage = () => {
     const item= events.find((c) => createSlug(c.eventId) === id)
 
     if(!item) {return <NotFoundPage/>}
+    console.log(item.artistsGroupPhoto)
 
     const renderContent = () => {
         switch(activeSection) {

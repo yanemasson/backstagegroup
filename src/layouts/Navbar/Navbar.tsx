@@ -22,9 +22,9 @@ const Navbar = () => {
 
     const MenuItems = [
         {id: 'hero', label: location.pathname === '/' ? 'Начало' : 'О концерте'},
+        {id: 'eventlist', label: 'Афиша'},
         {id: 'about', label: 'Организаторы'},
         {id: 'reviews', label: 'Отзывы'},
-        {id: 'eventlist', label: 'Афиша'}
     ]
 
     const toggleMenu = () => {setIsOpen(!isOpen)}

@@ -24,8 +24,11 @@ const LocationSection = ({location, address, eventId, photos}: LocationSectionPr
             <Text variant={TextVariant.H2}>ПЛОЩАДКА</Text>
             <div className='flex flex-col gap-[23px]'>
                 <div className='flex justify-between '>
-                    <img className='md:w-[49%]' src={photos[0]} alt='location1' />
-                    {md && <img className='md:w-[49%]' src={photos[1]} alt='location2' />}
+                    {md ? photos.map((photo) => (
+                        <img className='md:w-[49%]' src={photo} alt={photo} key={photo} />
+                    ))
+                        : <img className='md:w-[49%]' src={photos[0]} alt={photos[0]} />
+                    }
                 </div>
                 <div className='flex flex-col gap-10 xl:gap-[50px] w-[284px]'>
                     <div className='flex flex-col gap-2.5 w-3/4 xl:w-full'>
