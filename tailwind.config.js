@@ -16,8 +16,10 @@ export default {
       'brown': '#43260D',
       'black': '#000000',
       'darkgray': '#0F0F0F',
+      'semi-darkgray': '#191919',
       'gray': '#2D2D2D',
       'lightgray': '#9A9A9A',
+      'semi-lightgray': '#212020',
       'white': '#FFFCF2',
     },
     extend: {
