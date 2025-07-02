@@ -3,7 +3,7 @@ import {WordPressCategory, WordPressPost} from './types';
 
 export const fetchNews = async (): Promise<WordPressPost[]> => {
     try {
-        const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.posts}?_embed`);
+        const response = await fetch(`${API_CONFIG.wordpress.baseUrl}${API_CONFIG.wordpress.endpoints.posts}?_embed`);
 
         if (!response.ok) {
             throw new Error(`Ошибка API: ${response.status}`);
@@ -18,7 +18,7 @@ export const fetchNews = async (): Promise<WordPressPost[]> => {
 
 export const fetchPost = async (id: string | number | undefined): Promise<WordPressPost> => {
     try {
-        const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.posts}/${id}?_embed`);
+        const response = await fetch(`${API_CONFIG.wordpress.baseUrl}${API_CONFIG.wordpress.endpoints.posts}/${id}?_embed`);
 
         if (!response.ok) {
             throw new Error(`Ошибка API: ${response.status}`);
@@ -33,7 +33,7 @@ export const fetchPost = async (id: string | number | undefined): Promise<WordPr
 
 export const fetchPostForCategories = async (tag: number | undefined): Promise<WordPressPost[]> => {
     try {
-        const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.posts}?categories=${tag}&_embed`);
+        const response = await fetch(`${API_CONFIG.wordpress.baseUrl}${API_CONFIG.wordpress.endpoints.posts}?categories=${tag}&_embed`);
         if (!response.ok) {
             throw new Error(`Ошибка API: ${response.status}`);
         }
@@ -45,7 +45,7 @@ export const fetchPostForCategories = async (tag: number | undefined): Promise<W
 };
 export const fetchPostForCategoriesPerPage = async (tag: number | undefined, perPage: number): Promise<WordPressPost[]> => {
     try {
-        const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.posts}?categories=${tag}&_embed&per_page=${perPage}`);
+        const response = await fetch(`${API_CONFIG.wordpress.baseUrl}${API_CONFIG.wordpress.endpoints.posts}?categories=${tag}&_embed&per_page=${perPage}`);
         if (!response.ok) {
             throw new Error(`Ошибка API: ${response.status}`);
         }
@@ -58,7 +58,7 @@ export const fetchPostForCategoriesPerPage = async (tag: number | undefined, per
 
 export const fetchCategories = async (): Promise<WordPressCategory[]> => {
     try {
-        const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.categories}`);
+        const response = await fetch(`${API_CONFIG.wordpress.baseUrl}${API_CONFIG.wordpress.endpoints.categories}`);
 
         if (!response.ok) {
             throw new Error(`Ошибка API: ${response.status}`);

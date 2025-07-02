@@ -57,3 +57,17 @@ export interface WordPressCategory {
     id: number;
     name: string;
 }
+
+export interface DrupalNode {
+    id: string;
+    type: string;
+    attributes: Record<string, any>;
+    relationships?: Record<string, any>;
+}
+
+export interface DrupalResponse {
+    data: DrupalNode | DrupalNode[];
+    included?: DrupalNode[];
+    links?: Record<string, any>;
+    meta?: Record<string, any>;
+}
