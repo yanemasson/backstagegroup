@@ -18,7 +18,8 @@ const TagEvents = ({tag}: { tag: string; }) => {
         setFilteredEvents(events.filter(event => event.tag === tag))
     }, [events, tag]);
 
-    if (isLoading) {return <LoadingSpinner/>}
+    console.log(filteredEvents)
+    if (loading) return <LoadingSpinner/>
 
     return (
         <section id='eventlist'>

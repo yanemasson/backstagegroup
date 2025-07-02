@@ -8,7 +8,6 @@ import VideoPlayer from "./VideoPlayer/VideoPlayer.tsx";
 
 const ReportComponent = ({report}: {report: Report}) => {
     const dateObj = getDate(report.date);
-    console.log(report.date);
     const [isOpen, setIsOpen] = useState(false)
 
     enum Source {

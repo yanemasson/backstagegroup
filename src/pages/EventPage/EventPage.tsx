@@ -41,12 +41,9 @@ const EventPage = () => {
     const xl = useMediaBreakpoint('xl')
     const md = useMediaBreakpoint('md')
 
-    if(isLoading) {return <div><LoadingSpinner/></div>}
-
-    const item= events.find((c) => createSlug(c.eventId) === id)
-
-    if(!item) {return <NotFoundPage/>}
-    console.log(item.artistsGroupPhoto)
+    if(loading) return <LoadingSpinner/>
+    if(!event) return <NotFoundPage/>
+    if(error) return <>{error}</>
 
     const renderContent = () => {
         switch(activeSection) {

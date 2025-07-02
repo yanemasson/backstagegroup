@@ -35,8 +35,6 @@ const NewsPage = () => {
         loadPost();
     }, [id]);
 
-
-
     if(isLoading) {return <LoadingSpinner/>}
     if (error) return <div>{error}</div>;
     if(!post) {return <NotFoundPage/>}
