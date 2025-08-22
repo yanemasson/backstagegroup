@@ -1,16 +1,13 @@
 import {FC, ReactNode, useEffect} from 'react';
-import Button from "./Button.tsx";
 
-interface TicketButtonProps {
+interface TicketButtonWrapperProps {
     eventId: number;
-    children?: ReactNode;
+    children: ReactNode;
     className?: string;
     variant?: string;
 }
 
-
-
-const TicketButton: FC<TicketButtonProps> = ({eventId, className, children = <>Купить билет</>}) => {
+const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, children}) => {
 
     useEffect(() => {
         if (!document.getElementById('radario-script')) {
@@ -35,9 +32,10 @@ const TicketButton: FC<TicketButtonProps> = ({eventId, className, children = <>�
         }
     }, [eventId]);
 
+
     return (
-        <a href={`#event/${eventId}`}><Button className={className}>{children}</Button></a>
+        <a href={`#event/${eventId}`}>{children}</a>
     );
 };
 
-export default TicketButton
+export default TicketButtonWrapper

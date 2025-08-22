@@ -1,5 +1,7 @@
-const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня',
+    'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря']
+
+const weekdays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
 
 export const getDate = (datetime: string) => {
     const date = datetime.split('-')
@@ -11,12 +13,19 @@ export const getDate = (datetime: string) => {
         formattedTime = date[3].split(':').slice(0, 2).join(':');
     }
 
+    const jsDate = new Date(
+        parseInt(date[0]),
+        parseInt(date[1]) - 1,
+        parseInt(date[2])
+    );
+    const weekday = weekdays[jsDate.getDay()]
 
     return {
         year: date[0],
         monthNum: date[1],
         monthStr: months[Number(date[1]) - 1],
         day: date[2],
+        weekday: weekday,
         time: formattedTime,
         get formattedDate() {
             return this.day + '.' + this.monthNum + '.' + this.year;

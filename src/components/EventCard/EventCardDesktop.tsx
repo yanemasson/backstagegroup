@@ -4,8 +4,8 @@ import {getDate} from "../../utils/getDate.ts";
 import Button, {ButtonVariant} from "../Buttons/Button.tsx";
 import {Link} from "react-router";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
-import TicketButton from "../Buttons/TicketButton.tsx";
 import videoPosterDesktop from "../../assets/video_poster_desktop.png";
+import TicketButtonWrapper from "../Buttons/TicketButtonWrapper.tsx";
 
 interface EventCardProps {
     item: Event,
@@ -16,44 +16,47 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
     const datetime = getDate(item.date)
 
     return (
-        <div className='flex items-start text-start flex-row justify-between min-h-[255px]'>
-
-            <div className='flex w-[198px] h-[255px] justify-between flex-col'>
-                <div className='flex leading-none h-[52px] gap-[13px]'>
-                    <p className='font-display font-medium text-[52px] lining-nums'>{datetime.day}</p>
-                    <div className=' '>
-                        <p className='font-display font-medium text-[28px] tracking-[0.07em]'>{datetime.time}</p>
-                        <p className='font-display font-medium text-[24px] tracking-[0.07em]'>{datetime.monthStr}</p>
-                    </div>
-                </div>
+        <div className='flex items-start text-start flex-row justify-between'>
+            <div className='flex flex-col items-end text-end gap-5 mr-[52px]'>
                 <div>
-                    <Text variant={TextVariant.B}>г. {item.city}</Text>
-                    <Text variant={TextVariant.P}>{item.location}</Text>
+                    <p className='font-display min-w-[50px] font-medium text-[40px] lining-nums leading-[1.5] mb-2.5'>
+                        {datetime.day}
+                    </p>
+                    <Text variant={TextVariant.P}>{datetime.monthStr}</Text>
+                    <Text variant={TextVariant.P} className='text-dark-text'>{datetime.weekday}</Text>
+                </div>
+                <div className='w-full border-solid border-x-0 border-y-[1px] border-gray'/>
+                <p className='font-display proportional-nums text-[32px] leading-[1.3] '>{datetime.time}</p>
+                <div className='w-full border-solid border-x-0 border-y-[1px] border-gray'/>
+                <div>
+                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>{item.age + '+'}</Text>
+                    <Text variant={TextVariant.CAPTION} className='text-orange'>{item.cta}</Text>
                 </div>
             </div>
 
-            <div className='pl-10 border-solid border-gray border-l-2 border-y-0 border-r-0
-                flex flex-col justify-between h-[255px] min-w-[452px]'>
-                <div className='flex flex-col gap-5'>
-                    <div className='flex justify-between'>
-                        <Text className='leading-none whitespace-pre-line' variant={TextVariant.H3}>
-                            {item.title.toUpperCase().split(' ').join('\n')}
-                        </Text>
-                        <div className='h-11 w-11 bg-[#8A8A8A33] rounded-full flex justify-center items-center text-center'>
-                            <Text variant={TextVariant.P}>{item.age}+</Text>
-                        </div>
+            <div className='flex flex-col justify-between h-[313px] w-[438px] mr-8'>
+                <div className='flex flex-col gap-[30px]'>
+                    <div className='flex flex-col gap-2'>
+                        <Text variant={TextVariant.H3}>{item.title.toUpperCase()}</Text>
+                        <Text variant={TextVariant.P} className='text-dark-text'>{item.descriptionShort}</Text>
                     </div>
-                    <Text className='w-[331px]' variant={TextVariant.P}>{item.descriptionShort}</Text>
+                    <div className='flex flex-col gap-2'>
+                        <Text variant={TextVariant.P}>{item.location}</Text>
+                        <Text variant={TextVariant.P} className='text-dark-text'>{'г. ' + item.city}</Text>
+                    </div>
                 </div>
-                <div className='flex gap-2.5'>
-                    <TicketButton className='w-[201px] h-[43px]' eventId={item.eventId}/>
+
+                <div className='flex gap-2.5 justify-self-end'>
+                    <TicketButtonWrapper eventId={item.eventId}>
+                        <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]'>Купить билет</Button>
+                    </TicketButtonWrapper>
                     <Link to={`/events/${to}`}>
-                        <Button className='w-[201px] h-[43px]' variant={ButtonVariant.outline}>Подробнее</Button>
+                        <Button variant={ButtonVariant.secondary} className='h-[50px] w-[214px]'>Подробнее</Button>
                     </Link>
                 </div>
             </div>
 
-            <div className="min-w-[454px] w-[454px] h-[255px]">
+            <div className="min-w-[556px] w-[556px] h-[313px]">
                 {!item.video || item.video?.length === 0
                     ? <img
                         className='h-full w-full object-cover'
