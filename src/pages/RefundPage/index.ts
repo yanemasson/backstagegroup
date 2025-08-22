@@ -1,1 +1,1 @@
-export * from './RefundPage.tsx'
+export * from './RefundPage'

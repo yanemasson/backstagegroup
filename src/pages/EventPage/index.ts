@@ -1,1 +1,1 @@
-export * from './EventPage.tsx'
+export * from './EventPage'

@@ -1,1 +1,1 @@
-export * from './EventList.tsx'
+export * from './EventList'
