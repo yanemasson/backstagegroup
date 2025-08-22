@@ -11,7 +11,7 @@ const RefundPage = () => {
                  description={"Билеты на лучшие балетные спектакли и симфонические концерты." +
                      "Классическая музыка, премьеры в Вашем городе"}/>
             <div className='flex flex-col w-full items-start gap-10 '>
-                <div className='text-white flex flex-col items-start justify-center gap-5 pt-20 px-5 xl:px-0'>
+                <div className=' flex flex-col items-start justify-center gap-5 pt-20 px-5 xl:px-0'>
                     <Text variant={TextVariant.H1}>Возврат билетов</Text>
                     <Text variant={TextVariant.B}>Уважаемые зрители! Если Вы хотите вернуть билет, выберите, пожалуйста,
                         вашу ситуацию и дальше действуйте СОГЛАСНО ИНСТРУКЦИИ:
