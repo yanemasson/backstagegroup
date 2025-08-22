@@ -1,23 +1,24 @@
 import Text, {TextVariant} from "../../components/Text.tsx";
 import Button, {ButtonVariant} from "../../components/Buttons/Button.tsx";
 import Anchor from "../../components/Anchor.tsx";
+import {Link} from "react-router";
 
 const PostponementPage = () => {
     return (
         <div className="flex flex-col items-center justify-center mt-10 gap-10 max-w-[800px]">
             <Text className='text-light-brown' variant={TextVariant.H3}>Важное объявление о переносе мероприятия</Text>
-            <a >
+            <Link to={'/events/2429995'} >
                 <Button className='h-[45px] w-[300px]' variant={ButtonVariant.primary}>
                     Подробности мероприятия
                 </Button>
-            </a>
+            </Link>
             <table className="w-full border-collapse">
                 <thead>
                 <tr>
-                    <th className="border-2 border-solid bg-semi-darkgray border-light-brown font-display text-light-brown px-4 py-3 text-left">
+                    <th className="border-2 border-solid border-light-brown font-display text-light-brown px-4 py-3 text-left">
                         <Text variant={TextVariant.H4}>Старая дата и место</Text>
                     </th>
-                    <th className="border-2 border-solid bg-semi-darkgray border-light-brown font-display text-light-brown px-4 py-3 text-left">
+                    <th className="border-2 border-solid border-light-brown font-display text-light-brown px-4 py-3 text-left">
                         <Text variant={TextVariant.H4}>Новая дата и место</Text>
                     </th>
                 </tr>
