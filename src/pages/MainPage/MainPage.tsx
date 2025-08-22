@@ -3,6 +3,8 @@ import {SEO} from "../../components/SEO.tsx";
 import EventList from "./sections/EventList/EventList.tsx";
 import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
+import Faq from "./sections/FAQ/FAQ.tsx";
+import NewsSection from "./sections/News/NewsSection.tsx";
 
 const AboutUsSection = lazy(() => import('../EventPage/sections/AboutUsSection'));
 const ReviewsSection = lazy(() => import('../EventPage/sections/ReviewsSection'));
@@ -26,6 +28,8 @@ const MainPage = () => {
                     <Suspense fallback={<LoadingSpinner />}><ReportsSection/></Suspense>
                     <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
                 </section>
+                <Suspense fallback={<LoadingSpinner />}><NewsSection/></Suspense>
+                <Faq/>
             </div>
         </div>
     );
