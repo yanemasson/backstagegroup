@@ -1,5 +1,5 @@
 import Text, {TextVariant} from "../../components/Text.tsx";
-import NewsCard from "../../components/newsCard.tsx";
+import NewsCard from "../../components/NewsCard.tsx";
 import MultiSelect from "../../components/MultiSelect.tsx";
 import {useEffect, useMemo, useState} from "react";
 import {fetchCategories, fetchNews, WordPressCategory, WordPressPost} from "../../api";
