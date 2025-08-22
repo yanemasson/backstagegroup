@@ -7,24 +7,25 @@ import AppRoutes from "./components/AppRoutes.tsx";
 import MetricsProvider from "./components/Metrika/MetricsProvider.tsx";
 
 function App() {
-  return (
-      <HelmetProvider>
-          <MetricsProvider>
-              <BrowserRouter>
-                  <ScrollToTop />
-                  <div className='bg-darkgray text-white flex flex-col justify-center items-center'>
-                      <div className="flex flex-col items-center min-h-screen w-[90vw] xl:w-[1166px] ">
-                          <Navbar/>
-                          <main className="flex-grow py-[64px] xl:py-[84px]">
-                              <AppRoutes/>
-                          </main>
-                          <Footer/>
-                      </div>
-                  </div>
-              </BrowserRouter>
-          </MetricsProvider>
-      </HelmetProvider>
 
+
+    return (
+        <HelmetProvider>
+            <BrowserRouter>
+                <MetricsProvider>
+                    <ScrollToTop />
+                    <div className='bg-darkgray text-white flex flex-col justify-center items-center'>
+                        <div className="flex flex-col items-center min-h-screen w-[90vw] xl:w-[1166px] ">
+                            <Navbar/>
+                            <main className="flex-grow py-[64px] xl:py-[84px]">
+                                <AppRoutes/>
+                            </main>
+                            <Footer/>
+                        </div>
+                    </div>
+                </MetricsProvider>
+            </BrowserRouter>
+      </HelmetProvider>
   )
 }
 
