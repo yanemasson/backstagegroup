@@ -7,7 +7,7 @@ export const API_CONFIG = {
         }
     },
     drupal: {
-        baseUrl: 'http://api.backstagegroup.ru',
+        baseUrl: 'https://api.backstagegroup.ru',
         jsonApiPath: '/jsonapi',
     }
 };

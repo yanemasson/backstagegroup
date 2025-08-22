@@ -160,7 +160,7 @@ class DrupalParser {
         // Если URL относительный, добавьте базовый домен
         const url = fileData.attributes.uri.url;
         if (url.startsWith('/')) {
-            return `http://api.backstagegroup.ru${url}`;
+            return `https://api.backstagegroup.ru${url}`;
         }
 
         return url;
