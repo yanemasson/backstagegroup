@@ -21,6 +21,10 @@ export default {
       'lightgray': '#9A9A9A',
       'semi-lightgray': '#212020',
       'white': '#FFFCF2',
+      'orange': '#F66E41',
+
+      'dark-text': '#7F7F7F',
+      'dark-bg': '#131212'
     },
     extend: {
       fontFamily: {
