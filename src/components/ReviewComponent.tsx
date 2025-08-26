@@ -1,52 +1,51 @@
 import {Review} from "../types/review.ts";
 import Text, {TextVariant} from "./Text.tsx";
 import {getDate} from "../utils/getDate.ts";
-import ExpandButton from "./Buttons/ExpandButton.tsx";
 import {useState} from "react";
-import Anchor from "./Anchor.tsx";
 import {truncateToWord} from "../utils/truncateToWord.ts";
+import {useMediaBreakpoint} from "../hooks/useMediaBreakpoint.ts";
 
 const ReviewComponent = ({review}: {review: Review}) => {
     const [isOpen, setIsOpen] = useState(false)
+    const dayMonth = () => {
+        const day = getDate(review.date).day
+        const formattedDay = Number(day) < 10 ? day.slice(1, 2) : day
+        return formattedDay + ' ' + getDate(review.date).monthStr
+    }
 
-    enum Source {
-        VK = "VK",
-        TG = "TG",
-        site = "site",
-    }
-    const SourceMap = {
-        [Source.VK]: {name: "ВК", link: "https://vk.com/backstagegroup"},
-        [Source.TG]: {name: "ТГ", link: "https://t.me/backstagegroup24"},
-        [Source.site]: {name: "Сайт", link: "/"},
-    }
-    const SourceLink = ({ source }: {source: Review['source']}) => {
-        const sourceInfo = SourceMap[source]
-        return (
-            <Anchor href={sourceInfo.link}>
-                <Text variant={TextVariant.CAPTION}>
-                    Источник: {sourceInfo.name}
-                </Text>
-            </Anchor>
-        );
-    }
+    const md = useMediaBreakpoint('md')
 
     return (
-        <div className='flex flex-col xl:w-[382px] md:border-0 gap-[30px]
-            border-solid border-b-1 border-gray border-x-0 border-t-0 pb-5'>
-            <div className='flex flex-col gap-[15px] xl:gap-5'>
-                <Text className='text-lightgray' variant={TextVariant.CAPTION}>
-                    {getDate(review.date).formattedDate}
-                </Text>
-                <div className='flex flex-col gap-2.5'>
-                    <Text className='text-light-brown' variant={TextVariant.H4}>{review.name}</Text>
-                    {!isOpen ? <Text variant={TextVariant.P}>{truncateToWord(review.text, 70)}...</Text>
-                        : <Text variant={TextVariant.P}>{review.text}</Text>
-                    }
-                    <ExpandButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
-                </div>
+        <div
+            className={`flex flex-col bg-dark-bg xl:w-[382px] gap-[30px] p-5 ${isOpen ? 'h-full' : 'h-[267px]'}`}
+            onClick={() => !md && setIsOpen(!isOpen)}
+        >
+            <div className='flex justify-between'>
+                <Text className='text-lightgray' variant={TextVariant.CAPTION}>{review.name}</Text>
+                <Text className='text-lightgray' variant={TextVariant.CAPTION}>{dayMonth()}</Text>
             </div>
-            <div>
-                <SourceLink source={review.source}/>
+
+            <div className='inline'>
+                {!isOpen
+                    ? <Text variant={TextVariant.P} className='inline'>{truncateToWord(review.text, 120)}...</Text>
+                    : <Text variant={TextVariant.P}>{review.text}</Text>
+                }
+                {!isOpen && (
+                    <div
+                        onClick={() => setIsOpen(true)}
+                        className='inline-block cursor-pointer ml-1'
+                    >
+                        <Text className='text-lightgray' variant={TextVariant.P}>Еще</Text>
+                    </div>
+                )}
+            </div>
+            <div className='flex justify-between mt-auto'>
+                <Text className='text-lightgray ' variant={TextVariant.CAPTION}>{'г. ' + review.city}</Text>
+                {isOpen &&
+                    <div className='cursor-pointer' onClick={() => setIsOpen(false)}>
+                        <Text className='text-lightgray' variant={TextVariant.CAPTION}>Закрыть</Text>
+                    </div>
+                }
             </div>
         </div>
     );

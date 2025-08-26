@@ -34,9 +34,11 @@ export const useReviews = () => {
                         const dateMatch = frontMatter.match(/date:\s*(.+?)(\r?\n|$)/);
                         const statusMatch = frontMatter.match(/status:\s*(.+?)(\r?\n|$)/);
                         const sourceMatch = frontMatter.match(/source:\s*(.+?)(\r?\n|$)/);
+                        const cityMatch = frontMatter.match(/city:\s*(.+?)(\r?\n|$)/);
 
                         const id = idMatch ? idMatch[1].trim() : `review-${Date.now()}`;
                         const name = nameMatch ? nameMatch[1].trim() : 'Анонимный посетитель';
+                        const city = cityMatch ? cityMatch[1].trim() : '';
                         let date = dateMatch ? dateMatch[1].trim() : new Date().toISOString();
 
                         // Преобразование даты в более простой формат, если необходимо
@@ -64,7 +66,8 @@ export const useReviews = () => {
                             text: bodyContent,
                             date,
                             status,
-                            source
+                            source,
+                            city
                         };
                         loadedReviews.push(review);
                     }

@@ -5,4 +5,5 @@ export interface Review {
     date: string;
     source: 'VK' | 'TG' | 'site';
     status: 'pending' | 'approved' | 'rejected';
+    city: string;
 }

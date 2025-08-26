@@ -8,7 +8,7 @@ const ReviewsSection = () => {
 
     return (
         <section className='flex flex-col gap-[50px]'>
-            <Text variant={TextVariant.H2}>ОТЗЫВЫ</Text>
+            <Text variant={TextVariant.H2}>НАШИ КОНЦЕРТЫ ГЛАЗАМИ ЗРИТЕЛЕЙ</Text>
             <div className='flex flex-col gap-5 md:flex-row xl:justify-between'>
                 {reviews
                     .sort((a, b) => b.date.localeCompare(a.date))
