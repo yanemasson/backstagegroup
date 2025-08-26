@@ -17,7 +17,6 @@ const TrackList = lazy(() => import('./sections/TrackList'));
 const ArtistsSection = lazy(() => import('./sections/ArtistsSection'));
 const LocationSection = lazy(() => import('./sections/LocationSection'));
 const AboutUsSection = lazy(() => import('./sections/AboutUsSection'));
-const ReportsSection = lazy(() => import('./sections/ReportsSection'));
 const ReviewsSection = lazy(() => import('./sections/ReviewsSection'));
 // const UpcomingEvents = lazy(() => import('./sections/UpcomingEvents'));
 
@@ -148,9 +147,6 @@ const EventPage = () => {
                     <AboutUsSection />
                 </Suspense>
                 <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <ReportsSection />
-                    </Suspense>
                     <Suspense fallback={<LoadingSpinner />}>
                         <ReviewsSection />
                     </Suspense>

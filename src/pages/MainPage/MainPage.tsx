@@ -8,7 +8,6 @@ import NewsSection from "./sections/News/NewsSection.tsx";
 
 const AboutUsSection = lazy(() => import('../EventPage/sections/AboutUsSection'));
 const ReviewsSection = lazy(() => import('../EventPage/sections/ReviewsSection'));
-const ReportsSection = lazy(() => import('../EventPage/sections/ReportsSection'));
 
 
 const MainPage = () => {
@@ -24,12 +23,11 @@ const MainPage = () => {
             <div className='flex flex-col items-center gap-[100px] xl:gap-40'>
                 <Suspense fallback={<LoadingSpinner />}><EventList/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><AboutUsSection/></Suspense>
-                <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
-                    <Suspense fallback={<LoadingSpinner />}><ReportsSection/></Suspense>
-                    <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
-                </section>
                 <Suspense fallback={<LoadingSpinner />}><NewsSection/></Suspense>
-                <Faq/>
+                <Suspense fallback={<LoadingSpinner />}><Faq/></Suspense>
+
+                <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
+
             </div>
         </div>
     );
