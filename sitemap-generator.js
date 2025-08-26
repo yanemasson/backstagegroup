@@ -56,8 +56,13 @@ async function generateSitemap() {
         const newsIds = await getNewsIds();
         const staticRoutes = [
             '',
+            '/news',
+
             '/refund',
-            '/news'
+            '/user_agreement',
+            '/offer',
+            '/privacy_policy'
+
         ];
 
         // Добавляем динамические маршруты для событий и новостей

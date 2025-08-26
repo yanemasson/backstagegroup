@@ -25,8 +25,8 @@ const AppRoutes = () => {
                 <Route path={'news'} element={<NewsListPage/>} />
                 <Route path={'news/:id'} element={<NewsPage/>} />
 
-                <Route path={'/user_agreement'} element={<AgreementPage/>} />
-                <Route path={'/offer'} element={<OfferPage/>} />
+                <Route path={'user_agreement'} element={<AgreementPage/>} />
+                <Route path={'offer'} element={<OfferPage/>} />
                 <Route path={'refund'} element={<RefundPage/>} />
                 <Route path={'privacy_policy'} element={<PrivacyPage/>} />
 
