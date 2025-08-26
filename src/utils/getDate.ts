@@ -22,7 +22,7 @@ export const getDate = (datetime: string) => {
 
     return {
         year: date[0],
-        monthNum: date[1],
+        monthNum: Number(date[1]),
         monthStr: months[Number(date[1]) - 1],
         day: date[2],
         weekday: weekday,
