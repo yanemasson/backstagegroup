@@ -1,11 +1,9 @@
 
 interface BurgerButtonProps {
-    isOpen: boolean
     toggleMenu?: () => void;
 }
 
-const BurgerButton = ({isOpen, toggleMenu }: BurgerButtonProps)  => {
-    const SpanClassName = ' block w-7 h-[3px] bg-white transition-all duration-400 ease-out'
+const BurgerButton = ({toggleMenu }: BurgerButtonProps)  => {
 
     return (
         <button
@@ -14,10 +12,10 @@ const BurgerButton = ({isOpen, toggleMenu }: BurgerButtonProps)  => {
             aria-controls="menu-container-id"
             aria-label="Открыть меню"
             onClick={toggleMenu}
-            className={`flex flex-col justify-center items-center lg:hidden ${!isOpen && 'gap-[5.5px]'}`}>
-            <span className={`${SpanClassName} ${isOpen && 'rotate-45 translate-y-[3px]'}`}/>
-            <span className={`${SpanClassName} ${isOpen && 'opacity-0'}`}/>
-            <span className={`${SpanClassName} ${isOpen && '-rotate-45 -translate-y-[3px]'}`}/>
+            className={`flex flex-col gap-1.5 justify-center items-start lg:hidden h-10 w-10 bg-semi-darkgray px-2.5 py-[15px]`}
+        >
+            <div className='border-solid border-[#8F8F8F] border-[2px] w-5'/>
+            <div className='border-solid border-[#8F8F8F] border-[2px] w-2.5 '/>
         </button>
     );
 };
