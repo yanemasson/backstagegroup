@@ -17,7 +17,7 @@ const ReviewComponent = ({review}: {review: Review}) => {
 
     return (
         <div
-            className={`flex flex-col bg-dark-bg xl:w-[382px] gap-[30px] p-5 ${isOpen ? 'h-full' : 'h-[267px]'}`}
+            className={`flex flex-col bg-dark-bg xl:w-[382px] min-w-[290px] min-h-[254px] gap-[30px] p-5 ${isOpen ? 'h-full' : 'h-[267px]'}`}
             onClick={() => !md && setIsOpen(!isOpen)}
         >
             <div className='flex justify-between'>
@@ -27,7 +27,12 @@ const ReviewComponent = ({review}: {review: Review}) => {
 
             <div className='inline'>
                 {!isOpen
-                    ? <Text variant={TextVariant.P} className='inline'>{truncateToWord(review.text, 120)}...</Text>
+                    ? <Text variant={TextVariant.P} className='inline'>
+                        {md
+                            ? `${truncateToWord(review.text, 120)}...`
+                            : `${truncateToWord(review.text, 100)}...`
+                        }
+                </Text>
                     : <Text variant={TextVariant.P}>{review.text}</Text>
                 }
                 {!isOpen && (

@@ -7,9 +7,9 @@ const ReviewsSection = () => {
     const {reviews} = useReviews();
 
     return (
-        <section className='flex flex-col gap-[50px]'>
+        <section className='flex flex-col w-[90vw] md:w-[1166px] gap-[50px] min-h-[254px] '>
             <Text variant={TextVariant.H2}>НАШИ КОНЦЕРТЫ ГЛАЗАМИ ЗРИТЕЛЕЙ</Text>
-            <div className='flex flex-col gap-5 md:flex-row xl:justify-between'>
+            <div className='flex gap-5 overflow-x-auto'>
                 {reviews
                     .sort((a, b) => b.date.localeCompare(a.date))
                     .slice(0, 3)
