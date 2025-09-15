@@ -1,7 +1,5 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import TicketButton from "../../../components/Buttons/TicketButton.tsx";
-import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
-
 
 interface LocationSectionProps {
     location: string;
@@ -11,7 +9,6 @@ interface LocationSectionProps {
 }
 
 const LocationSection = ({location, address, eventId, photos}: LocationSectionProps) => {
-    const md = useMediaBreakpoint('md')
 
     if(photos.length === 0) {
         return <Text className='text-lightgray' variant={TextVariant.CAPTION}>
@@ -24,11 +21,9 @@ const LocationSection = ({location, address, eventId, photos}: LocationSectionPr
             <Text variant={TextVariant.H2}>ПЛОЩАДКА</Text>
             <div className='flex flex-col gap-[23px]'>
                 <div className='flex justify-between '>
-                    {md ? photos.map((photo) => (
+                    {photos.map((photo) => (
                         <img className='md:w-[49%]' src={photo} alt={photo} key={photo} />
-                    ))
-                        : <img className='md:w-[49%]' src={photos[0]} alt={photos[0]} />
-                    }
+                    ))}
                 </div>
                 <div className='flex flex-col gap-10 xl:gap-[50px] w-[284px]'>
                     <div className='flex flex-col gap-2.5 w-3/4 xl:w-full'>
@@ -37,7 +32,6 @@ const LocationSection = ({location, address, eventId, photos}: LocationSectionPr
                     </div>
                     <TicketButton className='w-[90vw] h-[45px] md:w-[284px] md:h-[53px]' eventId={eventId}/>
                 </div>
-
             </div>
         </section>
     );
