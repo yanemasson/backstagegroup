@@ -2,29 +2,31 @@ import {useParams} from "react-router";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import {SEO} from "../../components/SEO.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
-import Header from "./sections/Header.tsx";
 import {lazy, Suspense, useEffect, useState} from "react";
-import MenuItem from "../../components/MenuItem.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
 import HeroDesktop from "./sections/HeroDesktop.tsx";
 import HeroMobile from "./sections/HeroMobile.tsx";
 import {DrupalAPI} from "../../api/drupal.ts";
-import { Event } from '../../types/event.ts'
+import {Event} from '../../types/event.ts'
+import MenuItemButton from "./components/MenuItemButton.tsx";
+import FixedTicketButton from "./components/FixedTicketButton.tsx";
+import Disclaimer from "./sections/Disclaimer.tsx";
 
 const Information = lazy(() => import('./sections/Information'));
 const TrackList = lazy(() => import('./sections/TrackList'));
 const ArtistsSection = lazy(() => import('./sections/ArtistsSection'));
 const LocationSection = lazy(() => import('./sections/LocationSection'));
-const AboutUsSection = lazy(() => import('./sections/AboutUsSection'));
+const AboutUsSection = lazy(() => import('../MainPage/sections/AboutUs/AboutUs'));
 const ReviewsSection = lazy(() => import('./sections/ReviewsSection'));
-// const UpcomingEvents = lazy(() => import('./sections/UpcomingEvents'));
+const UpcomingEvents = lazy(() => import('./sections/UpcomingEvents'));
 
 
 const EventPage = () => {
     const { id } = useParams<{ id: string }>();
     const [loading, setLoading] = useState(true);
-    const [event, setEvent] = useState<Event | null>(null); // Изменено: event вместо events
+    const [event, setEvent] = useState<Event | null>(null);
+    const [events, setEvents] = useState<Event[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -40,6 +42,7 @@ const EventPage = () => {
 
                 const eventData = await DrupalAPI.getEventByEventId(id);
                 setEvent(eventData);
+                console.log(eventData);
 
                 if (!eventData) {
                     setError(`Событие с ID ${id} не найдено`);
@@ -52,12 +55,34 @@ const EventPage = () => {
             }
         };
 
-        fetchEvent(); // Добавлено: вызов функции
-    }, [id]); // Добавлено: зависимость от id
+        fetchEvent();
+    }, [id]);
 
-    type menuItemType = 'Описание' | 'Трек-лист' | 'Исполнители' | 'Площадка' | null
-    const [activeSection, setActiveSection] = useState<menuItemType>('Описание')
-    const menuItems: menuItemType[] = ['Описание', 'Трек-лист', 'Исполнители', 'Площадка']
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                setLoading(true);
+
+                const eventsData = await DrupalAPI.getEvents();
+                setEvents(eventsData);
+
+                if (!eventsData) {
+                    setError(`События не найдены`);
+                }
+            } catch (err) {
+                console.error('Error loading events:', err);
+                setError(err instanceof Error ? err.message : 'Unknown error');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchEvents();
+    }, [id]);
+
+    type menuItemType = 'Описание программы' | 'Трек-лист' | 'Исполнители' | 'Площадка' | null
+    const [activeSection, setActiveSection] = useState<menuItemType>('Описание программы')
+    const menuItems: menuItemType[] = ['Описание программы', 'Трек-лист', 'Исполнители', 'Площадка']
 
     const toggleMenu = (item: menuItemType) => {
         if(item === activeSection) {
@@ -66,7 +91,6 @@ const EventPage = () => {
         setActiveSection(item)
     }
 
-    const xl = useMediaBreakpoint('xl')
     const md = useMediaBreakpoint('md')
 
     if(loading) return <LoadingSpinner/>
@@ -75,8 +99,8 @@ const EventPage = () => {
 
     const renderContent = () => {
         switch(activeSection) {
-            case 'Описание':
-                return <Information description={event.descriptionFull} poster={event.poster && event.poster} eventId={event.eventId} />
+            case 'Описание программы':
+                return <Information description={event.descriptionFull} poster={event.poster && event.poster} />
             case 'Трек-лист':
                 return <TrackList trackList={event.trackList ? event.trackList : []} />
             case 'Исполнители':
@@ -100,49 +124,67 @@ const EventPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <Header item={event}/>
-            <div className='flex flex-col gap-[100px] w-[90vw] xl:w-[1166px] xl:gap-40'>
+            <FixedTicketButton eventId={event.eventId}/>
+            <div className='relative flex flex-col gap-[100px] w-[90vw] xl:w-[1166px]'>
+
                 {md ? <HeroDesktop item={event}/> : <HeroMobile item={event} />}
+
+                {event.title === "Симфония Раммштайн" &&
+                    <Disclaimer
+                        firstArticle=
+                            {<>
+                                <p className='text-light-brown'>Организатор и исполнители не поддерживают официальную позицию немецкой метал-группы «Rammstein».</p>
+                                Организатор и исполнители не несут ответственность за смысл текстов песен, а так же любые высказывания и мнения метал-группы «Rammstein».
+                                «Backstage group» не несёт ответственности за содержание авторских материалов.
+                            </>}
+                        secondArticle=
+                            {<>
+                                <p className='text-light-brown'>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
+                                и исполняет музыку метал-группы «Rammstein»
+                                в симфонической аранжировке.
+                                Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими людьми случайно.
+                            </>}
+                        />
+                }
+
+                {event.title === "Симфония Imagine Dragons" &&
+                    <Disclaimer
+                        firstArticle=
+                            {<>
+                                <p className='text-light-brown'>Организатор и исполнители не поддерживают официальную позицию группы «Imagine Dragons».</p>
+                                Организатор и исполнители не несут ответственность за смысл текстов песен, а так же любые высказывания и мнения группы «Imagine Dragons».
+                                «Backstage group» не несёт ответственности за содержание авторских материалов.
+                            </>}
+                        secondArticle=
+                            {<>
+                                <p className='text-light-brown'>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
+                                и исполняет музыку группы «Imagine Dragons»
+                                в симфонической аранжировке.
+                                Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими людьми случайно.
+                            </>}
+                    />
+                }
+
                 <Suspense fallback={<LoadingSpinner />}>
-                    {!xl ? <div className='flex flex-col items-center gap-[50px]'>
-                            <div className='grid grid-cols-2 md:grid-cols-4 gap-2.5'>
-                                {menuItems.map((item) => (
-                                    <MenuItem
-                                        key={item}
-                                        isActive={item === activeSection}
-                                        onClick={() => toggleMenu(item)}>
-                                        <Text variant={TextVariant.P}>{item}</Text>
-                                    </MenuItem>
-                                ))}
-                            </div>
-                            {renderContent()}
+                    <div className='flex flex-col items-start gap-[50px] w-[90vw] md:w-full '>
+                        <div className='flex gap-6 md:gap-[30px] overflow-auto w-[90vw] md:w-full'>
+                            {menuItems.map((item) => (
+                                <MenuItemButton
+                                    key={item}
+                                    isActive={item === activeSection}
+                                    setActive={() => toggleMenu(item)}>
+                                    <Text variant={TextVariant.P}>{item}</Text>
+                                </MenuItemButton>
+                            ))}
+                        </div>
+                        {renderContent()}
                     </div>
-                        : <>
-                            <Information description={event.descriptionFull} poster={event.poster && event.poster} eventId={event.eventId} />
-                            {event.trackList && <TrackList trackList={event.trackList} />}
-                            {event.artists && event.artists?.length > 0 &&
-                                <ArtistsSection
-                                    artistsGroupPhoto={event.artistsGroupPhoto && event.artistsGroupPhoto}
-                                    artists={event.artists}
-                                    artistsTeam={event.artistsTeam && event.artistsTeam}
-                                />
-                            }
-                            {event.locationPhotos.length > 0 &&
-                                <LocationSection
-                                    photos={event.locationPhotos}
-                                    location={event.location}
-                                    eventId={event.eventId}
-                                    address={event.address}
-                                />
-                            }
-                            </>
-                    }
                 </Suspense>
-                {/*{events.length > 1 &&*/}
-                {/*    <Suspense fallback={<LoadingSpinner />}>*/}
-                {/*        <UpcomingEvents item={event} events={events} />*/}
-                {/*    </Suspense>*/}
-                {/*}*/}
+                {events.length > 1 &&
+                    <Suspense fallback={<LoadingSpinner />}>
+                        <UpcomingEvents item={event} events={events} />
+                    </Suspense>
+                }
                 <Suspense fallback={<LoadingSpinner />}>
                     <AboutUsSection />
                 </Suspense>
