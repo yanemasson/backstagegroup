@@ -34,7 +34,7 @@ const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, children}) 
 
 
     return (
-        <a href={`#event/${eventId}`}>{children}</a>
+        <a className='w-fit' href={`#event/${eventId}`}>{children}</a>
     );
 };
 
