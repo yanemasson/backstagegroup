@@ -1,10 +1,10 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import ExpandButton from "../../../components/Buttons/ExpandButton.tsx";
-import {useState} from "react";
+import {ReactNode, useState} from "react";
 
 interface QuestionCardProps {
     question: string;
-    answer: string;
+    answer: ReactNode;
     isLast: boolean;
 }
 
