@@ -6,6 +6,7 @@ import {Link} from "react-router";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
 import videoPosterDesktop from "../../assets/video_poster_desktop.png";
 import TicketButtonWrapper from "../Buttons/TicketButtonWrapper.tsx";
+import InTicketButtonWrapper from "../Buttons/InTicketButtonWrapper.tsx";
 
 interface EventCardProps {
     item: Event,
@@ -47,9 +48,15 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
                 </div>
 
                 <div className='flex gap-2.5 justify-self-end'>
-                    <TicketButtonWrapper eventId={item.eventId}>
-                        <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]'>Купить билет</Button>
-                    </TicketButtonWrapper>
+                    {item.eventId == 67229812
+                        ? <InTicketButtonWrapper eventId={item.eventId}>
+                            <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]'>Купить билет</Button>
+                        </InTicketButtonWrapper>
+                        : <TicketButtonWrapper eventId={item.eventId}>
+                            <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]'>Купить билет</Button>
+                        </TicketButtonWrapper>
+                    }
+
                     <Link to={`/events/${to}`}>
                         <Button variant={ButtonVariant.secondary} className='h-[50px] w-[214px]'>Подробнее</Button>
                     </Link>

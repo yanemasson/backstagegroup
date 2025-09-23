@@ -1,7 +1,9 @@
-import TicketButton from "../../../components/Buttons/TicketButton.tsx";
+import TicketButtonWrapper from "../../../components/Buttons/TicketButtonWrapper.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 import {useActiveSection} from "../../../hooks/useActiveSection.ts";
 import {useEffect, useState} from "react";
+import InTicketButtonWrapper from "../../../components/Buttons/InTicketButtonWrapper.tsx";
+import Button, {ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 interface FixedTicketButtonProps {
     eventId: number;
@@ -28,7 +30,14 @@ const FixedTicketButton = ({eventId}: FixedTicketButtonProps) => {
         `}
         >
             <div className='md:pr-5 md:py-4 md:bg-darkgray '>
-                <TicketButton className='w-[90vw] h-[45px] md:w-[335px] md:h-[53px]' eventId={eventId}/>
+                {eventId == 67229812
+                    ? <InTicketButtonWrapper eventId={eventId}>
+                        <Button className='w-[90vw] h-[45px] md:w-[335px] md:h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
+                    </InTicketButtonWrapper>
+                    : <TicketButtonWrapper eventId={eventId}>
+                        <Button className='w-[90vw] h-[45px] md:w-[335px] md:h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
+                    </TicketButtonWrapper>
+                }
             </div>
         </div>
     );
