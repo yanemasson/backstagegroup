@@ -42,7 +42,6 @@ const EventPage = () => {
 
                 const eventData = await DrupalAPI.getEventByEventId(id);
                 setEvent(eventData);
-                console.log(eventData);
 
                 if (!eventData) {
                     setError(`Событие с ID ${id} не найдено`);
@@ -182,7 +181,12 @@ const EventPage = () => {
                 </Suspense>
                 {events.length > 1 &&
                     <Suspense fallback={<LoadingSpinner />}>
-                        <UpcomingEvents item={event} events={events} />
+                        <UpcomingEvents
+                            item={event}
+                            events={events.filter((item) =>
+                                item.eventId != event.eventId && item.city === event.city
+                            )}
+                        />
                     </Suspense>
                 }
                 <Suspense fallback={<LoadingSpinner />}>
