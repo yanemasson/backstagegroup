@@ -4,7 +4,7 @@ import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 
 const Hero = lazy(() => import('./sections/Hero/Hero'));
-const AboutUsSection = lazy(() => import('../EventPage/sections/AboutUsSection'));
+const AboutUsSection = lazy(() => import('./sections/AboutUs/AboutUs'));
 const ReviewsSection = lazy(() => import('../EventPage/sections/ReviewsSection'));
 const NewsSection = lazy(() => import('./sections/News/NewsSection'));
 const Faq = lazy(() => import('./sections/FAQ/FAQ'));
@@ -25,7 +25,6 @@ const MainPage = () => {
                 <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><NewsSection/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><Faq/></Suspense>
-
             </div>
         </div>
     );
