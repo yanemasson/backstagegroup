@@ -8,6 +8,7 @@ import {getDate} from "../../utils/getDate.ts";
 import Text, {TextVariant} from "../../components/Text.tsx";
 import {fetchCategories, fetchPost, WordPressCategory, WordPressPost} from "../../api";
 import {useEffect, useState} from "react";
+import {SEO} from "../../components/SEO.tsx";
 
 const NewsPage = () => {
     const {id} = useParams()
@@ -46,7 +47,13 @@ const NewsPage = () => {
     }
 
     return (
-        <div className='pt-5'>
+        <div className='pt-5 mb-[120px] md:w-[1166px] w-[90vw]'>
+            <SEO
+                title={post.title.rendered}
+                description='Билеты на лучшие балетные спектакли и симфонические концерты." +
+                    "Классическая музыка, премьеры в Вашем городе'
+                keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
+            />
             <Text className='text-lightgray pb-5' variant={TextVariant.CAPTION}>
                 <Link className='hover:text-white transition-colors ' to={`/news/`}>Новости</Link>
                 {` · `}

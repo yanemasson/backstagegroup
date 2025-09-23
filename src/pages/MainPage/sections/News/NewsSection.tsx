@@ -31,9 +31,9 @@ const NewsSection = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <section className='xl:w-[1200px] flex flex-col self-start items-start gap-[60px]'>
+        <section className='w-[90vw] md:w-[1166px] flex flex-col gap-[60px]'>
             <Text variant={TextVariant.H2}>НОВОСТИ</Text>
-            <div className='flex flex-col gap-10 lg:gap-[50px] justify-center'>
+            <div className='flex flex-col gap-10 lg:gap-[50px] justify-center items-center'>
                 {newsList.map((item, index) => (
                     index < 3 && <NewsCard key={item.id} post={item} />
                 ))}

@@ -69,7 +69,7 @@ const NewsListPage = () => {
                 "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <div className='xl:w-[1200px] flex flex-col self-start items-start gap-[60px]'>
+            <div className='xl:w-[1166px] flex flex-col self-start items-start gap-[60px] mb-[120px]'>
                 <div className='flex flex-col md:flex-row md:w-full gap-[30px] justify-between items-start'>
                     <Text className='text-light-brown' variant={TextVariant.H1}>НОВОСТИ</Text>
                     <MultiSelect options={options} selectedValues={selected} onChange={setSelected} />

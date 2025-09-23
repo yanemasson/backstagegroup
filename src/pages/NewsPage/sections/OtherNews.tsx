@@ -1,4 +1,4 @@
-import NewsCard from "../../../components/newsCard.tsx";
+import NewsCard from "../../../components/NewsCard";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import {useEffect, useState} from "react";
 import {fetchPostForCategories, WordPressPost} from "../../../api";

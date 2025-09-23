@@ -7,6 +7,7 @@ import LoadingSpinner from "../../../components/LoadingSpinner.tsx";
 import {useEffect, useState} from "react";
 import { Event } from '../../../types/event.ts'
 import {DrupalAPI} from "../../../api/drupal.ts";
+import {useCity} from "../../../hooks/geolocation/useCity.ts";
 
 const TagEvents = ({tag}: { tag: string; }) => {
 
@@ -14,6 +15,8 @@ const TagEvents = ({tag}: { tag: string; }) => {
     const [events, setEvents] = useState<Event[]>([]);
     const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
     const xl = useMediaBreakpoint('xl')
+
+    const { selectedCity } = useCity();
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -29,10 +32,9 @@ const TagEvents = ({tag}: { tag: string; }) => {
     }, []);
 
     useEffect(() => {
-        setFilteredEvents(events.filter(event => event.tag === tag));
+        setFilteredEvents(events.filter(event => event.tag === tag && event.city === selectedCity));
     }, [events, tag]);
 
-    console.log(filteredEvents)
     if (loading) return <LoadingSpinner/>
 
     return (

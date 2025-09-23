@@ -6,7 +6,7 @@ const Article = ({ post }: { post: WordPressPost }) => {
     const poster = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
     return (
         <section className='flex flex-col gap-10'>
-            <Text className='text-light-brown' variant={TextVariant.H1}>{post.title.rendered.toUpperCase()}</Text>
+            <Text className='text-light-brown break-words word-wrap-break-word' variant={TextVariant.H1}>{post.title.rendered.toUpperCase()}</Text>
             <img src={poster} alt={poster}/>
             <div className='flex flex-col gap-[30px]'>
                 <div className='w-full flex flex-col gap-6 lg:w-[688px] xl:w-[872px]'>
