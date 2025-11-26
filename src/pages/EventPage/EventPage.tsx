@@ -109,7 +109,7 @@ const EventPage = () => {
                         artistsGroupPhoto={event.artistsGroupPhoto && event.artistsGroupPhoto}
                     />
             case 'Площадка':
-                return <LocationSection photos={event.locationPhotos} location={event.location} eventId={event.eventId} address={event.address}/>
+                return <LocationSection photos={event.locationPhotos} location={event.location} address={event.address}/>
             default:
                 return null
         }
