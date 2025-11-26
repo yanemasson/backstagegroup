@@ -40,7 +40,7 @@ const Faq = () => {
                     <p>Вы можете написать нам в сообщения</p>
                     <p><Anchor href={'https://vk.com/backstagegroup'}>группы ВКонтакте</Anchor>,</p>
                     <p><Anchor href={'https://t.me/backstagegroup24'}>Telegram-канал</Anchor>,</p>
-                    <Anchor href={'https://t.me/backstagegroup24'}>WhatsApp</Anchor>
+                    <Anchor href={'https://wa.me/79994400249'}>WhatsApp</Anchor>
                     <p>или позвонить по <Anchor href={'tel:+79994400249'}>+7 999 440-02-49</Anchor>, <Anchor href={'tel:+79232157634'}>+7 923 215-76-34</Anchor></p>
                 </div>
         },
