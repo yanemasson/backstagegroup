@@ -1,6 +1,6 @@
 export interface Track {
-    musician: string,
-    composition: string,
+    artist: string,
+    title: string,
     source: string,
 }
 

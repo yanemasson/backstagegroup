@@ -74,31 +74,6 @@ class DrupalParser {
                 .filter((url : string) => url !== '');
         }
 
-        let trackList: Track[] = [];
-        if (relationships?.field_tracklist?.data && Array.isArray(relationships.field_tracklist.data)) {
-            trackList = relationships.field_tracklist.data
-                .map((trackRef: any) => {
-                    const trackData = included?.find(item =>
-                        item.type === 'node--track' && item.id === trackRef.id
-                    );
-
-                    if (!trackData) {
-                        return null;
-                    }
-
-                    return {
-                        musician: trackData.attributes?.field_musician ||
-                            trackData.attributes?.musician || '',
-                        composition: trackData.attributes?.field_composition ||
-                            trackData.attributes?.composition ||
-                            trackData.attributes?.title || '',
-                        source: trackData.attributes?.field_source ||
-                            trackData.attributes?.source || ''
-                    };
-                })
-                .filter((track : Track) => track !== null);
-        }
-
         let artists: Artist[] = [];
         if (relationships?.field_artists?.data && Array.isArray(relationships.field_artists.data)) {
             artists = relationships.field_artists.data
@@ -126,6 +101,31 @@ class DrupalParser {
                 .filter((artist : Artist) => artist !== null);
         }
 
+        let trackList: Track[] = [];
+        if (relationships?.field_tracklist_new?.data && Array.isArray(relationships.field_tracklist_new.data)) {
+            trackList = relationships.field_tracklist_new.data
+                .map((trackRef: any) => {
+                    const trackData = included?.find(item =>
+                        item.type === 'paragraph--track' && item.id === trackRef.id
+                    );
+
+                    if (!trackData) {
+                        return null;
+                    }
+
+                    const trackTitle = this.getFieldValue(trackData.attributes, 'field_title');
+                    const trackArtist = this.getFieldValue(trackData.attributes, 'field_artist');
+                    const trackSource = this.getFieldValue(trackData.attributes, 'field_source');
+
+                    return {
+                        title: trackTitle?.toString() || '',
+                        artist: trackArtist?.toString() || '',
+                        source: trackSource?.toString() || '',
+                    };
+                })
+                .filter((track: Track | null): track is Track => track !== null);
+        }
+
         return {
             title: attributes.title || '',
             poster: posterUrl,
@@ -144,7 +144,8 @@ class DrupalParser {
             locationPhotos: locationPhotos,
             tag: attributes.field_tag || '',
             trackList: trackList,
-            artists: artists
+            artists: artists,
+            cta: ''
         };
     }
 
@@ -207,9 +208,13 @@ export class DrupalAPI {
     static async getEventByEventId(eventId: string): Promise<Event | null> {
         try {
             const filterParam = `filter[field_event_id]=${eventId}`;
-            const includeParam = 'field_poster,field_video,field_artists_group_photo,field_location_photos,field_tracklist,field_artists,field_artists.field_photo';
+
+            const includeParam = 'field_poster,field_video,field_artists_group_photo,field_location_photos,field_tracklist_new,field_artists,field_artists.field_photo';
+
             const fieldsParam = 'fields[file--file]=uri,url,filename';
+
             const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${filterParam}&include=${includeParam}&${fieldsParam}`;
+
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -218,7 +223,6 @@ export class DrupalAPI {
 
             const data: DrupalResponse = await response.json();
 
-            // Возвращаем первое найденное событие (должно быть единственным)
             if (data.data && (Array.isArray(data.data) ? data.data.length > 0 : true)) {
                 const nodes = Array.isArray(data.data) ? data.data : [data.data];
                 return DrupalParser.parseEvent(nodes[0], data.included);
@@ -226,6 +230,7 @@ export class DrupalAPI {
 
             return null;
         } catch (error) {
+            console.error('Error fetching event by ID:', error);
             return null;
         }
     }
