@@ -57,7 +57,7 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                     </div>
 
                     <div className='flex gap-2.5 items-end'>
-                        {item.eventId == 67229812
+                        {item.eventId.toString().length > 7
                             ? <InTicketButtonWrapper  eventId={item.eventId}>
                                 <Button className='w-[335px] h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
                             </InTicketButtonWrapper>
