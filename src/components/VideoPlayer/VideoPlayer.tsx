@@ -4,11 +4,12 @@ import MuteButton from "./MuteButton.tsx";
 
 interface VideoPlayerProps {
     video: string | undefined
+    poster?: string
     className?: string
     buttonType?: 'play' | 'mute'
 }
 
-const VideoPlayer = ({video, className, buttonType = 'play'}:VideoPlayerProps) => {
+const VideoPlayer = ({video, poster, className, buttonType = 'play'}:VideoPlayerProps) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(buttonType === 'mute');
     const [isHovered, setIsHovered] = useState(false);
@@ -69,6 +70,7 @@ const VideoPlayer = ({video, className, buttonType = 'play'}:VideoPlayerProps) =
                 muted={isMuted}
                 width="100%"
                 height="100%"
+                poster={poster}
             >
                 <source src={video} type="video/mp4" />
             </video>
