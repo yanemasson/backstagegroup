@@ -9,29 +9,34 @@ const Footer = () => {
     const md = useMediaBreakpoint('md')
 
     return (
-        <section className='flex flex-col gap-10 w-[90vw] md:w-[1167px] md:items-center pb-10'>
+        <section className='flex flex-col gap-10 w-[90vw] md:w-[1167px] md:items-center pb-[100px]'>
             {md
                 ? <div className='flex flex-col md:flex-row md:justify-between md:w-[970px] gap-[50px]'>
 
                     <div className='flex flex-col gap-5'>
                         <Text variant={TextVariant.H4}>Меню</Text>
                         <Link to={'/'}>
-                            <Text variant={TextVariant.P} className='text-dark-text'>Афиша</Text>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>Афиша</Text>
                         </Link>
                         <Link to={'/news'}>
-                            <Text variant={TextVariant.P} className='text-dark-text'>Новости</Text>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>Новости</Text>
                         </Link>
                     </div>
                     <div className='flex flex-col gap-5'>
                         <Text variant={TextVariant.H4}>Полезное</Text>
                         <Link to='/refund'>
-                            <Text variant={TextVariant.P} className='text-dark-text'>Возврат билетов</Text>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>Возврат билетов</Text>
                         </Link>
                     </div>
 
                     <div className='flex flex-col gap-5'>
                         <Text variant={TextVariant.H4}>Номера для связи</Text>
-                        <Text variant={TextVariant.P} className='text-dark-text'>+7 987 876 23 45</Text>
+                        <a href='tel:+79994400249'>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>+7 999 440-02-49</Text>
+                        </a>
+                        <a href='tel:+79232157634'>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>+7 923 215-76-34</Text>
+                        </a>
                     </div>
                     <div className='flex flex-col gap-5'>
                         <Text variant={TextVariant.H4}>Мы в соцсетях</Text>
@@ -46,23 +51,28 @@ const Footer = () => {
                         <div className='flex flex-col gap-5'>
                             <Text variant={TextVariant.H4}>Меню</Text>
                             <Link to={'/'}>
-                                <Text variant={TextVariant.P} className='text-dark-text'>Афиша</Text>
+                                <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>Афиша</Text>
                             </Link>
                             <Link to={'/news'}>
-                                <Text variant={TextVariant.P} className='text-dark-text'>Новости</Text>
+                                <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>Новости</Text>
                             </Link>
                         </div>
                         <div className='flex flex-col gap-5'>
                             <Text variant={TextVariant.H4}>Полезное</Text>
                             <Link to='/refund'>
-                                <Text variant={TextVariant.P} className='text-dark-text'>Возврат билетов</Text>
+                                <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>Возврат билетов</Text>
                             </Link>
                         </div>
                     </div>
 
                     <div className='flex flex-col gap-5'>
                         <Text variant={TextVariant.H4}>Номера для связи</Text>
-                        <Text variant={TextVariant.P} className='text-dark-text'>+7 987 876 23 45</Text>
+                        <a href='tel:+79994400249'>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>+7 999 440-02-49</Text>
+                        </a>
+                        <a href='tel:+79232157634'>
+                            <Text variant={TextVariant.P} className='text-dark-text hover:text-light-brown'>+7 923 215-76-34</Text>
+                        </a>
                     </div>
                     <div className='flex flex-col gap-5'>
                         <Text variant={TextVariant.H4}>Мы в соцсетях</Text>
@@ -76,13 +86,13 @@ const Footer = () => {
 
             <div className='flex flex-col gap-5 md:flex-row md:justify-between md:gap-[30px]'>
                 <Link to={'/user_agreement'}>
-                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>Пользовательское соглашение</Text>
+                    <Text variant={TextVariant.CAPTION} className='text-dark-text hover:text-light-brown'>Пользовательское соглашение</Text>
                 </Link>
                 <Link to={'/offer'}>
-                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>Публичная оферта</Text>
+                    <Text variant={TextVariant.CAPTION} className='text-dark-text hover:text-light-brown'>Публичная оферта</Text>
                 </Link>
                 <Link to={'/privacy_policy'}>
-                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>Политика конфиденциальности</Text>
+                    <Text variant={TextVariant.CAPTION} className='text-dark-text hover:text-light-brown'>Политика конфиденциальности</Text>
                 </Link>
             </div>
 
