@@ -12,9 +12,9 @@ const TrackList = ({trackList} : {trackList: Track[]}) => {
                 {trackList.map((track: Track, index) => (
                     <div className='flex flex-col gap-2' key={index}>
                         <Text variant={TextVariant.H4}>
-                            {`${index + 1}. ${track.composition} из «${track.source}»`}
+                            {`${index + 1}. ${track.title} ${track.source && ` из «${track.source}»`}`}
                         </Text>
-                        <Text className='text-lightgray' variant={TextVariant.CAPTION}>{track.musician}</Text>
+                        <Text className='text-lightgray' variant={TextVariant.CAPTION}>{track.artist}</Text>
                     </div>
                 ))}
             </div>
