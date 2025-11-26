@@ -9,6 +9,7 @@ import {useMediaBreakpoint} from "../../../../hooks/useMediaBreakpoint.ts";
 import EventCardDesktop from "../../../../components/EventCard/EventCardDesktop.tsx";
 import {getDate} from "../../../../utils/getDate.ts";
 import MonthButton from "../../components/MonthButton.tsx";
+import {useCity} from "../../../../hooks/geolocation/useCity.ts";
 
 const EventList = () => {
 
@@ -16,6 +17,7 @@ const EventList = () => {
     const [firstMonth, setFirstMonth] = useState(0)
     const [activeMonthSection, setActiveMonthSection] = useState(0)
     const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+    const {selectedCity} = useCity();
 
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
@@ -27,7 +29,7 @@ const EventList = () => {
             try {
                 setLoading(true);
                 const eventsList = await DrupalAPI.getEvents();
-                setEvents(eventsList);
+                setEvents(eventsList.filter((item) => item.city == selectedCity));
                 setFirstMonth(getDate(eventsList[0].date).monthNum - 1);
 
             } catch (err) {
@@ -38,7 +40,7 @@ const EventList = () => {
         };
 
         fetchEvents();
-    }, []);
+    }, [selectedCity]);
 
     useEffect(() => {
         if (activeMonthSection === 0) {
@@ -59,7 +61,7 @@ const EventList = () => {
 
     return (
         <section id='eventlist' className='flex flex-col gap-10 bg-darkgray text-white w-[90vw] xl:w-[1166px]'>
-            <Text variant={TextVariant.H2}>АФИША</Text>
+            <Text variant={TextVariant.H2}>АФИША {selectedCity?.toUpperCase()}</Text>
             <div className='grid grid-cols-3 justify-items-center gap-2 md:grid-cols-4 xl:flex xl:gap-[30px]'>
                 <MonthButton
                     isActive={activeMonthSection === 0}
