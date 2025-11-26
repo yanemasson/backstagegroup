@@ -17,7 +17,7 @@ const ReviewComponent = ({review}: {review: Review}) => {
 
     return (
         <div
-            className={`flex flex-col bg-dark-bg xl:w-[382px] min-w-[290px] min-h-[254px] gap-[30px] p-5 ${isOpen ? 'h-full' : 'h-[267px]'}`}
+            className={`flex flex-col bg-dark-bg md:w-[382px] min-w-[290px] min-h-[254px] gap-[30px] p-5 ${isOpen ? 'h-full' : 'h-[267px]'}`}
             onClick={() => !md && setIsOpen(!isOpen)}
         >
             <div className='flex justify-between'>
