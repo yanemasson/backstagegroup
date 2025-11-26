@@ -2,6 +2,7 @@ const months = ['Января', 'Февраля', 'Марта', 'Апреля', 
     'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря']
 
 const weekdays = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+const weekdaysShort = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
 
 export const getDate = (datetime: string) => {
     const date = datetime.split('-')
@@ -19,6 +20,7 @@ export const getDate = (datetime: string) => {
         parseInt(date[2])
     );
     const weekday = weekdays[jsDate.getDay()]
+    const weekdayShort = weekdaysShort[jsDate.getDay()]
 
     return {
         year: date[0],
@@ -26,6 +28,7 @@ export const getDate = (datetime: string) => {
         monthStr: months[Number(date[1]) - 1],
         day: date[2],
         weekday: weekday,
+        weekdayShort: weekdayShort,
         time: formattedTime,
         get formattedDate() {
             return this.day + '.' + this.monthNum + '.' + this.year;
