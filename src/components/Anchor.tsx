@@ -8,7 +8,7 @@ interface AnchorProps {
 
 const Anchor = ({href, children, target = '_blank'}: AnchorProps) => {
     return (
-        <a target={target} className='underline text-lightgray focus:text-white hover:text-white' href={href}>
+        <a target={target} className='underline text-light-brown focus:text-white hover:text-white' href={href}>
             {children}
         </a>
     );
