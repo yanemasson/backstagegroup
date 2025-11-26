@@ -13,7 +13,7 @@ const Hero = () => {
     const [error, setError] = useState<string | null>(null);
     const [slideEvents, setSlideEvents] = useState<Event[]>([]);
     const [index, setIndex] = useState(0);
-    const slideTime = 8000
+    const slideTime = 4000
 
     const {selectedCity} = useCity();
 
