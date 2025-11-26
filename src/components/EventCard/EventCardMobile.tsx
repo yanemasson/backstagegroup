@@ -38,7 +38,7 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
                         className='h-full w-full object-cover'
                         alt={item.poster ? item.poster : videoPosterMobile}
                         src={item.poster ? item.poster : videoPosterMobile} />
-                    : <VideoPlayer buttonType='play' key={item.video} video={item.video} className='w-full object-cover' />
+                    : <VideoPlayer poster={item.poster} buttonType='play' key={item.video} video={item.video} className='w-full object-cover' />
                 }
             </div>
 
