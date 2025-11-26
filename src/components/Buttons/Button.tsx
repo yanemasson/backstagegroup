@@ -4,7 +4,8 @@ import {ReactNode} from "react";
 export enum ButtonVariant {
     primary = 'primary',
     secondary = 'secondary',
-    outline = 'outline'
+    outline = 'outline',
+    disabled = 'disabled',
 }
 interface ButtonProps {
     children: ReactNode,
@@ -24,6 +25,7 @@ const Button = ({
         [ButtonVariant.primary]: 'bg-light-brown text-white hover:bg-white hover:text-light-brown active:bg-black disabled:bg-[#131313] disabled:text-[#3E3E3E]',
         [ButtonVariant.secondary]: 'bg-semi-darkgray text-white hover:bg-black active:bg-brown',
         [ButtonVariant.outline]: 'text-light-brown border-solid border-[2px] border-light-brown hover:bg-black active:bg-gray ',
+        [ButtonVariant.disabled]: ' bg-[#1F1E1E] text-dark-text',
     }
 
     return (
