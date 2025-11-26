@@ -23,9 +23,9 @@ const Text = ({children, variant, className}:TextProps) => {
         [TextVariant.H2]: 'font-display font-semibold text-[28px] md:text-[40px] tracking-[0.07em] leading-none',
         [TextVariant.H3]: 'font-display font-medium text-[24px] md:text-[32px] tracking-[0.07em] leading-none',
         [TextVariant.H4]: 'font-medium text-[18px] md:text-[24px] tracking-[0em] leading-none',
-        [TextVariant.P]: 'text-[16px] xl:text-[18px] font-light tracking-[0em] leading-tight',
+        [TextVariant.P]: 'text-[16px] xl:text-[18px] font-medium tracking-[0em] leading-tight',
         [TextVariant.B]: 'text-[16px] md:text-[20px] font-bold',
-        [TextVariant.CAPTION]: 'text-[16px] font-light',
+        [TextVariant.CAPTION]: 'text-[16px] font-medium',
     };
     const Component = (variant === TextVariant.P || variant === TextVariant.CAPTION) ? 'p'
         : variant === TextVariant.B ? 'strong'
