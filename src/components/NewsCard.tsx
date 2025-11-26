@@ -20,7 +20,7 @@ const NewsCard = ({post}: NewsCardProps) => {
     const href = `/news/${post.id}`;
 
     return (
-        <div className='flex flex-col gap-5 md:flex-row justify-between xl:w-[1200px]'>
+        <div className='flex flex-col gap-5 md:flex-row justify-between xl:max-w-[1166px]'>
             <img className='md:w-[349px] lg:w-[435px] xl:w-[558px] object-cover' src={poster} alt={title} />
             <div className='flex flex-col gap-5 md:gap-[83px] md:w-[359px] lg:w-[435px] xl:w-[578px] justify-between items-start'>
                 <div className='flex flex-col gap-5'>
