@@ -9,35 +9,19 @@ import {useCity} from "../../hooks/geolocation/useCity.ts";
 import {CitySearchModal} from "./components/CitySearchModal.tsx";
 import CityConfirmationModal from "../../components/CityConfirmationModal.tsx";
 import LocationIcon from '../../assets/icons/ic_location.svg?react'
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
+import {useLocation} from "react-router-dom";
 
 const Navbar = () => {
-
-    const [isCityModalOpen, setIsCityModalOpen] = useState(false);
-    const [showCityPopUp, setShowCityPopUp] = useState(false);
-    const { selectedCity} = useCity();
 
     const [isOpen, setIsOpen] = useState(false)
     const [visible, setVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    const navigate = useNavigate();
+    const location = useLocation()
+
     const md = useMediaBreakpoint('md')
-
-    const handleConfirmCity = () => {
-        localStorage.setItem('hasVisited', 'true');
-        setShowCityPopUp(false);
-    };
-    const handleChangeCity = () => {
-        setShowCityPopUp(false);
-        setIsCityModalOpen(true)
-    };
-
-    useEffect(() => {
-        // Проверяем, первый ли это визит
-        const hasVisited = localStorage.getItem('hasVisited');
-        if (!hasVisited) {
-            setShowCityPopUp(true);
-        }
-    }, [selectedCity]);
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
@@ -63,7 +47,27 @@ const Navbar = () => {
             window.removeEventListener('scroll', controlNavbar);
         };
     }, [lastScrollY]);
-    
+
+    //геолокация
+    const [isCityModalOpen, setIsCityModalOpen] = useState(false);
+    const [showCityPopUp, setShowCityPopUp] = useState(false);
+    const { selectedCity } = useCity();
+    const handleConfirmCity = () => {
+        localStorage.setItem('hasVisited', 'true');
+        setShowCityPopUp(false);
+    };
+    const handleChangeCity = () => {
+        setShowCityPopUp(false);
+        setIsCityModalOpen(true)
+    };
+    useEffect(() => {
+        // Проверяем, первый ли это визит
+        const hasVisited = localStorage.getItem('hasVisited');
+        if (!hasVisited) {
+            setShowCityPopUp(true);
+        }
+    }, [selectedCity]);
+
     return (
         <nav className={`bg-darkgray fixed z-40 w-full  py-5 flex items-center justify-center
             ${visible ? 'transform-none' : 'transform -translate-y-full'} transition-all duration-300 `}>
@@ -91,13 +95,24 @@ const Navbar = () => {
                                     </Text>
                                 </Link>
                             </div>
-                            <a className='cursor-pointer hover:text-light-brown' href='tel:+79232157634'><Text variant={TextVariant.P}>+7 923 215-76-34</Text></a>
-
+                            <a className='cursor-pointer hover:text-light-brown' href='tel:+79994400249'><Text variant={TextVariant.P}>+7 999 440-02-49</Text></a>
                         </>}
                 </div>
 
-
                 <div className='flex items-center justify-between gap-2 w-[90vw] xl:w-[1166px]'>
+
+                    {!md && location.pathname !== '/' &&
+                        <button
+                            className='flex justify-center items-center h-10 w-10 bg-semi-darkgray text-[#8F8F8F] flex-shrink-0'
+                            onClick={() => navigate(-1)}
+                        >
+                            <svg className='rotate-90' width="16" height="12"
+                                 viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L0 0H12L6 9Z" fill="currentColor" />
+                            </svg>
+                        </button>
+                    }
+
                     <Link to='/'>
                         <Button className='w-[83px] h-10 md:w-[136px] md:h-[53px] shrink-0' variant={ButtonVariant.outline}>
                             Афиша
