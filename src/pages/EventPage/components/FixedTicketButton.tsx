@@ -30,7 +30,7 @@ const FixedTicketButton = ({eventId}: FixedTicketButtonProps) => {
         `}
         >
             <div className='md:pr-5 md:py-4 md:bg-darkgray '>
-                {eventId == 67229812
+                {eventId.toString().length > 7
                     ? <InTicketButtonWrapper eventId={eventId}>
                         <Button className='w-[90vw] h-[45px] md:w-[335px] md:h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
                     </InTicketButtonWrapper>

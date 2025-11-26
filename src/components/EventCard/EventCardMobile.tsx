@@ -55,7 +55,7 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
             </div>
 
             <div className='grid grid-cols-2 gap-2.5'>
-                {item.eventId == 67229812
+                {item.eventId.toString().length > 7
                     ? <InTicketButtonWrapper eventId={item.eventId}>
                         <Button variant={ButtonVariant.outline} className='h-[50px] w-[43vw]'>Купить билет</Button>
                     </InTicketButtonWrapper>
