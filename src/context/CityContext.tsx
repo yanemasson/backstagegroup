@@ -40,6 +40,9 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
                 if (data.location?.data?.city) {
                     setSelectedCity(data.location.data.city);
                     localStorage.setItem('selectedCity', data.location.data.city);
+                } else {
+                    setSelectedCity('Красноярск');
+                    localStorage.setItem('selectedCity', 'Красноярск');
                 }
             } catch (error) {
                 console.error('Ошибка при определении города:', error);
