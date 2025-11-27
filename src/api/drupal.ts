@@ -234,4 +234,31 @@ export class DrupalAPI {
             return null;
         }
     }
+    static async getCities(): Promise<string[]> {
+        try {
+            const fieldsParam = 'fields[node--concert]=field_city';
+            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${fieldsParam}`;
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data: DrupalResponse = await response.json();
+
+            const nodes = Array.isArray(data.data) ? data.data : [data.data];
+            const cities = nodes
+                .map(node => {
+                    const city = node.attributes.field_city;
+                    return typeof city === 'string' ? city.trim() : '';
+                })
+                .filter(city => city !== '');
+
+            return [...new Set(cities)].sort();
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+            throw error;
+        }
+    }
 }
