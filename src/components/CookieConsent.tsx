@@ -48,7 +48,7 @@ const CookieConsent = (
     };
 
     return (
-        <div className='text-white w-screen p-5 md:w-[741px] md:p-[30px] bg-dark-bg fixed bottom-0 z-30 md:right-5 md:bottom-5 shadow'>
+        <div className='text-white w-screen p-5 md:w-[741px] md:p-[30px] bg-dark-bg fixed bottom-0 z-50 md:right-5 md:bottom-5 shadow'>
             {showCustomize
                 ? <>
                     <div className='flex items-center pb-5 gap-3 cursor-pointer '>
