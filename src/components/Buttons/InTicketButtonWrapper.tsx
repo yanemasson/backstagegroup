@@ -6,7 +6,11 @@ interface TicketButtonWrapperProps {
 }
 
 const TicketButtonWrapper = ({ eventId, children }: TicketButtonWrapperProps) => {
-    const widgetUrl = `https://iframeab-pre11666.intickets.ru/seance/${eventId}/#abiframe`;
+
+    let widgetUrl = `https://iframeab-pre11666.intickets.ru/seance/${eventId}/#abiframe`;
+
+    if(eventId == '62738053')
+        widgetUrl = `https://iframeab-pre6263.intickets.ru/seance/${eventId}/#abiframe`
 
     return (
         <a
