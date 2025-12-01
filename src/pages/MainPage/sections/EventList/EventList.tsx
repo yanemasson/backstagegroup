@@ -14,10 +14,13 @@ import {useCity} from "../../../../hooks/geolocation/useCity.ts";
 const EventList = () => {
 
     const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель']
+    const monthSlugs = ['yanvar', 'fevral', 'mart', 'aprel', 'maj', 'iyun', 'iyul', 'avgust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr', 'yanvar', 'fevral', 'mart', 'aprel'];
+    
     const [firstMonth, setFirstMonth] = useState(0)
     const [activeMonthSection, setActiveMonthSection] = useState(0)
     const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
     const {selectedCity} = useCity();
+    const isSEOCity = selectedCity === 'Красноярск' || selectedCity === 'Новосибирск';
 
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
@@ -66,7 +69,8 @@ const EventList = () => {
                 <MonthButton
                     isActive={activeMonthSection === 0}
                     count={events.length}
-                    setActive={() => setActiveMonthSection(0)}
+                    setActive={!isSEOCity ? () => setActiveMonthSection(0) : undefined}
+                    href={isSEOCity ? '/' : undefined}
                 >
                     Все даты
                 </MonthButton>
@@ -74,8 +78,9 @@ const EventList = () => {
                     (index >= firstMonth && index <= firstMonth + 4) &&
                     <MonthButton
                         key={month + index}
-                        setActive={() => setActiveMonthSection(index - firstMonth + 1)}
+                        setActive={!isSEOCity ? () => setActiveMonthSection(index - firstMonth + 1) : undefined}
                         isActive={activeMonthSection === index - firstMonth + 1}
+                        href={isSEOCity ? `/${monthSlugs[index]}` : undefined}
                         count={events.filter(event => {
                             const eventMonth = getDate(event.date).monthNum - 1;
                             return eventMonth === index;
