@@ -40,9 +40,15 @@ type TextProps = {
 };
 const Text = ({children, variant, className}:TextProps) => {
     const variantStyleMap = {
-        [TextVariant.H1]: 'font-display font-semibold text-[52px] leading-[64px] tracking-wider',
-        [TextVariant.H2]: 'font-display font-semibold text-[42px] leading-[52px] tracking-wider',
-        [TextVariant.H3]: 'font-display font-semibold text-[32px] leading-[40px] tracking-[0.07em]',
+        [TextVariant.H1]:
+            'font-display font-semibold text-[32px] leading-[40px] tracking-[0.07em] ' +
+            'md:text-[52px] md:leading-[64px] md:tracking-wider',
+        [TextVariant.H2]:
+            'font-display font-semibold text-[32px] leading-[40px] tracking-[0.07em]' +
+            'md:text-[42px] md:leading-[52px] md:tracking-wider',
+        [TextVariant.H3]:
+            'font-display font-semibold text-[24px] leading-[28px] tracking-[0.07em]' +
+            'md:text-[32px] md:leading-[40px] md:tracking-[0.07em]',
         [TextVariant.H4]: 'font-display font-semibold text-[24px] leading-[28px] tracking-[0.07em]',
         [TextVariant.H5]: 'font-display font-semibold text-[18px] leading-[24px] tracking-[0.07em]',
 
