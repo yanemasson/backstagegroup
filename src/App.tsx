@@ -15,7 +15,7 @@ function App() {
                 <BrowserRouter>
                     <MetricsProvider>
                         <ScrollToTop />
-                        <div className='bg-darkgray text-white flex flex-col justify-center items-center'>
+                        <div className='bg-bg-global text-text-primary flex flex-col justify-center items-center'>
                             <div className="flex flex-col items-center min-h-screen w-[90vw] xl:w-[1166px] ">
                                 <Navbar/>
                                 <main className="flex-grow md:mt-[134px] mt-[118px] mb-20 ">
