@@ -12,7 +12,7 @@ export default {
   ],
   theme: {
     colors: {
-      'bg-globe': '#0F0F0F',
+      'bg-global': '#0F0F0F',
       'bg-island': '#141414',
       'bg-island-iner': '#191919',
       'bg-accent': '#EA7B1E',
