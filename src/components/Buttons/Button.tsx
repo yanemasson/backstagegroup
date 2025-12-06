@@ -1,4 +1,5 @@
 import {ReactNode} from "react";
+import Text, {TextVariant} from "../Text.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export enum ButtonVariant {
@@ -57,17 +58,27 @@ const Button = (
     }
 
     const sizeStyleMap = {
-        [ButtonSize.large]: 'h-[60px]',
-        [ButtonSize.medium]: 'h-[52px]',
-        [ButtonSize.small]: 'h-11',
+        [ButtonSize.large]: {
+            style: 'h-[60px]',
+            text: TextVariant.Button_M,
+        },
+        [ButtonSize.medium]: {
+            style: 'h-[52px]',
+            text: TextVariant.Button_M
+        },
+        [ButtonSize.small]: {
+            style: 'h-11',
+            text: TextVariant.Button_S
+        }
     }
 
     return (
         <button
             onClick={onClick} disabled={disabled}
-            className={`self-center text-[18px] duration-100 ${className} ${variantStyleMap[variant]} ${sizeStyleMap[size]}`}
+            className={`self-center text-[18px] duration-100 ${className} ${variantStyleMap[variant]} ${sizeStyleMap[size].style}`}
         >
-            {children}
+            <Text variant={sizeStyleMap[size].text}>{children}</Text>
+
         </button>
     );
 };
