@@ -55,6 +55,8 @@ export default {
       'button-shadow-active': '#FFFFFF14',
       'button-shadow-disabled': '#FFFFFF00',
 
+      'button-disabled-gray': '#343434',
+
       'input-outline-default': '#FFFFFF66',
       'input-outline-hover': '#FFFFFF99',
       'input-outline-active': '#FFFFFF1A',
