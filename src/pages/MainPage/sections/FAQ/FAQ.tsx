@@ -51,7 +51,7 @@ const Faq = () => {
                     <p>Если вы купили билет на нашем сайте, и он не пришел Вам на почту, напишите</p>
                     <Anchor href={'mailto:help@radario.ru'}>help@radario.ru</Anchor>
                     <p>Так же можете написать нам в <Anchor href={'https://vk.com/backstagegroup'}>группу Вконтакте</Anchor>,</p>
-                    <p>или позвонить по <Anchor href={'tel:+79994400249'}>+7 999 440-02-49</Anchor>, <Anchor href={'tel:+79232157634'}>+7 923 215-76-34</Anchor></p>
+                    <p>или позвонить по +7 999 440-02-49, +7 923 215-76-34</p>
                 </div>
         },
         {
@@ -64,9 +64,9 @@ const Faq = () => {
     ]
 
     return (
-        <section className='flex flex-col gap-[62px] w-[90vw] md:w-[1166px] mb-[120px]'>
-            <Text variant={TextVariant.H2}>ОТВЕТЫ НА ЧАСТЫЕ ВОПРОСЫ</Text>
-            <div className='flex flex-col gap-[30px] md:px-[30px]'>
+        <section className='flex flex-col gap-5 xl:w-full w-[90vw]'>
+            <h2><Text variant={TextVariant.H2}>ОТВЕТЫ НА ЧАСТЫЕ ВОПРОСЫ</Text></h2>
+            <div className='flex flex-col '>
                 {faqArr.map((item, index) => (
                     <QuestionCard key={item.question}
                                   question={item.question}
