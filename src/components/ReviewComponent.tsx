@@ -4,6 +4,7 @@ import {getDate} from "../utils/getDate.ts";
 import {useState} from "react";
 import {truncateToWord} from "../utils/truncateToWord.ts";
 import {useMediaBreakpoint} from "../hooks/useMediaBreakpoint.ts";
+import Button, {ButtonSize, ButtonVariant} from "./Buttons/Button.tsx";
 
 const ReviewComponent = ({review}: {review: Review}) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -17,40 +18,33 @@ const ReviewComponent = ({review}: {review: Review}) => {
 
     return (
         <div
-            className={`flex flex-col bg-dark-bg md:w-[382px] min-w-[290px] min-h-[254px] gap-[30px] p-5 ${isOpen ? 'h-full' : 'h-[267px]'}`}
+            className={`flex flex-col min-w-[85vw] lg:min-w-[368px] min-h-[264px] justify-between bg-bg-island p-6 ${isOpen ? 'h-full' : 'h-[264px]'}`}
             onClick={() => !md && setIsOpen(!isOpen)}
         >
-            <div className='flex justify-between'>
-                <Text className='text-lightgray' variant={TextVariant.CAPTION}>{review.name}</Text>
-                <Text className='text-lightgray' variant={TextVariant.CAPTION}>{dayMonth()}</Text>
+            <div className='flex flex-col gap-3'>
+                <div className='flex justify-between'>
+                    <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{review.name}</Text>
+                    <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{dayMonth()}</Text>
+                </div>
+                <div className='inline'>
+                    {!isOpen
+                        ? <Text variant={TextVariant.Body_L} className='inline'>{truncateToWord(review.text, 120)}...</Text>
+                        : <Text variant={TextVariant.Body_L}>{review.text}</Text>
+                    }
+                </div>
             </div>
 
-            <div className='inline'>
-                {!isOpen
-                    ? <Text variant={TextVariant.P} className='inline'>
-                        {md
-                            ? `${truncateToWord(review.text, 120)}...`
-                            : `${truncateToWord(review.text, 100)}...`
-                        }
-                </Text>
-                    : <Text variant={TextVariant.P}>{review.text}</Text>
-                }
-                {!isOpen && (
-                    <div
-                        onClick={() => setIsOpen(true)}
-                        className='inline-block cursor-pointer ml-1'
-                    >
-                        <Text className='text-lightgray' variant={TextVariant.P}>Еще</Text>
-                    </div>
-                )}
-            </div>
-            <div className='flex justify-between mt-auto'>
-                <Text className='text-lightgray ' variant={TextVariant.CAPTION}>{'г. ' + review.city}</Text>
-                {isOpen &&
-                    <div className='cursor-pointer' onClick={() => setIsOpen(false)}>
-                        <Text className='text-lightgray' variant={TextVariant.CAPTION}>Закрыть</Text>
-                    </div>
-                }
+
+            <div className='flex justify-between items-center '>
+                <Text className='text-text-tertiary ' variant={TextVariant.Body_M}>{'г. ' + review.city}</Text>
+                <Button
+                    className='w-[110px]'
+                    variant={ButtonVariant.shadow}
+                    size={ButtonSize.small}
+                    onClick={() => {setIsOpen(!isOpen)}}
+                >
+                    {isOpen ? "Закрыть" : "Открыть" }
+                </Button>
             </div>
         </div>
     );
