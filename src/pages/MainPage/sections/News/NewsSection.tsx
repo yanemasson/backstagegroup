@@ -3,6 +3,8 @@ import {fetchNews, WordPressPost} from "../../../../api";
 import Text, {TextVariant} from "../../../../components/Text.tsx";
 import NewsCard from "../../../../components/NewsCard.tsx";
 import LoadingSpinner from "../../../../components/LoadingSpinner.tsx";
+import Button, {ButtonSize, ButtonVariant} from "../../../../components/Buttons/Button.tsx";
+import {Link} from "react-router";
 
 const NewsSection = () => {
     const [newsList, setNewsList] = useState<WordPressPost[]>([]);
@@ -31,13 +33,14 @@ const NewsSection = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <section className='w-[90vw] md:w-[1166px] flex flex-col gap-[60px]'>
-            <Text variant={TextVariant.H2}>НОВОСТИ</Text>
-            <div className='flex flex-col gap-10 lg:gap-[50px] justify-center items-center'>
-                {newsList.map((item, index) => (
-                    index < 3 && <NewsCard key={item.id} post={item} />
-                ))}
-            </div>
+        <section className='w-[90vw] lg:w-full flex flex-col gap-11'>
+            <h2><Text variant={TextVariant.H2}>НОВОСТИ</Text></h2>
+            {newsList.map((item, index) => (
+                index < 3 && <NewsCard key={item.id} post={item} />
+            ))}
+            <Link className='self-center' to='/news'>
+                <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Все новости</Button>
+            </Link>
         </section>
     );
 };

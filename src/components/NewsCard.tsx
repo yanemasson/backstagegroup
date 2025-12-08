@@ -1,5 +1,5 @@
 import {getDate} from "../utils/getDate.ts";
-import Button, {ButtonVariant} from "./Buttons/Button.tsx";
+import Button, {ButtonSize, ButtonVariant} from "./Buttons/Button.tsx";
 import Text, {TextVariant} from "./Text.tsx";
 import {Link} from "react-router";
 import {WordPressPost} from "../api";
@@ -20,23 +20,24 @@ const NewsCard = ({post}: NewsCardProps) => {
     const href = `/news/${post.id}`;
 
     return (
-        <div className='flex flex-col gap-5 md:flex-row justify-between xl:max-w-[1166px]'>
-            <img className='md:w-[349px] lg:w-[435px] xl:w-[558px] object-cover' src={poster} alt={title} />
-            <div className='flex flex-col gap-5 md:gap-[83px] md:w-[359px] lg:w-[435px] xl:w-[578px] justify-between items-start'>
-                <div className='flex flex-col gap-5'>
-                    <Text className='text-lightgray' variant={TextVariant.CAPTION}>{datetime.formattedDate}</Text>
-                    <div className='flex flex-col gap-2.5'>
-                        {/* Используем dangerouslySetInnerHTML для отображения HTML в заголовке */}
-                        <Text className='text-light-brown' variant={TextVariant.H4}>
+        <div className='flex flex-col lg:flex-row  gap-6 w-full'>
+            <img className='w-[570px] object-cover' src={poster} alt={title} />
+            <div className='flex flex-col gap-6 justify-between items-start'>
+                <div className='flex flex-col gap-3'>
+                    <Text className='text-text-tertiary' variant={TextVariant.Overline}>{datetime.formattedDate}</Text>
+                    <h3>
+                        <Text className='text-text-accent' variant={TextVariant.Subtitle_L}>
                             <span dangerouslySetInnerHTML={{ __html: title }} />
                         </Text>
-                        <Text variant={TextVariant.P}>{truncateToWord(textPreview, 200)}...</Text>
+                    </h3>
+                    <div className='flex flex-col gap-2.5'>
+                        <Text variant={TextVariant.Body_L}>{truncateToWord(textPreview, 150)}...</Text>
                     </div>
                 </div>
                 <Link className='w-full' to={href}>
-                    <Button
-                        className='w-full md:w-[284px] h-[53px] bg-semi-darkgray'
-                        variant={ButtonVariant.secondary}
+                    <Button size={ButtonSize.medium}
+                        className='w-full lg:w-[171px]'
+                        variant={ButtonVariant.tertiary}
                         onClick={() => {}}
                     >
                         Читать статью
