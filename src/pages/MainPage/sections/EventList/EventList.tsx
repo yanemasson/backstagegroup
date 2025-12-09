@@ -7,16 +7,12 @@ import LoadingSpinner from "../../../../components/LoadingSpinner.tsx";
 import EventCardMobile from "../../../../components/EventCard/EventCardMobile.tsx";
 import {useMediaBreakpoint} from "../../../../hooks/useMediaBreakpoint.ts";
 import EventCardDesktop from "../../../../components/EventCard/EventCardDesktop.tsx";
-import {getDate} from "../../../../utils/getDate.ts";
-import MonthButton from "../../components/MonthButton.tsx";
 import {useCity} from "../../../../hooks/geolocation/useCity.ts";
+import Button, {ButtonSize, ButtonVariant} from "../../../../components/Buttons/Button.tsx";
+import {Link} from "react-router";
 
 const EventList = () => {
 
-    const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель']
-    const [firstMonth, setFirstMonth] = useState(0)
-    const [activeMonthSection, setActiveMonthSection] = useState(0)
-    const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
     const {selectedCity} = useCity();
 
     const [events, setEvents] = useState<Event[]>([]);
@@ -30,8 +26,6 @@ const EventList = () => {
                 setLoading(true);
                 const eventsList = await DrupalAPI.getEvents();
                 setEvents(eventsList.filter((item) => item.city == selectedCity));
-                setFirstMonth(getDate(eventsList[0].date).monthNum - 1);
-
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -42,71 +36,36 @@ const EventList = () => {
         fetchEvents();
     }, [selectedCity]);
 
-    useEffect(() => {
-        if (activeMonthSection === 0) {
-            setFilteredEvents(events);
-        } else {
-            const targetMonthIndex = firstMonth + activeMonthSection - 1;
-            const filtered = events.filter(event => {
-                const eventMonth = getDate(event.date).monthNum - 1;
-                return eventMonth === targetMonthIndex;
-            });
-            setFilteredEvents(filtered);
-        }
-    }, [activeMonthSection, events, firstMonth]);
-
 
     if(loading) { return <LoadingSpinner/> }
     if(error) { return <>{error}</> }
 
     return (
-        <section id='eventlist' className='flex flex-col gap-10 bg-darkgray text-white w-[90vw] xl:w-[1166px]'>
+        <section id='eventlist' className='flex flex-col w-[90vw] lg:w-full'>
             <Text variant={TextVariant.H2}>АФИША {selectedCity?.toUpperCase()}</Text>
-            <div className='grid grid-cols-3 justify-items-center gap-2 md:grid-cols-4 xl:flex xl:gap-[30px]'>
-                <MonthButton
-                    isActive={activeMonthSection === 0}
-                    count={events.length}
-                    setActive={() => setActiveMonthSection(0)}
-                >
-                    Все даты
-                </MonthButton>
-                {months.map((month, index) => (
-                    (index >= firstMonth && index <= firstMonth + 4) &&
-                    <MonthButton
-                        key={month + index}
-                        setActive={() => setActiveMonthSection(index - firstMonth + 1)}
-                        isActive={activeMonthSection === index - firstMonth + 1}
-                        count={events.filter(event => {
-                            const eventMonth = getDate(event.date).monthNum - 1;
-                            return eventMonth === index;
-                        }).length}
-                    >
-                        {month}
-                    </MonthButton>
-                ))}
-            </div>
-            <div className='flex flex-col gap-[50px]'>
-                {filteredEvents.length > 0 ? (
-                    filteredEvents.map((item, index) => (
-                        <>
-                            {xl
-                                ? <EventCardDesktop key={index} item={item} to={createSlug(item.eventId)}/>
-                                : <EventCardMobile key={index} item={item} to={createSlug(item.eventId)}/>
-                            }
-                            {index !== filteredEvents.length - 1 && <div className='w-full border-solid border-semi-darkgray border-t-[2px] border-x-0 border-b-0'/>}
-
-                        </>
-
+            <div className='flex flex-col'>
+                {events.length > 0 ? (
+                    events
+                        .slice(0, 3)
+                        .map((item, index) => (
+                        xl
+                            ? <EventCardDesktop
+                                key={index} item={item}
+                                to={createSlug(item.eventId)}
+                                isLast={index !== events.length - 1}
+                            />
+                            : <EventCardMobile
+                                key={index}
+                                item={item}
+                                to={createSlug(item.eventId)}
+                                isLast={index !== events.length - 1}
+                            />
                         )
                     )
-                ) : (
-                    <Text className='text-lightgray' variant={TextVariant.CAPTION}>
-                        {activeMonthSection === 0
-                            ? 'В ближайшее время концертов не планируется. Следите за обновлениями!'
-                            : `В этом месяце концертов не планируется. Следите за обновлениями!`
-                        }
-                    </Text>
-                )}
+                ) : <>text</> }
+                <Link className='self-center' to='/events'>
+                    <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Вся афиша</Button>
+                </Link>
             </div>
         </section>
     );
