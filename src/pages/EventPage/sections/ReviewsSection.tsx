@@ -2,7 +2,6 @@ import Text, {TextVariant} from "../../../components/Text.tsx";
 import UserPhotosBlock from "../components/UserPhotosBlock.tsx";
 import UserReviewBlock from "../components/UserReviewBlock.tsx";
 
-
 const ReviewsSection = () => {
 
     return (

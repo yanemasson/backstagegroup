@@ -5,49 +5,11 @@ import IconButton, {IconButtonSize, IconButtonVariant} from "../../../components
 import {useReviews} from "../../../hooks/cms/useReviews.ts";
 import LeftArrowIcon from "../../../assets/icons/arrows/ic_arrow_left.svg?react"
 import RightArrowIcon from "../../../assets/icons/arrows/ic_arrow_right.svg?react"
-import {useEffect, useRef, useState} from "react";
+import {useHorizontalScroll} from "../../../hooks/useHorizontalScroll.ts";
 
 const UserReviewBlock = () => {
     const {reviews} = useReviews();
-
-    const reviewsContainerRef = useRef<HTMLDivElement>(null);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(false);
-
-    const checkScrollButtons = () => {
-        if (reviewsContainerRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = reviewsContainerRef.current;
-            setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
-        }
-    };
-
-    useEffect(() => {
-        checkScrollButtons();
-        window.addEventListener('resize', checkScrollButtons);
-        return () => window.removeEventListener('resize', checkScrollButtons);
-    }, []);
-
-    const scrollLeft = () => {
-        if (reviewsContainerRef.current) {
-            reviewsContainerRef.current.scrollBy({
-                left: -380,
-                behavior: 'smooth'
-            });
-        }
-    };
-    const scrollRight = () => {
-        if (reviewsContainerRef.current) {
-            reviewsContainerRef.current.scrollBy({
-                left: 380,
-                behavior: 'smooth'
-            });
-        }
-    };
-
-    const handleScroll = () => {
-        checkScrollButtons();
-    };
+    const {containerRef, canScrollLeft, canScrollRight, scrollLeft, scrollRight,} = useHorizontalScroll({scrollAmount: 380,});
 
     return (
         <div className='flex flex-col gap-4'>
@@ -55,9 +17,8 @@ const UserReviewBlock = () => {
 
             <div className='relative'>
                 <div
-                    ref={reviewsContainerRef}
+                    ref={containerRef}
                     className='flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth'
-                    onScroll={handleScroll}
                 >
                     {reviews
                         .sort((a, b) => b.date.localeCompare(a.date))
