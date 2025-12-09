@@ -1,21 +1,27 @@
-import Mute from '../../assets/icons/ic_mute.svg?react'
-import UnMute from '../../assets/icons/ic_unmute.svg?react'
+import MuteIcon from '../../assets/icons/video/ic_mute.svg?react'
+import UnMuteIcon from '../../assets/icons/video/ic_unmute.svg?react'
+import IconButton, {IconButtonSize, IconButtonVariant} from "../Buttons/IconButton.tsx";
 
 interface MuteButtonProps {
     isMuted: boolean
-    isHovered: boolean
     toggleMute: () => void
 }
-const MuteButton = ({isMuted, toggleMute, isHovered}: MuteButtonProps) => {
+
+const MuteButton = ({isMuted, toggleMute}: MuteButtonProps) => {
     return (
-        <button
+        <IconButton
+            variant={IconButtonVariant.FilledSecondary}
+            size={IconButtonSize.large}
             aria-label={isMuted ? "Включить звук" : 'Отключить звук'}
             aria-pressed={isMuted ? "false" : "true"}
             onClick={toggleMute}
-            className={`text-white flex items-center justify-center w-[62px] h-[62px] rounded-full bg-light-brown 
-            ${isHovered ? ('opacity-90') : ('opacity-30')} ${isMuted ? ('bg-light-brown') : ('bg-transparent')}`}>
-            {isMuted ? (<Mute/>) : (<UnMute/>)}
-        </button>
+            className="rounded-full"
+        >
+            {isMuted
+                ? <MuteIcon/>
+                : <UnMuteIcon/>
+            }
+        </IconButton>
     );
 };
 
