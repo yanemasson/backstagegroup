@@ -41,20 +41,20 @@ const Button = (
             'active:bg-button-primary-active ' +
             'disabled:bg-button-primary-disabled',
         [ButtonVariant.secondary]:
-            'border-solid border-[2px] border-button-secondary-default text-button-secondary-default' +
-            'hover:bg-button-secondary-hover hover:text-text-primary hover:border-0' +
-            'active:bg-button-secondary-active active:text-text-primary active:border-0' +
-            'disabled:border-button-secondary-disabled text-button-secondary-disabled',
+            'border-solid border-[2px] border-button-secondary-default text-button-secondary-default ' +
+            'hover:bg-button-secondary-hover hover:text-text-primary hover:border-0 ' +
+            'active:bg-button-secondary-active active:text-text-primary active:border-0 ' +
+            'disabled:border-button-secondary-disabled disabled:text-button-secondary-disabled',
         [ButtonVariant.tertiary]:
-            'text-text-primary bg-button-tertiary-default' +
-            'hover:bg-button-tertiary-hover' +
-            'active:bg-button-tertiary-active' +
+            'text-text-primary bg-button-tertiary-default ' +
+            'hover:bg-button-tertiary-hover ' +
+            'active:bg-button-tertiary-active ' +
             'disabled:bg-button-tertiary-disabled',
         [ButtonVariant.shadow]:
-            'text-text-accent bg-button-shadow-default' +
-            'hover:bg-button-shadow-hover hover:text-ic-primary' +
-            'active:bg-button-shadow-active hover:text-text-primary' +
-            'disabled:bg-button-shadow-disabled text-text-tertiary',
+            'text-text-accent bg-button-shadow-default ' +
+            'hover:bg-button-shadow-hover hover:text-ic-primary ' +
+            'active:bg-button-shadow-active hover:text-text-primary ' +
+            'disabled:bg-button-shadow-disabled disabled:text-text-tertiary',
     }
 
     const sizeStyleMap = {
@@ -75,7 +75,7 @@ const Button = (
     return (
         <button
             onClick={onClick} disabled={disabled}
-            className={`self-center text-[18px] duration-100 ${className} ${variantStyleMap[variant]} ${sizeStyleMap[size].style}`}
+            className={`self-center transition-colors duration-100 ${className} ${variantStyleMap[variant]} ${sizeStyleMap[size].style}`}
         >
             <Text variant={sizeStyleMap[size].text}>{children}</Text>
 
