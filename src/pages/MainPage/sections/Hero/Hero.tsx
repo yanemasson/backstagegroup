@@ -68,14 +68,14 @@ const Hero = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <section className='md:w-[1166px] w-screen overflow-hidden' id='hero'>
+        <section className='w-full overflow-hidden relative' id='hero'>
             <div
-                className="relative md:w-[1166px] w-screen h-full flex transition-transform duration-1000 ease-out"
+                className="relative w-full h-full flex transition-transform duration-1000 ease-out"
                 style={{ transform: `translateX(-${index * 100}%)` }}
             >
                 {slideEvents
                     .map((event, i) => (
-                        <div key={`slide-${event.eventId}-${i}`} className="w-full h-full flex-shrink-0 flex items-center justify-center">
+                        <div key={`slide-${event.eventId}-${i}`} className="w-full h-full flex-shrink-0">
                             <EventCardSlide event={event} />
                         </div>
                     ))
