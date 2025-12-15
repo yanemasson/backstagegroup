@@ -1,10 +1,11 @@
 // hooks/useCookieConsent.ts
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { CookiePreferences } from '../types/cookie';
 
 export const useCookieConsent = () => {
     const [showBanner, setShowBanner] = useState(false);
     const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>();
+    const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
     useEffect(() => {
         const savedPreferences = localStorage.getItem('cookiePreferences');
@@ -12,62 +13,62 @@ export const useCookieConsent = () => {
             const prefs = JSON.parse(savedPreferences);
             setCookiePreferences(prefs);
         } else {
-            setShowBanner(true);
-        }
-    }, []);
+            // Не показываем сразу, ждем взаимодействия
+            const handleInteraction = () => {
+                setHasUserInteracted(true);
+                setShowBanner(true);
+                // Удаляем обработчики после первого взаимодействия
+                ['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+                    document.removeEventListener(event, handleInteraction);
+                });
+            };
 
-    const acceptAll = () => {
-        const preferences: CookiePreferences = {
-            necessary: true,
-            analytics: true,
-            marketing: true
-        };
-        savePreferences(preferences);
-    };
+            // Добавляем обработчики событий
+            ['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+                document.addEventListener(event, handleInteraction, { once: true });
+            });
 
-    const rejectAll = () => {
-        const preferences: CookiePreferences = {
-            necessary: true,
-            analytics: false,
-            marketing: false
-        };
-        savePreferences(preferences);
-    };
-
-    const customize = (preferences: CookiePreferences) => {
-        savePreferences(preferences);
-    };
-
-    useEffect(() => {
-        let isMounted = true;
-
-        const loadPreferences = async () => {
-            try {
-                const savedPreferences = localStorage.getItem('cookiePreferences');
-                if (savedPreferences && isMounted) {
-                    const prefs = JSON.parse(savedPreferences);
-                    setCookiePreferences(prefs);
-                } else if (isMounted) {
+            // Показываем баннер через 10 секунд, даже если не было взаимодействия
+            const timeoutId = setTimeout(() => {
+                if (!hasUserInteracted) {
                     setShowBanner(true);
                 }
-            } catch (error) {
-                console.error('Error reading cookie preferences:', error);
-                if (isMounted) setShowBanner(true);
-            }
-        };
+            }, 10000);
 
-        loadPreferences();
+            return () => {
+                clearTimeout(timeoutId);
+                ['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+                    document.removeEventListener(event, handleInteraction);
+                });
+            };
+        }
+    }, [hasUserInteracted]);
 
-        return () => {
-            isMounted = false;
-        };
-    }, []);
-
-    const savePreferences = (preferences: CookiePreferences) => {
+    const savePreferences = useCallback((preferences: CookiePreferences) => {
         setCookiePreferences(preferences);
         localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
         setShowBanner(false);
-    };
+    }, []);
+
+    const acceptAll = useCallback(() => {
+        savePreferences({
+            necessary: true,
+            analytics: true,
+            marketing: true
+        });
+    }, [savePreferences]);
+
+    const rejectAll = useCallback(() => {
+        savePreferences({
+            necessary: true,
+            analytics: false,
+            marketing: false
+        });
+    }, [savePreferences]);
+
+    const customize = useCallback((preferences: CookiePreferences) => {
+        savePreferences(preferences);
+    }, [savePreferences]);
 
     return {
         showBanner,
