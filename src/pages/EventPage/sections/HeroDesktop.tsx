@@ -54,7 +54,7 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                         <Text className='text-dark-text w-[500px]' variant={TextVariant.P}>{item.descriptionShort}</Text>
                     </div>
                     <div className='flex gap-2.5 items-end'>
-                        <TicketButtonWrapper className='w-[335px] h-[53px]' operator={"kassir"} eventId={item.eventId}>
+                        <TicketButtonWrapper className='w-[335px] h-[53px]' operator={item.operator} eventId={item.eventId}>
                             <Button className='w-[335px] h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
                         </TicketButtonWrapper>
                     </div>
