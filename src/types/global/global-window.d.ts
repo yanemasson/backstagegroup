@@ -7,7 +7,7 @@ declare global {
             };
         };
         ksr?: {
-            summon: (eventId: string) => void;
+            summon: (options?: string | { width?: number; height?: number }) => boolean;
         };
         // Google Analytics properties
         dataLayer: any[];

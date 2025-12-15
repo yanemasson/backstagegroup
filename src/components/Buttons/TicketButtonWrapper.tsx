@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useCallback } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 interface TicketButtonWrapperProps {
     eventId: number;
@@ -7,10 +7,11 @@ interface TicketButtonWrapperProps {
     className?: string;
 }
 
-const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, operator, children, className}) => {
+const TicketButtonWrapper = ({ eventId, operator, children, className }: TicketButtonWrapperProps) => {
     const eventIdString = eventId.toString();
+    const linkRef = useRef<HTMLAnchorElement>(null);
 
-    // Логика для Radario
+    //radario
     useEffect(() => {
         if (operator !== 'radario') return;
 
@@ -35,28 +36,46 @@ const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, operator, c
         }
     }, [eventIdString, operator]);
 
-    // Логика для Kassir
-    const handleKassirClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-        if (operator === 'kassir') {
-            e.preventDefault();
-            if (window.ksr) {
-                window.ksr.summon();
-            }
-        }
-    }, [operator]);
-
+    //kassir
     useEffect(() => {
-        if (operator !== 'kassir') return;
+        if (operator === 'kassir' && linkRef.current) {
+            const link = linkRef.current;
 
-        if (!document.getElementById('kassir-script')) {
-            const script = document.createElement('script');
-            script.id = 'kassir-script';
-            script.src = 'https://widget.kassir.ru/widget.js';
-            script.async = true;
-            document.head.appendChild(script);
+            link.onclick = function() {
+                if (window.ksr && typeof window.ksr.summon === 'function') {
+                    try {
+                        return window.ksr.summon();
+                    } catch (error) {
+                        console.error('Kassir summon error:', error);
+                    }
+                }
+                return false;
+            };
         }
-    }, [operator]);
+    }, [operator, eventIdString]);
 
+    const getKassirUrl = () => {
+        return `https://widget.kassir.ru/?type=E&key=62a61af3-48f2-c264-ea78-0d77bc476c59&domain=sakh.kassir.ru&id=${eventIdString}`;
+    };
+
+    if (operator === 'kassir') {
+        const kassirUrl = getKassirUrl();
+        return (
+            <a
+                ref={linkRef}
+                className={`w-fit ${className} widget-tr`}
+                href={kassirUrl}
+                target="_blank"
+                // Добавляем data-атрибуты для отладки
+                data-kassir-event={eventIdString}
+                data-kassir-operator="kassir"
+            >
+                {children}
+            </a>
+        );
+    }
+
+    //intickets
     const getInticketsUrl = () => {
         if (eventIdString === '62738053') {
             return `https://iframeab-pre6263.intickets.ru/seance/${eventIdString}/#abiframe`;
@@ -64,45 +83,26 @@ const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, operator, c
         return `https://iframeab-pre11666.intickets.ru/seance/${eventIdString}/#abiframe`;
     };
 
-    const getKassirUrl = () => {
-        return `https://widget.kassir.ru/?type=E&key=62a61af3-48f2-c264-ea78-0d77bc476c59&domain=sakh.kassir.ru&id=${eventIdString}`;
-    };
-
-    // Определяем href и дополнительные props в зависимости от оператора
     let href = `#event/${eventIdString}`;
     let linkProps: any = {};
-    let onClick: ((e: React.MouseEvent<HTMLAnchorElement>) => void) | undefined;
 
-    switch (operator) {
-        case 'intickets':
-            href = getInticketsUrl();
-            linkProps = {
-                rel: "noopener noreferrer",
-                target: "_blank"
-            };
-            break;
-        case 'kassir':
-            href = getKassirUrl();
-            linkProps = {
-                rel: "noopener noreferrer"
-            };
-            onClick = handleKassirClick;
-            break;
-        default: // radario
-            // Используем стандартную внутреннюю ссылку
-            break;
+    if (operator === 'intickets') {
+        href = getInticketsUrl();
+        linkProps = {
+            rel: "noopener noreferrer",
+            target: "_blank"
+        };
     }
 
     return (
         <a
-            className={`w-fit ${className}`}
+            className={`w-fit ${className} widget-tr`}
             href={href}
             {...linkProps}
-            onClick={onClick}
         >
             {children}
         </a>
     );
 };
 
-export default TicketButtonWrapper
+export default TicketButtonWrapper;
