@@ -16,12 +16,12 @@ function App() {
                     <MetricsProvider>
                         <ScrollToTop />
                         <div className='bg-bg-global text-text-primary flex flex-col justify-center items-center'>
-                            <div className="flex flex-col items-center min-h-screen w-[90vw] xl:w-[1166px] ">
+                            <div className="flex flex-col items-center min-h-screen ">
                                 <Navbar/>
-                                <main className="flex-grow md:mt-[134px] mt-[118px] mb-20 ">
+                                <main className="flex-grow flex flex-col items-center mb-20 w-full gap-24">
                                     <AppRoutes/>
+                                    <Footer/>
                                 </main>
-                                <Footer/>
                             </div>
                         </div>
                     </MetricsProvider>
