@@ -7,7 +7,6 @@ import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {getDuration} from "../../../utils/getDuration.ts";
 import {memo, useMemo} from "react";
 import {Link} from "react-router";
-import InTicketButtonWrapper from "../../../components/Buttons/InTicketButtonWrapper.tsx";
 import Button, {ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 interface HeroProps {
@@ -57,14 +56,9 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                     </div>
 
                     <div className='flex gap-2.5 items-end'>
-                        {item.eventId.toString().length > 7
-                            ? <InTicketButtonWrapper  eventId={item.eventId}>
-                                <Button className='w-[335px] h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
-                            </InTicketButtonWrapper>
-                            : <TicketButtonWrapper className='w-[335px] h-[53px]' eventId={item.eventId}>
-                                <Button className='w-[335px] h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
-                            </TicketButtonWrapper>
-                        }
+                        <TicketButtonWrapper className='w-[335px] h-[53px]' eventId={item.eventId}>
+                            <Button className='w-[335px] h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
+                        </TicketButtonWrapper>
                     </div>
 
                 </div>
