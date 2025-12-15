@@ -6,7 +6,6 @@ import {Link} from "react-router";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
 import videoPosterDesktop from "../../assets/video_poster_desktop.png";
 import TicketButtonWrapper from "../Buttons/TicketButtonWrapper.tsx";
-import InTicketButtonWrapper from "../Buttons/InTicketButtonWrapper.tsx";
 
 interface EventCardProps {
     item: Event,
@@ -31,7 +30,6 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
                 <div className='w-full border-solid border-x-0 border-y-[1px] border-gray'/>
                 <div>
                     <Text variant={TextVariant.CAPTION} className='text-dark-text'>{item.age + '+'}</Text>
-                    <Text variant={TextVariant.CAPTION} className='text-orange'>{item.cta}</Text>
                 </div>
             </div>
 
@@ -48,14 +46,10 @@ const EventCardDesktop = ({item, to}: EventCardProps) => {
                 </div>
 
                 <div className='flex gap-2.5 justify-self-end'>
-                    {item.eventId.toString().length > 7
-                        ? <InTicketButtonWrapper eventId={item.eventId}>
-                            <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]'>Купить билет</Button>
-                        </InTicketButtonWrapper>
-                        : <TicketButtonWrapper eventId={item.eventId}>
-                            <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]'>Купить билет</Button>
-                        </TicketButtonWrapper>
-                    }
+                    <TicketButtonWrapper eventId={item.eventId} operator={item.operator}>
+                        <Button variant={ButtonVariant.outline} className='h-[50px] w-[214px]' >Купить билет</Button>
+                    </TicketButtonWrapper>
+
 
                     <Link to={`/events/${to}`}>
                         <Button variant={ButtonVariant.secondary} className='h-[50px] w-[214px]'>Подробнее</Button>

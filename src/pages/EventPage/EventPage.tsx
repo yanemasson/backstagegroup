@@ -123,7 +123,7 @@ const EventPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <FixedTicketButton eventId={event.eventId}/>
+            <FixedTicketButton eventId={event.eventId} operator={event.operator} />
             <div className='relative flex flex-col gap-[100px] w-[90vw] xl:w-[1166px]'>
 
                 {md ? <HeroDesktop item={event}/> : <HeroMobile item={event} />}

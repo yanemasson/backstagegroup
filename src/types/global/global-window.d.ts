@@ -1,11 +1,13 @@
 declare global {
     interface Window {
-        // Radario widget properties
         radario?: {
             Widgets: {
                 Event: (config: any) => void;
                 ButtonFrame?: (eventId: number) => void;
             };
+        };
+        ksr?: {
+            summon: (eventId: string) => void;
         };
         // Google Analytics properties
         dataLayer: any[];

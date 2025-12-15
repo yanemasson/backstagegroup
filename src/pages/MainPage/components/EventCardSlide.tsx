@@ -4,7 +4,6 @@ import TicketButtonWrapper from "../../../components/Buttons/TicketButtonWrapper
 import Button, {ButtonVariant} from "../../../components/Buttons/Button.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
-import InTicketButtonWrapper from "../../../components/Buttons/InTicketButtonWrapper.tsx";
 
 interface EventCardSlideProps {
     event: Event
@@ -65,21 +64,11 @@ const EventCardSlide = ({event}: EventCardSlideProps) => {
                             {event.descriptionShort}
                         </Text>
                     }
-
-                    {event.eventId.toString().length > 7
-                        ? <InTicketButtonWrapper eventId={event.eventId}>
-                            <Button className=' md:w-[284px] w-[90vw] h-[53px]' variant={ButtonVariant.primary}>
-                                Купить билет
-                            </Button>
-                        </InTicketButtonWrapper>
-                        : <TicketButtonWrapper eventId={event.eventId}>
-                            <Button className=' md:w-[284px] w-[90vw] h-[53px]' variant={ButtonVariant.primary}>
-                                Купить билет
-                            </Button>
-                        </TicketButtonWrapper>
-                    }
-
-
+                    <TicketButtonWrapper eventId={event.eventId} operator={event.operator}>
+                        <Button className=' md:w-[284px] w-[90vw] h-[53px]' variant={ButtonVariant.primary}>
+                            Купить билет
+                        </Button>
+                    </TicketButtonWrapper>
                 </div>
             </div>
         </div>

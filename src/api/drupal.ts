@@ -145,7 +145,7 @@ class DrupalParser {
             tag: attributes.field_tag || '',
             trackList: trackList,
             artists: artists,
-            cta: ''
+            operator: attributes.field_operator,
         };
     }
 

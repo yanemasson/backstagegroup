@@ -42,7 +42,6 @@ const HeroMobile = memo(({item}: HeroProps) => {
 
                 <div className='flex flex-col gap-2'>
                     <div className='flex items-start gap-3'>
-                        <Text variant={TextVariant.CAPTION} className='text-orange'>{item.cta}</Text>
                         <Text variant={TextVariant.CAPTION} className='text-dark-text'>{item.age + '+'}</Text>
                     </div>
                     <Text className='leading-none' variant={TextVariant.H1}>{title}</Text>

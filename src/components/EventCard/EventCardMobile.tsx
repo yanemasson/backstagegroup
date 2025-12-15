@@ -6,7 +6,6 @@ import Text, {TextVariant} from "../Text.tsx";
 import TicketButtonWrapper from "../Buttons/TicketButtonWrapper.tsx";
 import Button, {ButtonVariant} from "../Buttons/Button.tsx";
 import {Link} from "react-router";
-import InTicketButtonWrapper from "../Buttons/InTicketButtonWrapper.tsx";
 
 interface EventCardProps {
     item: Event,
@@ -21,7 +20,6 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
 
             <div className='flex flex-col gap-5'>
                 <div className='flex justify-between -mb-6'>
-                    <Text variant={TextVariant.CAPTION} className='text-orange'>{item.cta}</Text>
                     <Text variant={TextVariant.CAPTION} className='text-dark-text'>{item.age + '+'}</Text>
                 </div>
                 <div className='flex gap-5 items-end'>
@@ -55,14 +53,10 @@ const EventCardMobile = ({item, to}: EventCardProps) => {
             </div>
 
             <div className='grid grid-cols-2 gap-2.5'>
-                {item.eventId.toString().length > 7
-                    ? <InTicketButtonWrapper eventId={item.eventId}>
-                        <Button variant={ButtonVariant.outline} className='h-[50px] w-[43vw]'>Купить билет</Button>
-                    </InTicketButtonWrapper>
-                    : <TicketButtonWrapper eventId={item.eventId}>
-                        <Button variant={ButtonVariant.outline} className='h-[50px] w-[43vw]'>Купить билет</Button>
-                    </TicketButtonWrapper>
-                }
+                <TicketButtonWrapper eventId={item.eventId} operator={item.operator}>
+                    <Button variant={ButtonVariant.outline} className='h-[50px] w-[43vw]'>Купить билет</Button>
+                </TicketButtonWrapper>
+
                 <Link to={`/events/${to}`}>
                     <Button variant={ButtonVariant.secondary} className='h-[50px] w-[43vw]'>Подробнее</Button>
                 </Link>
