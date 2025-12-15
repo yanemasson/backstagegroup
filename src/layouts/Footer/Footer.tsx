@@ -10,10 +10,13 @@ import LinkItem from "../../components/LinkItem.tsx";
 
 const Footer = () => {
     const lg = useMediaBreakpoint('lg')
+    const borderStyle = 'border-solid border-x-0 border-b-0 border-t-[2px] border-t-divider-default'
 
     if(lg) {
         return (
-            <section id='footer' className='py-[52px] w-full flex justify-between'>
+            <section
+                id='footer'
+                className={`py-[52px] w-full flex justify-between ${borderStyle}`}>
                 <div className='flex flex-col gap-[52px]'>
                     <Logo/>
                     <div className='flex flex-col gap-6'>
@@ -80,7 +83,7 @@ const Footer = () => {
         );
     }
     return (
-        <section id='footer' className='py-[52px] w-full flex flex-col justify-between gap-[52px]'>
+        <section id='footer' className={`py-[52px] w-full flex flex-col justify-between gap-[52px] ${borderStyle}`}>
             <Logo/>
             <div className='flex flex-col gap-11'>
                 <div className='flex gap-[52px]'>
