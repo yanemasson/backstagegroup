@@ -24,17 +24,19 @@ const EventList = () => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-                const eventsList = await DrupalAPI.getEvents();
-                setEvents(eventsList
-                    .filter((item) => item.city == selectedCity)
-                    .slice(0, 3))
+                let eventsList
+                if(selectedCity) {
+                    eventsList = await DrupalAPI.getEventsByCity(selectedCity);
+                } else {
+                    eventsList = await DrupalAPI.getEventsByCity('Все города');
+                }
+                setEvents(eventsList.slice(0, 3))
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
                 setLoading(false);
             }
         };
-
         fetchEvents();
     }, [selectedCity]);
 

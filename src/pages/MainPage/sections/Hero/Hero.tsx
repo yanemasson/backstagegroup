@@ -73,18 +73,19 @@ const Hero = () => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-                const eventsList = await DrupalAPI.getEvents();
-                setSlideEvents(eventsList
-                    .filter((item) => item.poster && item.city === selectedCity)
-                    .slice(0, 3)
-                    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()));
+                let eventsList
+                if(selectedCity) {
+                    eventsList = await DrupalAPI.getEventsByCity(selectedCity);
+                } else {
+                    eventsList = await DrupalAPI.getEventsByCity('Все города');
+                }
+                setSlideEvents(eventsList.slice(0, 3))
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
                 setLoading(false);
             }
         };
-
         fetchEvents();
     }, [selectedCity]);
 
