@@ -3,6 +3,7 @@ import {useCity} from "../../../hooks/geolocation/useCity.ts";
 import CloseIcon from '../../../assets/icons/ic_close.svg?react'
 import {useNavigate} from "react-router";
 import {useDrupalCities} from "../../../hooks/geolocation/useDrupalCities.ts";
+import LoadingSpinner from "../../../components/LoadingSpinner.tsx";
 
 
 interface CitySearchModalProps {
@@ -10,7 +11,7 @@ interface CitySearchModalProps {
     onClose: () => void;
 }
 
-export const CitySearchModal = ({ isOpen, onClose }: CitySearchModalProps) => {
+const CitySearchModal = ({ isOpen, onClose }: CitySearchModalProps) => {
     const { setSelectedCity } = useCity();
     const { cities, isLoading, error } = useDrupalCities();
     const navigate = useNavigate();
@@ -18,57 +19,63 @@ export const CitySearchModal = ({ isOpen, onClose }: CitySearchModalProps) => {
     const handleCitySelect = (cityName: string) => {
         setSelectedCity(cityName);
         onClose();
-        navigate(0)
+        navigate(0);
     };
+
+    const borderStyle = 'border-solid border-x-0 border-t-0 border-b-[1px] border-divider-default';
+    const style = `p-4 h-[52px] hover:text-button-primary-active ${borderStyle}`;
 
     if (!isOpen) return null;
 
     return (
         <>
-            <div className="fixed md:absolute left-0 top-0 md:top-8 pr-4 py-4 pl-[30px] bg-semi-darkgray w-screen h-screen md:w-[382px] md:h-auto flex flex-col z-50">
-                <div onClick={onClose} className='text-[#595959] cursor-pointer self-end hover:text-light-brown transition-colors duration-100'>
-                    <CloseIcon/>
-                </div>
-                <div className="shrink-0 pl-4 pb-4">
-                    <Text variant={TextVariant.P}>
-                        Выберите город
-                    </Text>
-                </div>
+            <div
+                className="fixed inset-0 bg-bg-overlay z-40"
+                onClick={onClose}
+            />
 
-                <div className="flex-1 overflow-hidden">
-                    <div className="h-full overflow-y-auto">
-                        {isLoading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"/>
+            <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+                <div
+                    className="w-[90vw] xl:max-w-[560px] bg-bg-island max-h-[80vh] flex flex-col overflow-hidden"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {/* Заголовок модального окна */}
+                    <div className={`${borderStyle} p-3 h-12 flex items-center justify-between shrink-0`}>
+                        <Text variant={TextVariant.Subtitle_M}>
+                            Выберите ваш город
+                        </Text>
+                        <div
+                            onClick={onClose}
+                            className='cursor-pointer p-1 hover:bg-gray-100 rounded'
+                        >
+                            <CloseIcon/>
+                        </div>
+                    </div>
+
+                    {/* Контент с возможностью прокрутки */}
+                    <div className="overflow-y-auto flex-1">
+                        {error && (
+                            <div className="p-4">
+                                <Text variant={TextVariant.Checkbox_L}>{error}</Text>
                             </div>
-                        ) : error ? (
-                            <div className="flex items-center justify-center h-full">
-                                <Text variant={TextVariant.CAPTION} className="text-red-400">
-                                    {error}
-                                </Text>
+                        )}
+
+                        {isLoading ? (
+                            <div className="flex items-center justify-center p-8">
+                                <LoadingSpinner/>
                             </div>
                         ) : (
-                            <div className="divide-y divide-gray-100">
-                                {cities.length > 0 ? (
-                                    cities.map((city) => (
-                                        <button
-                                            key={city}
-                                            onClick={() => handleCitySelect(city)}
-                                            className="w-full px-4 py-3 text-left transition-colors hover:bg-gray-100 hover:bg-opacity-10"
-                                        >
-                                            <Text className='hover:text-light-brown' variant={TextVariant.CAPTION}>
-                                                {city}
-                                            </Text>
-                                        </button>
-                                    ))
-                                ) : (
-                                    <div className="flex items-center justify-center h-full">
-                                        <Text variant={TextVariant.CAPTION}>
-                                            Нет доступных городов
-                                        </Text>
+                            <>
+                                {cities.map((city) => (
+                                    <div
+                                        key={city}
+                                        onClick={() => handleCitySelect(city)}
+                                        className={`${style} cursor-pointer hover:bg-gray-50 transition-colors`}
+                                    >
+                                        <Text variant={TextVariant.Checkbox_L}>{city}</Text>
                                     </div>
-                                )}
-                            </div>
+                                ))}
+                            </>
                         )}
                     </div>
                 </div>
@@ -76,3 +83,5 @@ export const CitySearchModal = ({ isOpen, onClose }: CitySearchModalProps) => {
         </>
     );
 };
+
+export default CitySearchModal;
