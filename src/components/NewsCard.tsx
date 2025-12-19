@@ -20,8 +20,8 @@ const NewsCard = ({post}: NewsCardProps) => {
     const href = `/news/${post.id}`;
 
     return (
-        <div className='flex flex-col lg:flex-row  gap-6 w-full'>
-            <img className='w-[570px] object-cover' src={poster} alt={title} />
+        <div className='flex flex-col xl:flex-row gap-6 w-full'>
+            <img className='xl:w-[570px] object-cover' src={poster} alt={title} />
             <div className='flex flex-col gap-6 justify-between items-start'>
                 <div className='flex flex-col gap-3'>
                     <Text className='text-text-tertiary' variant={TextVariant.Overline}>{datetime.formattedDate}</Text>
@@ -36,7 +36,7 @@ const NewsCard = ({post}: NewsCardProps) => {
                 </div>
                 <Link className='w-full' to={href}>
                     <Button size={ButtonSize.medium}
-                        className='w-full lg:w-[171px]'
+                        className='w-full xl:w-[171px]'
                         variant={ButtonVariant.tertiary}
                         onClick={() => {}}
                     >

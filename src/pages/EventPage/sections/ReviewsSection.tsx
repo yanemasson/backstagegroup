@@ -5,7 +5,7 @@ import UserReviewBlock from "../components/UserReviewBlock.tsx";
 const ReviewsSection = () => {
 
     return (
-        <section className='flex flex-col w-[90vw] lg:w-full gap-11'>
+        <section className='flex flex-col w-[90vw] xl:w-full gap-11'>
             <h2><Text variant={TextVariant.H2}>НАШИ КОНЦЕРТЫ ГЛАЗАМИ ЗРИТЕЛЕЙ</Text></h2>
             <UserPhotosBlock />
             <UserReviewBlock />

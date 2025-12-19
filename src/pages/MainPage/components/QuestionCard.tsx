@@ -15,7 +15,7 @@ const QuestionCard = ({question, answer, isLast}: QuestionCardProps) => {
 
     return (
         <div
-            className={`flex flex-col lg:w-[1152px] ${!isLast && 'border-solid border-x-0 border-t-0 border-b-[2px] border-b-divider-default'}`}
+            className={`flex flex-col xl:w-[1152px] ${!isLast && 'border-solid border-x-0 border-t-0 border-b-[2px] border-b-divider-default'}`}
         >
             <div
                 onClick={() => setIsOpen(!isOpen)}

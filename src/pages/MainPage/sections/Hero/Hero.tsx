@@ -92,7 +92,7 @@ const Hero = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <section className='w-screen lg:w-[99vw] h-screen overflow-hidden' id='hero'>
+        <section className='w-screen xl:w-[99vw] h-screen overflow-hidden' id='hero'>
             <div
                 className="relative w-full h-full flex transition-transform duration-1000 ease-out"
                 style={{ transform: `translateX(-${index * 100}%)` }}

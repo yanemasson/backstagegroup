@@ -18,7 +18,7 @@ const UserReviewBlock = () => {
             <div className='relative'>
                 <div
                     ref={containerRef}
-                    className='flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth'
+                    className='flex gap-3 overflow-x-auto scrollbar-hide '
                 >
                     {reviews
                         .sort((a, b) => b.date.localeCompare(a.date))

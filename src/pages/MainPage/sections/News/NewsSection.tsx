@@ -33,7 +33,7 @@ const NewsSection = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <section className='w-[90vw] lg:w-full flex flex-col gap-11'>
+        <section className='w-[90vw] xl:w-full flex flex-col gap-11'>
             <h2><Text variant={TextVariant.H2}>НОВОСТИ</Text></h2>
             {newsList.map((item, index) => (
                 index < 3 && <NewsCard key={item.id} post={item} />

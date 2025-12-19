@@ -7,7 +7,7 @@ import HorizontalScrollButton from "../../../components/Buttons/HorizontalScroll
 const UserPhotosBlock = () => {
     const arr = [1, 2, 3, 4, 5, 6]
 
-    const lg = useMediaBreakpoint('lg')
+    const xl = useMediaBreakpoint('xl')
 
     const vwToPixels = useCallback((vw: number) => {
         if (typeof window === 'undefined') return 0;
@@ -15,7 +15,7 @@ const UserPhotosBlock = () => {
     }, []);
 
     const {containerRef, canScrollLeft, canScrollRight, scrollLeft, scrollRight,} = useHorizontalScroll({
-        scrollAmount: lg ? 280 : vwToPixels(85),
+        scrollAmount: xl ? 280 : vwToPixels(85),
     });
 
     return (
@@ -32,7 +32,7 @@ const UserPhotosBlock = () => {
                             key={'userImage' + item}
                             alt={'/images/review/' + item + '.png' }
                             src={'/images/review/' + item + '.png' }
-                            className='w-[85vw] h-[484px] lg:w-[272px] lg:h-[412px] object-center object-cover'
+                            className='w-[85vw] h-[484px] xl:w-[272px] xl:h-[412px] object-center object-cover'
                         />
                     ))}
                 </div>

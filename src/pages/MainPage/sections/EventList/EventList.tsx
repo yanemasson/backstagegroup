@@ -43,7 +43,7 @@ const EventList = () => {
     if(error) { return <>{error}</> }
 
     return (
-        <section id='eventlist' className='flex flex-col w-[90vw] lg:w-full'>
+        <section id='eventlist' className='flex flex-col w-[90vw] xl:w-full'>
             <Text variant={TextVariant.H2}>АФИША {selectedCity?.toUpperCase()}</Text>
             <div className='flex flex-col'>
                 {events.length > 0 ? (

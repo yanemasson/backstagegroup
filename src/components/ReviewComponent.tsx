@@ -18,7 +18,7 @@ const ReviewComponent = ({review}: {review: Review}) => {
 
     return (
         <div
-            className={`flex flex-col min-w-[85vw] lg:min-w-[368px] min-h-[264px] justify-between bg-bg-island p-6 ${isOpen ? 'h-full' : 'h-[264px]'}`}
+            className={`flex flex-col min-w-[85vw] xl:min-w-[368px] min-h-[264px] justify-between bg-bg-island p-6 ${isOpen ? 'h-full' : 'h-[264px]'}`}
             onClick={() => !md && setIsOpen(!isOpen)}
         >
             <div className='flex flex-col gap-3'>
