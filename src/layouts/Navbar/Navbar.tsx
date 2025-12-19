@@ -4,7 +4,7 @@ import Text, {TextVariant} from "../../components/Text.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
 import Button, {ButtonSize, ButtonVariant} from "../../components/Buttons/Button.tsx";
 import {useCity} from "../../hooks/geolocation/useCity.ts";
-import {CitySearchModal} from "./components/CitySearchModal.tsx";
+import CitySearchModal from "./components/CitySearchModal.tsx";
 import CityConfirmationModal from "../../components/CityConfirmationModal.tsx";
 import DesktopLogo from '../../assets/logos/logo_bg_full.svg?react';
 import MobileLogo from '../../assets/logos/logo_bg.svg?react'
@@ -17,6 +17,10 @@ import {useActiveSection} from "../../hooks/useActiveSection.ts";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
+
+    const [isCityModalOpen, setIsCityModalOpen] = useState(false);
+    const [showCityPopUp, setShowCityPopUp] = useState(false);
+    const { selectedCity } = useCity();
 
     const [visible, setVisible] = useState(true);
     const visibleRef = useRef(visible);
@@ -31,16 +35,34 @@ const Navbar = () => {
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
+    // управление скроллом
     useEffect(() => {
-        if (isOpen && !md) {
+        const shouldDisableScroll = isOpen || isCityModalOpen;
+
+        if (shouldDisableScroll) {
             document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.top = `-${window.scrollY}px`;
         } else {
+            const scrollY = document.body.style.top;
             document.body.style.overflow = 'auto';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
         }
+
         return () => {
             document.body.style.overflow = 'auto';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
         };
-    }, [isOpen, md]);
+    }, [isOpen, isCityModalOpen]);
 
     // видимость навбара
     useEffect(() => {
@@ -103,9 +125,6 @@ const Navbar = () => {
     }, [visible]);
 
     // геолокация
-    const [isCityModalOpen, setIsCityModalOpen] = useState(false);
-    const [showCityPopUp, setShowCityPopUp] = useState(false);
-    const { selectedCity } = useCity();
     const handleConfirmCity = () => {
         localStorage.setItem('hasVisited', 'true');
         setShowCityPopUp(false);
