@@ -205,6 +205,35 @@ export class DrupalAPI {
         }
     }
 
+    static async getEventsByCity(cityName: string): Promise<Event[]> {
+        const isAllCities = cityName === 'Все города'
+
+        try {
+            const encodedCityName = encodeURIComponent(cityName);
+            const filterParam = isAllCities ? '' : `filter[field_city]=${encodedCityName}`;
+            const includeParam = 'field_poster,field_video';
+            const fieldsParam = 'fields[file--file]=uri,url,filename';
+            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${filterParam}&include=${includeParam}&${fieldsParam}`;
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
+            }
+            const data: DrupalResponse = await response.json();
+            const nodes = Array.isArray(data.data) ? data.data : [data.data];
+            const events = nodes.map(node => DrupalParser.parseEvent(node, data.included));
+
+            return events.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA.getTime() - dateB.getTime();
+            });
+        } catch (error) {
+            console.error('Error fetching events by city:', error);
+            throw error;
+        }
+    }
+
     static async getEventByEventId(eventId: string): Promise<Event | null> {
         try {
             const filterParam = `filter[field_event_id]=${eventId}`;
