@@ -28,7 +28,7 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
 
             <div className='relative z-10 w-full h-full flex lg:items-end justify-end p-4 lg:px-6 lg:py-8'>
                 <div className='w-full flex flex-col gap-4 lg:gap-[37px] lg:flex-row items-end justify-end lg:justify-between'>
-                    <div className='flex flex-col gap-3 lg:w-[650px]'>
+                    <div className='flex flex-col gap-3 lg:min-w-[650px]'>
                         <Text variant={TextVariant.Subtitle_M}>{event.city}</Text>
                         <div className='flex gap-6 items-end'>
                             <div className='flex gap-2 items-end'>
