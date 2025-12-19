@@ -1,90 +1,59 @@
 import {Event} from '../../../types/event'
 import Text, {TextVariant} from "../../../components/Text.tsx";
-import TicketButtonWrapper from "../../../components/Buttons/TicketButtonWrapper.tsx";
-import Button, {ButtonVariant} from "../../../components/Buttons/Button.tsx";
 import {getDate} from "../../../utils/getDate.ts";
-import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
-import InTicketButtonWrapper from "../../../components/Buttons/InTicketButtonWrapper.tsx";
+import StatusBar from "../../../components/StatusBar.tsx";
+import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 interface EventCardSlideProps {
-    event: Event
+    event: Event,
+    activeIndex: number,
+    progress: number,
+    handleBarClick: (index: number) => void,
 }
 
-const EventCardSlide = ({event}: EventCardSlideProps) => {
+const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCardSlideProps) => {
     const datetime = getDate(event.date)
-    const md = useMediaBreakpoint('md')
+    const arr = [0, 1, 2]
 
     return (
-        <div className='w-full h-screen relative'> {/* Изменено на h-screen */}
-            <div className='absolute inset-0 w-full h-full'>
-                {/* Фоновое изображение */}
+        <div className='relative w-full h-full'>
+            <div
+                style={{ backgroundImage: `url(${event.poster})` }}
+                className='absolute inset-0 bg-cover bg-center'
+            >
                 <div
-                    className='absolute inset-0 w-full h-full bg-cover bg-center'
-                    style={{ backgroundImage: `url(${event.poster})` }}
+                    className='absolute inset-0 bg-gradient-to-b from-[#000000] via-[#000000]/0 to-[#000000]'
                 />
+            </div>
 
-                {/* Градиент поверх изображения */}
-                {md
-                    ? <div className='absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent' />
-                    : <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent' />
-                }
-
-                {/* Контент */}
-                <div className='relative z-10 h-full flex flex-col justify-end md:justify-center md:items-start items-center md:p-16 p-6'>
-                    <div className='max-w-6xl w-full'>
-                        <div className='flex flex-col w-fit mb-6'>
-                            <Text className='text-dark-text self-end -mr-5' variant={TextVariant.CAPTION}>{event.age}+</Text>
-                            <Text variant={TextVariant.H2} className='text-white'>
-                                {event.title.toUpperCase().split(' ').map((item) => <p key={item}>{item}</p>)}
-                            </Text>
-                        </div>
-
-                        <div className='flex flex-col md:flex-row gap-5 md:items-center mb-6'>
-                            <div className='flex items-end text-end'>
-                                <p className='font-display font-medium text-[28px] lining-nums leading-[1.5] md:mr-1 mr-2.5 -mb-2 md:-mb-1 text-white'>
-                                    {datetime.day}
-                                </p>
-                                <Text variant={TextVariant.P} className='mr-3 text-white'>
-                                    {datetime.monthStr}
-                                </Text>
-                                <Text variant={TextVariant.CAPTION} className='text-dark-text'>
-                                    {datetime.weekdayShort}
-                                </Text>
+            <div className='relative z-10 w-full h-full flex lg:items-end justify-end p-4 lg:px-6 lg:py-8'>
+                <div className='w-full flex flex-col gap-4 lg:gap-[37px] lg:flex-row items-end justify-end lg:justify-between'>
+                    <div className='flex flex-col gap-3 lg:w-[650px]'>
+                        <Text variant={TextVariant.Subtitle_M}>{event.city}</Text>
+                        <div className='flex gap-6 items-end'>
+                            <div className='flex gap-2 items-end'>
+                                <Text variant={TextVariant.Number_S}>{datetime.day}</Text>
+                                <Text variant={TextVariant.Subtitle_S}>{datetime.monthStr}</Text>
                             </div>
-                            <div className='h-10 border-solid border-y-0 border-x-[1px] border-gray-300 hidden md:block'/>
-                            <div className='flex items-end text-end gap-3'>
-                                <p className='font-display proportional-nums text-[32px] leading-[1.3] text-white'>
-                                    {datetime.time}
-                                </p>
-                                {md &&
-                                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>
-                                        {event.location}
-                                    </Text>
-                                }
-                            </div>
+                            <Text variant={TextVariant.Number_S}>{datetime.time}</Text>
                         </div>
+                        <Text variant={TextVariant.H1}>{event.title.toUpperCase()}</Text>
+                    </div>
 
-                        {md &&
-                            <Text variant={TextVariant.P} className='text-dark-text max-w-2xl mb-8'>
-                                {event.descriptionShort}
-                            </Text>
-                        }
+                    <div className='flex flex-col lg:flex-row-reverse self-center lg:self-end items-end w-full gap-4 lg:gap-[37px] '>
+                        <Button variant={ButtonVariant.primary} size={ButtonSize.medium} className='w-full lg:w-40 self-end'>
+                            Купить билет
+                        </Button>
 
-                        <div className='flex justify-start'>
-                            {event.eventId.toString().length > 7
-                                ? <InTicketButtonWrapper eventId={event.eventId}>
-                                    <Button className='md:w-[284px] w-full h-[53px]' variant={ButtonVariant.primary}>
-                                        Купить билет
-                                    </Button>
-                                </InTicketButtonWrapper>
-                                : <TicketButtonWrapper eventId={event.eventId}>
-                                    <Button className='md:w-[284px] w-full h-[53px]' variant={ButtonVariant.primary}>
-                                        Купить билет
-                                    </Button>
-                                </TicketButtonWrapper>
-                            }
+                        <div className='flex gap-2'>
+                            {arr.map((index) => (
+                                <div key={index} className='h-6 flex items-end cursor-pointer' onClick={() => handleBarClick(index)}>
+                                    <StatusBar progress={progress} isActive={index === activeIndex} className='w-[30vw] lg:w-[84px]'/>
+                                </div>
+                            ))}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

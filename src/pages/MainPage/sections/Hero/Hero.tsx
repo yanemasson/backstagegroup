@@ -1,50 +1,73 @@
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {DrupalAPI} from "../../../../api/drupal.ts";
 import {Event} from '../../../../types/event.ts'
 import EventCardSlide from "../../components/EventCardSlide.tsx";
 import LoadingSpinner from "../../../../components/LoadingSpinner.tsx";
 import {useCity} from "../../../../hooks/geolocation/useCity.ts";
-import MiniEventCardSlide from "../../components/MiniEventCardSlide.tsx";
 
 
 const Hero = () => {
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
     const [slideEvents, setSlideEvents] = useState<Event[]>([]);
     const [index, setIndex] = useState(0);
+
+    const [progress, setProgress] = useState(0);
     const slideTime = 4000
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const {selectedCity} = useCity();
 
-    const getVisibleMiniSlides = useCallback(() => {
-        if (slideEvents.length <= 3) {
-            return slideEvents.map((_, i) => i);
+    const handleBarClick = useCallback((index: number) => {
+        setIndex(index);
+        setProgress(0);
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
         }
-
-        // Показываем текущий слайд и два предыдущих
-        let startIndex = index - 2;
-        if (startIndex < 0) {
-            startIndex = slideEvents.length + startIndex;
-        }
-
-        const indices = [];
-        for (let i = 0; i < 3; i++) {
-            indices.push((startIndex + i) % slideEvents.length);
-        }
-
-        return indices;
-    }, [slideEvents, index]);
-
-    const visibleIndices = getVisibleMiniSlides();
+        intervalRef.current = setTimeout(() => {
+            setIndex((prevIndex) => (prevIndex === slideEvents.length - 1 ? 0 : prevIndex + 1));
+            setProgress(0);
+        }, slideTime);
+    }, [slideEvents.length])
 
     const handleNextSlide = useCallback(() => {
         setIndex((prevIndex) => (prevIndex === slideEvents.length - 1 ? 0 : prevIndex + 1));
+        setProgress(0);
     }, [slideEvents.length]);
 
-    const handleSlideClick = useCallback((clickedIndex: number) => {
-        setIndex(clickedIndex);
-    }, []);
+    // прогресс
+    useEffect(() => {
+        if (slideEvents.length <= 1) return;
+
+        const startTime = Date.now();
+        const interval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const currentProgress = Math.min((elapsed / slideTime) * 100, 100);
+            setProgress(currentProgress);
+        }, 50);
+
+        return () => clearInterval(interval);
+    }, [index, slideEvents.length, slideTime]);
+
+    // автоматическое переключение
+    useEffect(() => {
+        if (slideEvents.length <= 1) return;
+
+        if (intervalRef.current) {
+            clearTimeout(intervalRef.current);
+        }
+
+        intervalRef.current = setTimeout(() => {
+            handleNextSlide();
+        }, slideTime);
+
+        return () => {
+            if (intervalRef.current) {
+                clearTimeout(intervalRef.current);
+            }
+        };
+    }, [index, slideEvents.length, handleNextSlide, slideTime]);
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -53,6 +76,7 @@ const Hero = () => {
                 const eventsList = await DrupalAPI.getEvents();
                 setSlideEvents(eventsList
                     .filter((item) => item.poster && item.city === selectedCity)
+                    .slice(0, 3)
                     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()));
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
@@ -68,33 +92,18 @@ const Hero = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <section className='w-full overflow-hidden relative' id='hero'>
+        <section className='w-screen lg:w-[99vw] h-screen overflow-hidden' id='hero'>
             <div
                 className="relative w-full h-full flex transition-transform duration-1000 ease-out"
                 style={{ transform: `translateX(-${index * 100}%)` }}
             >
                 {slideEvents
-                    .map((event, i) => (
-                        <div key={`slide-${event.eventId}-${i}`} className="w-full h-full flex-shrink-0">
-                            <EventCardSlide event={event} />
+                    .map((event, index) => (
+                        <div key={`slide-${event.eventId}-${index}`} className="w-full h-full flex-shrink-0">
+                            <EventCardSlide event={event} activeIndex={index} progress={progress} handleBarClick={handleBarClick} />
                         </div>
                     ))
                 }
-            </div>
-
-            <div className='flex overflow-auto md:overflow-hidden'>
-                {visibleIndices.map((slideIndex, i) => (
-                    <div key={`mini-${slideIndex}-${slideEvents[slideIndex].eventId}`} className="relative ">
-                        <MiniEventCardSlide
-                            event={slideEvents[slideIndex]}
-                            isActive={slideIndex === index}
-                            onClick={() => handleSlideClick(slideIndex)}
-                            duration={slideTime}
-                            onComplete={slideIndex === index ? handleNextSlide : undefined}
-                            isLast={i === 2}
-                        />
-                    </div>
-                ))}
             </div>
         </section>
     );
