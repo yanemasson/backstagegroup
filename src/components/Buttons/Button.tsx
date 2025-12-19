@@ -75,7 +75,7 @@ const Button = (
     return (
         <button
             onClick={onClick} disabled={disabled}
-            className={`self-center transition-colors duration-100 ${className} ${variantStyleMap[variant]} ${sizeStyleMap[size].style}`}
+            className={`transition-colors duration-100 ${className} ${variantStyleMap[variant]} ${sizeStyleMap[size].style}`}
         >
             <Text variant={sizeStyleMap[size].text}>{children}</Text>
 
