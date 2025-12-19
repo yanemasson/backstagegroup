@@ -41,11 +41,13 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
                     setSelectedCity(data.location.data.city);
                     localStorage.setItem('selectedCity', data.location.data.city);
                 } else {
-                    setSelectedCity('Красноярск');
-                    localStorage.setItem('selectedCity', 'Красноярск');
+                    setSelectedCity('Все города');
+                    localStorage.setItem('selectedCity', 'Все города');
                 }
             } catch (error) {
                 console.error('Ошибка при определении города:', error);
+                setSelectedCity('Все города');
+                localStorage.setItem('selectedCity', 'Все города');
             } finally {
                 setIsLoading(false);
             }

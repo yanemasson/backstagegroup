@@ -11,7 +11,7 @@ export const useDrupalCities = () => {
         setError(null);
         try {
             const citiesList = await DrupalAPI.getCities();
-            setCities(citiesList);
+            setCities(['Все города', ...citiesList]);
         } catch (err) {
             console.error('Ошибка при загрузке городов:', err);
             setError('Не удалось загрузить список городов');
