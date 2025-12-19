@@ -25,7 +25,9 @@ const EventList = () => {
             try {
                 setLoading(true);
                 const eventsList = await DrupalAPI.getEvents();
-                setEvents(eventsList.filter((item) => item.city == selectedCity));
+                setEvents(eventsList
+                    .filter((item) => item.city == selectedCity)
+                    .slice(0, 3))
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -46,7 +48,6 @@ const EventList = () => {
             <div className='flex flex-col'>
                 {events.length > 0 ? (
                     events
-                        .slice(0, 3)
                         .map((item, index) => (
                         xl
                             ? <EventCardDesktop
