@@ -22,7 +22,7 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
                 className='absolute inset-0 bg-cover bg-center'
             >
                 <div
-                    className='absolute inset-0 bg-gradient-to-b from-[#000000] via-[#000000]/0 to-[#000000]'
+                    className='absolute inset-0 bg-gradient-to-b from-black via-transparent to-black'
                 />
             </div>
 
@@ -45,10 +45,10 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
                             Купить билет
                         </Button>
 
-                        <div className='flex gap-2'>
+                        <div className='flex w-full lg:w-fit gap-2'>
                             {arr.map((index) => (
-                                <div key={index} className='h-6 flex items-end cursor-pointer' onClick={() => handleBarClick(index)}>
-                                    <StatusBar progress={progress} isActive={index === activeIndex} className='w-[30vw] lg:w-[84px]'/>
+                                <div key={index} className='h-6 flex flex-1 lg:flex-0 items-end cursor-pointer' onClick={() => handleBarClick(index)}>
+                                    <StatusBar progress={progress} isActive={index === activeIndex} className='lg:w-[84px]'/>
                                 </div>
                             ))}
                         </div>

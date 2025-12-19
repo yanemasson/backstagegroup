@@ -12,6 +12,9 @@ export default {
   ],
   theme: {
     colors: {
+      'transparent': '#00000000',
+      'black': '#000000',
+
       'bg-global': '#0F0F0F',
       'bg-island': '#141414',
       'bg-island-iner': '#191919',
