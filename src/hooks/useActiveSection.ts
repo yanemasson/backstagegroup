@@ -7,33 +7,25 @@ export const useActiveSection = () => {
 
     useEffect(() => {
         setActiveSection('');
-        const timer = setTimeout(() => {
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    const visibleEntries = entries.filter(entry => entry.intersectionRatio > 0);
-                    if (visibleEntries.length === 0) return;
 
-                    const mostVisible = visibleEntries.reduce((max, entry) => {
-                        return (entry.intersectionRatio > max.intersectionRatio)
-                            ? entry
-                            : max;
-                    }, visibleEntries[0]);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleSection = entries.find(entry => entry.intersectionRatio >= 0.5);
 
-                    setActiveSection(mostVisible.target.id);
-                },
-                {
-                    threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
-                    rootMargin: '-100px 0px -100px 0px'
+                if (visibleSection) {
+                    setActiveSection(visibleSection.target.id);
                 }
-            );
+            },
+            {
+                threshold: 0.5,
+                rootMargin: '-50px 0px -50px 0px'
+            }
+        );
 
-            const sections = document.querySelectorAll('section[id]');
-            sections.forEach((section) => observer.observe(section));
+        const sections = document.querySelectorAll('section[id]');
+        sections.forEach((section) => observer.observe(section));
 
-            return () => observer.disconnect();
-        }, 100);
-
-        return () => clearTimeout(timer);
+        return () => observer.disconnect();
     }, [location.pathname]);
 
     return activeSection;

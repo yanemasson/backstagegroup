@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import BurgerMenu from "./components/BurgerMenu.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
@@ -13,14 +13,22 @@ import {Link} from "react-router";
 import LinkItem from "../../components/LinkItem.tsx";
 import CitySelection from "./components/CitySelection.tsx";
 import IconButton, {IconButtonSize, IconButtonVariant} from "../../components/Buttons/IconButton.tsx";
-
+import {useActiveSection} from "../../hooks/useActiveSection.ts";
 
 const Navbar = () => {
-
     const [isOpen, setIsOpen] = useState(false)
+
     const [visible, setVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+    const visibleRef = useRef(visible);
+    useEffect(() => {
+        visibleRef.current = visible;
+    }, [visible]);
+
+    const activeSection = useActiveSection()
+    const isTransparent = activeSection === 'hero'
+
     const md = useMediaBreakpoint('md')
+
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
     useEffect(() => {
@@ -34,19 +42,67 @@ const Navbar = () => {
         };
     }, [isOpen, md]);
 
+    // видимость навбара
     useEffect(() => {
+        let ticking = false;
+        let lastScrollY = 0;
+        let hideTimeout: NodeJS.Timeout | null = null;
+
         const controlNavbar = () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY) {setVisible(false);} else {setVisible(true);}
-            setLastScrollY(currentScrollY);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    const scrollDelta = currentScrollY - lastScrollY;
+                    const isScrollingDown = scrollDelta > 0;
+                    const isScrollingUp = scrollDelta < 0;
+
+                    console.log(`Scroll: ${currentScrollY}, Delta: ${scrollDelta}, Visible: ${visible}`);
+
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                    }
+
+                    if (isScrollingDown && visible && currentScrollY > 50) {
+                        console.log('Setting hide timeout');
+                        hideTimeout = setTimeout(() => {
+                            console.log('Hiding navbar');
+                            setVisible(false);
+                        }, 50);
+                    }
+                    else if (isScrollingUp && !visible) {
+                        console.log('Setting show timeout');
+                        hideTimeout = setTimeout(() => {
+                            console.log('Showing navbar');
+                            setVisible(true);
+                        }, 50);
+                    }
+
+                    if (currentScrollY < 50) {
+                        console.log('At top - showing navbar');
+                        if (hideTimeout) {
+                            clearTimeout(hideTimeout);
+                        }
+                        setVisible(true);
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
+
         window.addEventListener('scroll', controlNavbar);
+
         return () => {
             window.removeEventListener('scroll', controlNavbar);
+            if (hideTimeout) {
+                clearTimeout(hideTimeout);
+            }
         };
-    }, [lastScrollY]);
+    }, [visible]);
 
-    //геолокация
+    // геолокация
     const [isCityModalOpen, setIsCityModalOpen] = useState(false);
     const [showCityPopUp, setShowCityPopUp] = useState(false);
     const { selectedCity } = useCity();
@@ -59,7 +115,6 @@ const Navbar = () => {
         setIsCityModalOpen(true)
     };
     useEffect(() => {
-        // Проверяем, первый ли это визит
         const hasVisited = localStorage.getItem('hasVisited');
         if (!hasVisited) {
             setShowCityPopUp(true);
@@ -68,7 +123,9 @@ const Navbar = () => {
 
     return (
         <nav className={`fixed z-40 h-[76px] w-full flex justify-between items-center px-4 md:px-6 
-            ${visible ? 'transform-none' : 'transform -translate-y-full'} transition-all duration-300 `}>
+            ${visible ? 'transform-none' : 'transform -translate-y-full'}
+            ${isTransparent ? 'bg-transparent' : 'bg-bg-global'} transition-all duration-300 `}
+        >
 
             <div className='flex items-center gap-3 md:gap-6'>
                 <Link to='/'>{md ? <DesktopLogo /> : <MobileLogo />}</Link>
