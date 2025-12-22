@@ -9,10 +9,10 @@ import LinkItem from "../../components/LinkItem.tsx";
 
 
 const Footer = () => {
-    const lg = useMediaBreakpoint('lg')
+    const xl = useMediaBreakpoint('xl')
     const borderStyle = 'border-solid border-x-0 border-b-0 border-t-[2px] border-t-divider-default'
 
-    if(lg) {
+    if(xl) {
         return (
             <section
                 id='footer'

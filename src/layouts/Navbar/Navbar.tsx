@@ -20,6 +20,7 @@ const Navbar = () => {
 
     const [isCityModalOpen, setIsCityModalOpen] = useState(false);
     const [showCityPopUp, setShowCityPopUp] = useState(false);
+    const [hasUserInteracted, setHasUserInteracted] = useState(false);
     const { selectedCity } = useCity();
 
     const [visible, setVisible] = useState(true);
@@ -32,6 +33,7 @@ const Navbar = () => {
     const isTransparent = activeSection === 'hero'
 
     const md = useMediaBreakpoint('md')
+    const xl = useMediaBreakpoint('xl')
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
@@ -136,9 +138,35 @@ const Navbar = () => {
     useEffect(() => {
         const hasVisited = localStorage.getItem('hasVisited');
         if (!hasVisited) {
-            setShowCityPopUp(true);
+            const handleInteraction = () => {
+                setHasUserInteracted(true);
+                setShowCityPopUp(true);
+                // Удаляем обработчики после первого взаимодействия
+                ['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+                    document.removeEventListener(event, handleInteraction);
+                });
+            };
+
+            // Добавляем обработчики событий
+            ['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+                document.addEventListener(event, handleInteraction, { once: true });
+            });
+
+            // Показываем баннер через 10 секунд, даже если не было взаимодействия
+            const timeoutId = setTimeout(() => {
+                if (!hasUserInteracted) {
+                    setShowCityPopUp(true);
+                }
+            }, 10000);
+
+            return () => {
+                clearTimeout(timeoutId);
+                ['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
+                    document.removeEventListener(event, handleInteraction);
+                });
+            };
         }
-    }, [selectedCity]);
+    }, [hasUserInteracted, selectedCity]);
 
     return (
         <nav className={`fixed z-40 h-[76px] w-full flex justify-between items-center px-4 md:px-6 
@@ -147,7 +175,7 @@ const Navbar = () => {
         >
 
             <div className='flex items-center gap-3 md:gap-6'>
-                <Link to='/'>{md ? <DesktopLogo /> : <MobileLogo />}</Link>
+                <Link to='/'>{xl ? <DesktopLogo /> : <MobileLogo />}</Link>
                 <CitySelection city={selectedCity} onClick={() => setIsCityModalOpen(true)}/>
             </div>
 
