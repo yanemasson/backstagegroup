@@ -80,8 +80,6 @@ const Navbar = () => {
                     const isScrollingDown = scrollDelta > 0;
                     const isScrollingUp = scrollDelta < 0;
 
-                    console.log(`Scroll: ${currentScrollY}, Delta: ${scrollDelta}, Visible: ${visible}`);
-
                     if (hideTimeout) {
                         clearTimeout(hideTimeout);
                     }
