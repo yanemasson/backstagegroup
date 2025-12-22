@@ -1,6 +1,7 @@
 import {API_CONFIG} from './config';
 import {DrupalNode, DrupalResponse} from './types';
 import {Artist, Event, Track} from '../types/event';
+import {Program} from '../types/program';
 
 class DrupalParser {
     static getFieldValue(attributes: Record<string, unknown>, fieldName: string): string | number | null {
@@ -146,6 +147,38 @@ class DrupalParser {
             trackList: trackList,
             artists: artists,
             operator: attributes.field_operator,
+            program: attributes.field_program,
+        };
+    }
+
+    static parseProgram(node: DrupalNode, included?: any[]): Program {
+        const {attributes, relationships} = node;
+
+        let videoUrl = '';
+        if (relationships?.field_video?.data) {
+            const videoData = relationships.field_video.data;
+            if (videoData.id) {
+                videoUrl = this.getFileUrl(videoData.id, included);
+            }
+        }
+
+        let posterUrl = '';
+        if (relationships?.field_poster?.data) {
+            const posterData = relationships.field_poster.data;
+            if (posterData.id) {
+                posterUrl = this.getFileUrl(posterData.id, included);
+            }
+        }
+
+        return {
+            title: attributes.title || '',
+            poster: posterUrl,
+            video: videoUrl,
+            descriptionShort: attributes.field_description_short || '',
+            descriptionFull: attributes.field_description_full || '',
+            duration: attributes.field_duration || '',
+            age: attributes.field_age?.toString() || '',
+            url: attributes.field_url || ''
         };
     }
 
@@ -188,6 +221,45 @@ export class DrupalAPI {
         return await response.json();
     }
 
+    static async getPrograms(): Promise<Program[]> {
+        try {
+            const response: DrupalResponse = await this.fetchApi('/node/program');
+            const nodes = Array.isArray(response.data) ? response.data : [response.data];
+            return nodes.map(node => DrupalParser.parseProgram(node, response.included))
+        } catch (error) {
+            console.error('Error fetching programs:', error);
+            throw error;
+        }
+    }
+
+    static async getProgramByUrl(link: string): Promise<Program | null> {
+        try {
+            const filterParam = `filter[field_link]=${link}`;
+            const includeParam = 'field_poster,field_video';
+            const fieldsParam = 'fields[file--file]=uri,url,filename';
+            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/program?${filterParam}&include=${includeParam}&${fieldsParam}`;
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data: DrupalResponse = await response.json();
+
+            if (data.data && (Array.isArray(data.data) ? data.data.length > 0 : true)) {
+                const nodes = Array.isArray(data.data) ? data.data : [data.data];
+                return DrupalParser.parseProgram(nodes[0], data.included);
+            }
+
+            return null;
+        } catch (error) {
+            console.error('Error fetching program by url:', error);
+            return null;
+        }
+
+    }
+
     static async getEvents(): Promise<Event[]> {
         try {
             const response: DrupalResponse = await this.fetchApi('/node/concert');
@@ -201,6 +273,34 @@ export class DrupalAPI {
             });
         } catch (error) {
             console.error('Error fetching events:', error);
+            throw error;
+        }
+    }
+
+    static async getEventsByProgram(program: string | undefined): Promise<Event[]> {
+
+        try {
+            const filterParam = `filter[field_program]=${program}`;
+            const includeParam = 'field_poster,field_video';
+            const fieldsParam = 'fields[file--file]=uri,url,filename';
+            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${filterParam}&include=${includeParam}&${fieldsParam}`;
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
+            }
+            const data: DrupalResponse = await response.json();
+            const nodes = Array.isArray(data.data) ? data.data : [data.data];
+            const events = nodes.map(node => DrupalParser.parseEvent(node, data.included));
+
+            return events.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA.getTime() - dateB.getTime();
+            });
+
+        } catch (error) {
+            console.error('Error fetching events by program:', error);
             throw error;
         }
     }
@@ -234,6 +334,7 @@ export class DrupalAPI {
             return null;
         }
     }
+
     static async getCities(): Promise<string[]> {
         try {
             const fieldsParam = 'fields[node--concert]=field_city';
