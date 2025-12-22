@@ -1,9 +1,9 @@
-import Text, {TextVariant} from "../../../components/Text.tsx";
-import {useCity} from "../../../hooks/geolocation/useCity.ts";
-import CloseIcon from '../../../assets/icons/ic_close.svg?react'
+import Text, {TextVariant} from "../components/Text.tsx";
+import {useCity} from "../hooks/geolocation/useCity.ts";
+import CloseIcon from '../assets/icons/ic_close.svg?react'
 import {useNavigate} from "react-router";
-import {useDrupalCities} from "../../../hooks/geolocation/useDrupalCities.ts";
-import LoadingSpinner from "../../../components/LoadingSpinner.tsx";
+import {useDrupalCities} from "../hooks/geolocation/useDrupalCities.ts";
+import LoadingSpinner from "../components/LoadingSpinner.tsx";
 
 
 interface CitySearchModalProps {

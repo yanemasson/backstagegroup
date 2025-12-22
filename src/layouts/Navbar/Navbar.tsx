@@ -4,7 +4,7 @@ import Text, {TextVariant} from "../../components/Text.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
 import Button, {ButtonSize, ButtonVariant} from "../../components/Buttons/Button.tsx";
 import {useCity} from "../../hooks/geolocation/useCity.ts";
-import CitySearchModal from "./components/CitySearchModal.tsx";
+import CitySearchModal from "../../components/CitySearchModal.tsx";
 import CityConfirmationModal from "../../components/CityConfirmationModal.tsx";
 import DesktopLogo from '../../assets/logos/logo_bg_full.svg?react';
 import MobileLogo from '../../assets/logos/logo_bg.svg?react'
