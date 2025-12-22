@@ -8,7 +8,7 @@ interface StatusBarProps {
 const StatusBar = ({progress, className, isActive}: StatusBarProps) => {
     return (
         <div
-            className={`w-full h-[2px] bg-divider-default rounded-full overflow-hidden ${className}`}
+            className={`w-full h-[8px] bg-divider-default transition-all duration-200 hover:bg-divider-hover overflow-hidden ${className}`}
             role="progressbar"
             aria-valuenow={progress}
             aria-valuemin={0}
@@ -16,7 +16,7 @@ const StatusBar = ({progress, className, isActive}: StatusBarProps) => {
             onClick={() => {}}
         >
             <div
-                className={`h-full transition-all duration-300 ease-out ${isActive ? 'bg-divider-accent' : ''}`}
+                className={`h-full transition-all duration-200 ease-out ${isActive ? 'bg-divider-accent hover:bg-divider-hover' : ''}`}
                 style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
             />
         </div>
