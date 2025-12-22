@@ -19,7 +19,7 @@ export default {
       'bg-island': '#141414',
       'bg-island-iner': '#191919',
       'bg-accent': '#EA7B1E',
-      'bg-overlay': '#0000007F',
+      'bg-overlay': '#000000CC',
 
       'text-accent': '#EA7B1E',
       'text-primary': '#FFF8F3',
