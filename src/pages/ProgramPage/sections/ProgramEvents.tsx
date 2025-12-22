@@ -26,11 +26,6 @@ const ProgramEvents = ({events}: ProgramEventsProps) => {
                     : <Text variant={TextVariant.CAPTION}>В ближайшее время в вашем городе концертов не ожидается. Следите за обновлениями!</Text>
 
                 }
-                {events.map((item, index) => (
-                    xl
-                        ? <EventCardDesktop key={index} item={item} to={createSlug(item.eventId)}/>
-                        : <EventCardMobile key={index} item={item} to={createSlug(item.eventId)}/>
-                ))}
             </div>
         </div>
     );
