@@ -10,10 +10,14 @@ import EventCardDesktop from "../../../../components/EventCard/EventCardDesktop.
 import {useCity} from "../../../../hooks/geolocation/useCity.ts";
 import Button, {ButtonSize, ButtonVariant} from "../../../../components/Buttons/Button.tsx";
 import {Link} from "react-router";
+import IconButton, {IconButtonSize, IconButtonVariant} from "../../../../components/Buttons/IconButton.tsx";
+import DownIcon from '../../../../assets/icons/arrows/ic_down.svg?react'
+import CitySearchModal from "../../../../components/CitySearchModal.tsx";
 
 const EventList = () => {
 
     const {selectedCity} = useCity();
+    const [citySearchModalIsOpen, setCitySearchModalIsOpen] = useState(false)
 
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
@@ -40,13 +44,43 @@ const EventList = () => {
         fetchEvents();
     }, [selectedCity]);
 
+    useEffect(() => {
+        if (citySearchModalIsOpen) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.top = `-${window.scrollY}px`;
+        } else {
+            const scrollY = document.body.style.top;
+            document.body.style.overflow = 'auto';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
 
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+        };
+    }, [citySearchModalIsOpen]);
+    
     if(loading) { return <LoadingSpinner/> }
     if(error) { return <>{error}</> }
 
     return (
         <section id='eventlist' className='flex flex-col w-[90vw] xl:w-full'>
-            <Text variant={TextVariant.H2}>АФИША {selectedCity?.toUpperCase()}</Text>
+            <div className='flex gap-2'>
+                <Text variant={TextVariant.H2}>АФИША {selectedCity?.toUpperCase()}</Text>
+                <IconButton onClick={() => setCitySearchModalIsOpen(true)} variant={IconButtonVariant.NoFilledSecondary} size={IconButtonSize.small}>
+                    <DownIcon />
+                </IconButton>
+            </div>
             <div className='flex flex-col'>
                 {events.length > 0 ? (
                     events
@@ -70,6 +104,8 @@ const EventList = () => {
                     <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Вся афиша</Button>
                 </Link>
             </div>
+
+            <CitySearchModal isOpen={citySearchModalIsOpen} onClose={() => setCitySearchModalIsOpen(false)} />
         </section>
     );
 };
