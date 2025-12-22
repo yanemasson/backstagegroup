@@ -31,5 +31,6 @@ export interface Event {
     artistsTeam?: string,
     tag: string,
     operator: "radario" | "intickets" | "kassir",
-    orgId?: number
+    orgId?: number,
+    program: string,
 }
