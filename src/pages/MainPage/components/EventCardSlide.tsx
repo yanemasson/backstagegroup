@@ -3,6 +3,7 @@ import Text, {TextVariant} from "../../../components/Text.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import StatusBar from "../../../components/StatusBar.tsx";
 import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
+import TicketButtonWrapper from "../../../components/Buttons/TicketButtonWrapper.tsx";
 
 interface EventCardSlideProps {
     event: Event,
@@ -40,10 +41,12 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
                         <Text variant={TextVariant.H1}>{event.title.toUpperCase()}</Text>
                     </div>
 
-                    <div className='flex flex-col xl:flex-row-reverse self-center xl:self-end items-end w-full gap-4 xl:gap-[37px] '>
-                        <Button variant={ButtonVariant.primary} size={ButtonSize.medium} className='w-full xl:w-40 self-end'>
-                            Купить билет
-                        </Button>
+                    <div className='flex flex-col xl:flex-row-reverse self-center xl:self-end items-end w-full gap-4 xl:gap-[37px]'>
+                        <TicketButtonWrapper className='w-full xl:w-40 self-end' eventId={event.eventId}>
+                            <Button variant={ButtonVariant.primary} size={ButtonSize.medium} className='w-full xl:w-40  xl:mb-8'>
+                                Купить билет
+                            </Button>
+                        </TicketButtonWrapper>
 
                         <div className='flex w-full xl:w-fit gap-2'>
                             {arr.map((index) => (
