@@ -27,9 +27,9 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
                 />
             </div>
 
-            <div className='relative z-10 w-full h-full flex xl:items-end justify-end p-4 xl:px-6 xl:py-8'>
+            <div className='relative z-10 w-full h-full flex xl:items-end justify-end px-4 xl:px-6 '>
                 <div className='w-full flex flex-col gap-4 xl:gap-[37px] xl:flex-row items-end justify-end xl:justify-between'>
-                    <div className='flex flex-col gap-3 xl:min-w-[650px]'>
+                    <div className='flex flex-col gap-3 xl:min-w-[650px] xl:mb-8'>
                         <Text variant={TextVariant.Subtitle_M}>{event.city}</Text>
                         <div className='flex gap-6 items-end'>
                             <div className='flex gap-2 items-end'>
@@ -50,7 +50,11 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
 
                         <div className='flex w-full xl:w-fit gap-2'>
                             {arr.map((index) => (
-                                <div key={index} className='h-6 flex flex-1 xl:flex-0 items-end cursor-pointer' onClick={() => handleBarClick(index)}>
+                                <div
+                                    key={index}
+                                    className='h-6 flex flex-1 xl:flex-0 items-end py-4 pb-4 xl:py-8 cursor-pointer'
+                                    onClick={() => {handleBarClick(index)}}
+                                >
                                     <StatusBar progress={progress} isActive={index === activeIndex} className='xl:w-[84px]'/>
                                 </div>
                             ))}
