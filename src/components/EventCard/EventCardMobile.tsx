@@ -5,7 +5,7 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";
 import Text, {TextVariant} from "../Text.tsx";
 import Button, {ButtonSize, ButtonVariant} from "../Buttons/Button.tsx";
 import TicketButtonWrapper from "../Buttons/TicketButtonWrapper.tsx";
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
 
 interface EventCardProps {
     item: Event,
@@ -15,13 +15,14 @@ interface EventCardProps {
 
 const EventCardMobile = ({item, to, isLast}: EventCardProps) => {
     const datetime = getDate(item.date)
+    const navigate = useNavigate();
 
     return (
         <div
             className={`flex flex-col gap-6 pt-8 pb-11
             ${isLast ? 'border-solid border-b-[2px] border-x-0 border-t-0 border-divider-default' : ''}`}
         >
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-3' onClick={() => navigate(`/events/${to}`)}>
                 <div className='flex justify-between items-end'>
                     <div className='flex items-end gap-2'>
                         <Text variant={TextVariant.Number_L}>{datetime.day}</Text>
@@ -48,7 +49,7 @@ const EventCardMobile = ({item, to, isLast}: EventCardProps) => {
                 }
             </div>
 
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-4' onClick={() => navigate(`/events/${to}`)}>
                 <div className='flex flex-col gap-2'>
                     <Text variant={TextVariant.H3}>{item.title.toUpperCase()}</Text>
                     <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
