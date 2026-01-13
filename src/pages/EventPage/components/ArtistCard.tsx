@@ -8,17 +8,15 @@ interface ArtistCardProps {
 
 const ArtistCard = ({name, photo, role}: ArtistCardProps) => {
     return (
-        <div className='flex flex-col gap-2.5 xl:gap-5'>
-            <div className='relative w-full pb-[100%] max-w-[223px] max-h-[223px] xl:w-[223px] xl:h-[223px] xl:pb-0'>
-                <img
-                    className='absolute top-0 left-0 w-full h-full object-cover'
-                    alt={photo}
-                    src={photo}
-                />
-            </div>
-            <div className='flex flex-col gap-[5px]'>
-                <Text variant={TextVariant.P}>{name}</Text>
-                {role && <Text className='text-lightgray' variant={TextVariant.CAPTION}>{role}</Text>}
+        <div className='flex flex-col gap-4 w-40 justify-self-center'>
+            <img
+                className='object-cover max-w-40 max-h-40'
+                alt={photo}
+                src={photo}
+            />
+            <div className='flex flex-col gap-1'>
+                <Text variant={TextVariant.Body_L}>{name}</Text>
+                {role && <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{role}</Text>}
             </div>
         </div>
     );

@@ -8,25 +8,23 @@ interface LocationSectionProps {
 
 const LocationSection = ({location, address, photos}: LocationSectionProps) => {
 
-    if(photos.length === 0) {
-        return <Text className='text-lightgray' variant={TextVariant.CAPTION}>
-            Фотографии концертной площадки появятся в ближайшее время. Следите за обновлениями!
-        </Text>
-    }
-
     return (
-        <section id='location' className='flex flex-col gap-10 xl:gap-[60px]'>
-            <Text variant={TextVariant.H2}>ПЛОЩАДКА</Text>
-            <div className='flex flex-col gap-[30px] xl:gap-10'>
-                <div className='flex flex-col gap-2'>
-                    <Text variant={TextVariant.H4}>{location}</Text>
-                    <Text className='text-lightgray' variant={TextVariant.P}>{address}</Text>
-                </div>
-                <div className='flex flex-col lg:flex-row justify-between gap-2.5'>
-                    {photos.map((photo) => (
-                        <img className='md:w-[49%]' src={photo} alt={photo} key={photo} />
-                    ))}
-                </div>
+        <section id='location' className='flex flex-col gap-6'>
+            <div className='flex flex-col gap-3'>
+                <Text variant={TextVariant.Subtitle_L}>{location}</Text>
+                <Text variant={TextVariant.Body_L}>{address}</Text>
+                {photos.length === 0 &&
+                    <Text className='text-text-tertiary' variant={TextVariant.Body_M}>
+                        Фотографии концертной площадки появятся в ближайшее время. Следите за обновлениями
+                    </Text>
+                }
+            </div>
+
+
+            <div className='flex flex-col xl:flex-row gap-3'>
+                {photos.map((photo) => (
+                    <img className='w-[90vw] xl:w-[49%]' src={photo} alt={photo} key={photo} />
+                ))}
             </div>
         </section>
     );
