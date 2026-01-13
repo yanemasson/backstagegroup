@@ -27,10 +27,10 @@ export const Chips = ({size=ChipsSize.medium, options, onItemClose} : ChipsProps
     }
 
     return (
-        <div className='flex gap-2'>
+        <div className='flex gap-2 flex-wrap xl:flex-nowrap overflow-x-auto scrollbar-hide'>
             {options.map((item) => (
                 <div
-                    className={`flex gap-2 p-3 items-center ${sizeStyleMap[size].style}
+                    className={`flex gap-2 p-3 items-center min-w-fit ${sizeStyleMap[size].style}
                     bg-button-tertiary-default hover:bg-button-tertiary-hover transition-colors`}
                     key={item.id + '_chips'}
                 >

@@ -6,6 +6,8 @@ import {fetchCategories, fetchNews, WordPressCategory, WordPressPost} from "../.
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import {SEO} from "../../components/SEO.tsx";
 import { useSearchParams } from 'react-router-dom';
+import Breadcrumbs from "../../components/Breadcrumbs.tsx";
+import {Chips} from "../../components/Chips.tsx";
 
 const NewsListPage = () => {
     const [newsList, setNewsList] = useState<WordPressPost[]>([]);
@@ -57,9 +59,12 @@ const NewsListPage = () => {
         );
     }, [selected, newsList]);
 
+    const handleOptionRemove = (option: WordPressCategory) => {
+            setSelected(selected.filter(item => item.id !== option.id));
+    };
+
     if (loading) return <LoadingSpinner />;
     if (error) return <div>{error}</div>;
-
 
     return (
         <>
@@ -69,28 +74,26 @@ const NewsListPage = () => {
                 "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <div className='xl:w-[1166px] flex flex-col self-start items-start gap-[60px] mb-[120px]'>
-                <div className='flex flex-col md:flex-row md:w-full gap-[30px] justify-between items-start'>
-                    <Text className='text-light-brown' variant={TextVariant.H1}>НОВОСТИ</Text>
-                    <MultiSelect options={options} selectedValues={selected} onChange={setSelected} />
+            <div className='xl:w-[1152px] w-[90vw] flex flex-col gap-11 mt-[76px]'>
+                <div className='flex flex-col gap-2'>
+                    <div className='flex'>
+                        <Breadcrumbs isFirst={true} to='/'>Главная</Breadcrumbs>
+                        <Breadcrumbs isLast={true}>Новости</Breadcrumbs>
+                    </div>
+                    <h1><Text variant={TextVariant.H1}>НОВОСТИ</Text></h1>
                 </div>
 
-                <div className='flex flex-col gap-10 lg:gap-[50px] justify-center'>
+                <div className='flex xl:flex-row flex-col gap-6'>
+                    <MultiSelect className='xl:w-60 w-full' options={options} selectedValues={selected} onChange={setSelected} />
+                    {selected.length > 0 ? <Chips options={selected} onItemClose={handleOptionRemove}/> : <></>}
+
+                </div>
+
+                <div className='flex flex-col gap-11 justify-center'>
                     {filteredNews.map((item) => (
                         <NewsCard key={item.id} post={item} />
                     ))}
                 </div>
-
-                {/*            <button className='w-32 self-center'
-                aria-label='Показать еще' >
-                <Text className='flex gap-1.5 items-center text-lightgray hover:text-white focus:text-white' variant={TextVariant.CAPTION}>
-                    Показать еще
-                    <svg width="12" height="9"
-                         viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9L0 0H12L6 9Z" fill="currentColor" />
-                    </svg>
-                </Text>
-            </button>*/}
             </div>
         </>
 
