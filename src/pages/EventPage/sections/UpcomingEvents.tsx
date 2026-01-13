@@ -4,11 +4,11 @@ import createSlug from "../../../utils/createSlug.ts";
 import EventCardMobile from "../../../components/EventCard/EventCardMobile.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 import {Event} from "../../../types/event.ts";
+import {Link} from "react-router";
+import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 interface UpcomingEventsProps {
     events: Event[];
-    item: Event;
-
 }
 
 const UpcomingEvents = ({events}: UpcomingEventsProps) => {
@@ -20,14 +20,28 @@ const UpcomingEvents = ({events}: UpcomingEventsProps) => {
 
     return (
         <section id='eventlist'>
-            <Text className='pb-[30px] xl:pb-[50px]' variant={TextVariant.H2}>БЛИЖАЙШИЕ КОНЦЕРТЫ</Text>
-            <div id='eventlist' className='flex flex-col gap-0 xl:gap-10 bg-darkgray text-white '>
+            <Text variant={TextVariant.H2}>БЛИЖАЙШИЕ КОНЦЕРТЫ</Text>
+            <div id='eventlist' className='flex flex-col '>
                 {events.map((item, index) => (
                     xl
-                        ? <EventCardDesktop key={index} item={item} to={createSlug(item.eventId)}/>
-                        : <EventCardMobile key={index} item={item} to={createSlug(item.eventId)}/>
+                        ? <EventCardDesktop
+                            key={index}
+                            item={item}
+                            to={createSlug(item.eventId)}
+                            isLast={index !== events.length - 1}
+                        />
+                        : <EventCardMobile
+                            key={index}
+                            item={item}
+                            to={createSlug(item.eventId)}
+                            isLast={index !== events.length - 1}
+                        />
                 ))}
+                <Link className='self-center' to='/events'>
+                    <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Вся афиша</Button>
+                </Link>
             </div>
+
         </section>
     );
 };
