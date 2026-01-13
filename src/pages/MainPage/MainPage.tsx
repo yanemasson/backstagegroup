@@ -4,7 +4,7 @@ import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 
 const Hero = lazy(() => import('./sections/Hero/Hero'));
 const EventList = lazy(() => import('./sections/EventList/EventList'));
-const ReviewsSection = lazy(() => import('../EventPage/sections/ReviewsSection'));
+const ReviewsSection = lazy(() => import('./sections/Reviews/ReviewsSection'));
 const AboutUsSection = lazy(() => import('./sections/AboutUs/AboutUs'));
 const NewsSection = lazy(() => import('./sections/News/NewsSection'));
 const Faq = lazy(() => import('./sections/FAQ/FAQ'));
