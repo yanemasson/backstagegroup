@@ -85,22 +85,17 @@ const Navbar = () => {
                     }
 
                     if (isScrollingDown && visible && currentScrollY > 50) {
-                        console.log('Setting hide timeout');
                         hideTimeout = setTimeout(() => {
-                            console.log('Hiding navbar');
                             setVisible(false);
                         }, 50);
                     }
                     else if (isScrollingUp && !visible) {
-                        console.log('Setting show timeout');
                         hideTimeout = setTimeout(() => {
-                            console.log('Showing navbar');
                             setVisible(true);
                         }, 50);
                     }
 
                     if (currentScrollY < 50) {
-                        console.log('At top - showing navbar');
                         if (hideTimeout) {
                             clearTimeout(hideTimeout);
                         }
