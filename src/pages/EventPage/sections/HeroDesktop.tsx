@@ -43,7 +43,7 @@ const HeroDesktop = memo(({item}: HeroProps) => {
             <div className='flex w-full justify-between'>
 
                 <div className='flex flex-col gap-6'>
-                    <div>
+                    <div className='flex flex-col gap-4'>
                         <h1><Text className='leading-none' variant={TextVariant.H1}>{title}</Text></h1>
                         <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
                     </div>
