@@ -45,14 +45,14 @@ const Tab = (
         }
     }
 
-    const style = 'border-solid border-x-0 border-t-0 border-b-[2px] flex items-center justify-center transition-colors duration-200 cursor-pointer border-divider-default hover:text-text-accent'
+    const style = 'border-solid border-x-0 border-t-0 border-b-[2px] flex items-center justify-center transition-colors duration-200 cursor-pointer hover:text-text-accent'
     const activeStyle = 'border-divider-accent text-text-accent'
     const disabledStyle = 'cursor-default text-button-disabled-gray hover:text-button-disabled-gray'
 
     return (
         <button
             onClick={handleClick}
-            className={`${style} ${sizeStyleMap[size].style} ${className} ${isActive ? activeStyle : ''} ${disabled ? disabledStyle : ''}`}
+            className={`${style} ${sizeStyleMap[size].style} ${className} ${isActive ? activeStyle : 'border-divider-default '} ${disabled ? disabledStyle : ''}`}
         >
             <Text variant={sizeStyleMap[size].text}>{children}</Text>
 
