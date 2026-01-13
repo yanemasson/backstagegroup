@@ -6,8 +6,8 @@ import {getDate} from "../../../utils/getDate.ts";
 import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {getDuration} from "../../../utils/getDuration.ts";
 import {memo, useMemo} from "react";
-import {Link} from "react-router";
-import Button, {ButtonVariant} from "../../../components/Buttons/Button.tsx";
+import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
+import Breadcrumbs from "../../../components/Breadcrumbs.tsx";
 
 interface HeroProps {
     item: Event
@@ -20,21 +20,14 @@ const HeroDesktop = memo(({item}: HeroProps) => {
     const hasVideo = item.video && item.video.length > 0;
 
     return (
-        <section id='hero' className='flex flex-col h-full gap-5'>
-            <div className='flex justify-between'>
-                <Text className='text-lightgray' variant={TextVariant.CAPTION}>
-                    <Link className='hover:text-white transition-colors ' to={'/'}>Главная</Link>
-                    {` · `}
-                    <Link className='hover:text-white transition-colors ' to={'/#eventlist'}>Афиша</Link>
-                    {` · ${getDate(item.date).day} ${getDate(item.date).monthStr}`}
-                </Text>
-                <div className='flex gap-2'>
-                    <Text variant={TextVariant.CAPTION} className='text-orange'>{item.cta}</Text>
-                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>{`${item.age} +`}</Text>
-                </div>
+        <section id='hero' className='flex flex-col gap-4'>
+            <div className='flex'>
+                <Breadcrumbs isFirst={true} to='/'>Главная</Breadcrumbs>
+                <Breadcrumbs to='/events'>Афиша</Breadcrumbs>
+                <Breadcrumbs isLast={true}>{datetime.day + ' ' + datetime.monthStr}</Breadcrumbs>
             </div>
 
-            <div className='h-[436px] relative'>
+            <div className='h-[420px] relative'>
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
                     {!hasVideo
                         ? <img
@@ -47,48 +40,47 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                 </div>
             </div>
 
-            <div className='flex w-full h-[257px] gap-[108px] items-end space-between'>
+            <div className='flex w-full justify-between'>
 
-                <div className='flex flex-col h-full justify-between'>
-                    <div className='flex flex-col gap-5'>
-                        <Text className='leading-none' variant={TextVariant.H1}>{title}</Text>
-                        <Text className='text-dark-text w-[500px]' variant={TextVariant.P}>{item.descriptionShort}</Text>
+                <div className='flex flex-col gap-6'>
+                    <div>
+                        <h1><Text className='leading-none' variant={TextVariant.H1}>{title}</Text></h1>
+                        <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
                     </div>
-
-                    <div className='flex gap-2.5 items-end'>
-                        <TicketButtonWrapper className='w-[335px] h-[53px]' eventId={item.eventId}>
-                            <Button className='w-[335px] h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
-                        </TicketButtonWrapper>
-                    </div>
-
+                    <TicketButtonWrapper eventId={item.eventId}>
+                        <Button className='w-40' size={ButtonSize.medium} variant={ButtonVariant.primary}>Купить билет</Button>
+                    </TicketButtonWrapper>
                 </div>
 
-                <div className='flex flex-col h-full gap-[30px] justify-between'>
-                    <div className='flex gap-5 items-end'>
-                        <div className='flex items-end'>
-                            <p className='font-display min-w-[50px] font-medium text-[40px] lining-nums leading-[1.5] -mb-2 '>
-                                {datetime.day}
-                            </p>
-                            <div className='flex flex-col items-start text-start'>
-                                <Text variant={TextVariant.P}>{datetime.monthStr}</Text>
-                                <Text variant={TextVariant.P} className='text-dark-text'>{datetime.weekday}</Text>
+                <div className='flex flex-col gap-6'>
+                    <div className='flex gap-8'>
+                        <div className='flex gap-3'>
+                            <Text className='-translate-y-2' variant={TextVariant.Number_L}>{datetime.day}</Text>
+                            <div className='flex flex-col justify-around'>
+                                <Text variant={TextVariant.Body_L}>
+                                    {String(datetime.monthStr).charAt(0).toUpperCase() + String(datetime.monthStr).slice(1)}
+                                </Text>
+                                <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{datetime.weekday}</Text>
                             </div>
                         </div>
-                        <div className='h-10 border-solid border-y-0 border-x-[1px] border-gray'/>
-                        <p className='font-display proportional-nums text-[32px] leading-[1.3] '>{datetime.time}</p>
+                        <Text className='translate-y-1' variant={TextVariant.Number_S}>{datetime.time}</Text>
                     </div>
 
-                    <div className='flex flex-col gap-2.5'>
-                        <Text variant={TextVariant.P}>{item.location}</Text>
-                        <Text className='text-dark-text' variant={TextVariant.P}>{`г. ${item.city}`}</Text>
-                    </div>
+                    <div className='flex flex-col gap-6'>
+                        <div>
+                            <Text variant={TextVariant.Body_L}>{item.location}</Text>
+                            <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{'г. ' + item.city}</Text>
+                        </div>
+                        <div>
+                            <Text variant={TextVariant.Body_L}>{getDuration(item.duration)}</Text>
+                            <Text className='text-text-tertiary' variant={TextVariant.Body_M}>Продолжительность концерта</Text>
 
-                    <div className='flex flex-col gap-2.5'>
-                        <Text variant={TextVariant.P}>{getDuration(item.duration)}</Text>
-                        <Text className='text-dark-text' variant={TextVariant.P}>{`г. ${item.city}`}</Text>
-                    </div>
+                        </div>
+                        <Text variant={TextVariant.Body_L}>{item.age + '+'}</Text>
 
+                    </div>
                 </div>
+
             </div>
         </section>
     );
