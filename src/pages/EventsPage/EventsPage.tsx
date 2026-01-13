@@ -19,6 +19,8 @@ const EventsPage = () => {
     const {selectedCity} = useCity();
     const [citySearchModalIsOpen, setCitySearchModalIsOpen] = useState(false)
 
+    const [headerIsVisible, setHeaderIsVisible] = useState(false)
+    
     const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентярь', 'Октябрь', 'Ноябрь', 'Декабрь']
     const now = new Date()
     const currentMonthIndex = now.getMonth()
@@ -122,6 +124,64 @@ const EventsPage = () => {
         };
     }, [citySearchModalIsOpen]);
 
+    //положение табов
+    useEffect(() => {
+        let ticking = false;
+        let lastScrollY = 0;
+        let hideTimeout: NodeJS.Timeout | null = null;
+
+        const controlNavbar = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    const scrollDelta = currentScrollY - lastScrollY;
+                    const isScrollingDown = scrollDelta > 0;
+                    const isScrollingUp = scrollDelta < 0;
+
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                    }
+
+                    if (isScrollingDown && headerIsVisible && currentScrollY > 50) {
+                        console.log('Setting hide timeout');
+                        hideTimeout = setTimeout(() => {
+                            console.log('Hiding navbar');
+                            setHeaderIsVisible(false);
+                        }, 50);
+                    }
+                    else if (isScrollingUp && !headerIsVisible) {
+                        console.log('Setting show timeout');
+                        hideTimeout = setTimeout(() => {
+                            console.log('Showing navbar');
+                            setHeaderIsVisible(true);
+                        }, 50);
+                    }
+
+                    if (currentScrollY < 50) {
+                        console.log('At top - showing navbar');
+                        if (hideTimeout) {
+                            clearTimeout(hideTimeout);
+                        }
+                        setHeaderIsVisible(true);
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', controlNavbar);
+
+        return () => {
+            window.removeEventListener('scroll', controlNavbar);
+            if (hideTimeout) {
+                clearTimeout(hideTimeout);
+            }
+        };
+    }, [headerIsVisible]);
+    
     if(loading) { return <LoadingSpinner/> }
     if(error) { return <>{error}</> }
 
@@ -143,8 +203,11 @@ const EventsPage = () => {
                 </div>
             </div>
 
-            <div className='flex flex-col'>
-                <div className='flex xl:w-full w-[90vw] overflow-x-auto scrollbar-hide'>
+            <div className=' flex flex-col'>
+                <div
+                    className={`sticky flex xl:w-full w-[90vw] overflow-x-auto scrollbar-hide bg-bg-global z-10
+                    ${headerIsVisible ? 'top-[76px]' : 'top-0'} transition-all duration-300`}
+                >
                     <Tab
                         size={xl ? TabButtonSize.medium : TabButtonSize.small}
                         className='flex-1 min-w-[108px] text-nowrap'
