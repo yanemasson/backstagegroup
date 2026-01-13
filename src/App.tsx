@@ -13,18 +13,17 @@ function App() {
         <HelmetProvider>
             <CityProvider>
                 <BrowserRouter>
-                    <MetricsProvider>
-                        <ScrollToTop />
-                        <div className='bg-bg-global text-text-primary flex flex-col justify-center items-center'>
-                            <div className="flex flex-col items-center min-h-screen ">
-                                <Navbar/>
-                                <main className="flex-grow flex flex-col items-center mb-20 w-full gap-24">
-                                    <AppRoutes/>
-                                    <Footer/>
-                                </main>
-                            </div>
+                    <MetricsProvider/>
+                    <ScrollToTop />
+                    <div className='bg-bg-global text-text-primary flex flex-col justify-center items-center'>
+                        <div className="flex flex-col items-center min-h-screen ">
+                            <Navbar/>
+                            <main className="flex-grow flex flex-col items-center mb-20 w-full gap-24">
+                                <AppRoutes/>
+                                <Footer/>
+                            </main>
                         </div>
-                    </MetricsProvider>
+                    </div>
                 </BrowserRouter>
             </CityProvider>
         </HelmetProvider>

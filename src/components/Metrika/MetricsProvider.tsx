@@ -1,15 +1,12 @@
 import GoogleTagManager from './GoogleTagManager';
 import YandexMetrika from "./YandexMetrika.tsx";
 import MailRuMetrika from "./MailRuMetrika.tsx";
-import {ReactNode} from "react";
 import {useCookieConsent} from "../../hooks/useCookieConsent.ts";
 import CookieConsent from "../CookieConsent.tsx";
 import {CookiePreferences} from "../../types/cookie.ts";
 
-interface MetricsProviderProps {
-    children: ReactNode
-}
-const MetricsProvider = ({ children }: MetricsProviderProps) => {
+
+const MetricsProvider = () => {
 
     const { showBanner, acceptAll, rejectAll, customize, cookiePreferences } = useCookieConsent();
     const handleClose = () => {
@@ -40,7 +37,6 @@ const MetricsProvider = ({ children }: MetricsProviderProps) => {
                                onClose={handleClose}
                 />
             }
-            {children}
         </>
     );
 };
