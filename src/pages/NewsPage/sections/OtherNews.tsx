@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {fetchPostForCategories, WordPressPost} from "../../../api";
 import LoadingSpinner from "../../../components/LoadingSpinner.tsx";
 import { Link } from "react-router";
+import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 interface OtherNewsProps {
     tag: number;
@@ -43,22 +44,14 @@ const OtherNews = ({tag, postItem}: OtherNewsProps) => {
         return null
     }
     return (
-        <div className='flex flex-col gap-10'>
-            <Text variant={TextVariant.H2}>ПОХОЖИЕ НОВОСТИ</Text>
-            <div className='flex flex-col gap-10 lg:gap-[50px] justify-center'>
+        <div className='w-[90vw] xl:w-full flex flex-col gap-11'>
+            <h2><Text variant={TextVariant.H2}>ПОХОЖИЕ НОВОСТИ</Text></h2>
                 {newsList
                     .filter((item) => (item.id !== postItem.id))
                     .map((item) => (<NewsCard key={item.id} post={item} />))
                 }
-            </div>
-            <Link className='w-32 self-center' to={`/news?tag=${encodeURIComponent(tag)}`}>
-                <Text className='flex gap-1.5 items-center text-lightgray hover:text-white focus:text-white' variant={TextVariant.CAPTION}>
-                    Показать еще
-                    <svg width="12" height="9"
-                         viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9L0 0H12L6 9Z" fill="currentColor" />
-                    </svg>
-                </Text>
+            <Link className='self-center' to='/news'>
+                <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Все новости</Button>
             </Link>
         </div>
     );

@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import { Event } from '../../../types/event.ts'
 import {DrupalAPI} from "../../../api/drupal.ts";
 import {useCity} from "../../../hooks/geolocation/useCity.ts";
+import {Link} from "react-router";
+import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 const TagEvents = ({tag}: { tag: string; }) => {
 
@@ -42,16 +44,19 @@ const TagEvents = ({tag}: { tag: string; }) => {
             <Text className='pb-[30px] xl:pb-[50px]' variant={TextVariant.H2}>БЛИЖАЙШИЕ КОНЦЕРТЫ</Text>
             <div id='eventlist' className='flex flex-col gap-0 xl:gap-10 bg-darkgray text-white '>
                 {filteredEvents.length === 0 ?
-                    events.slice(0, 3).map((item: Event) => (
+                    events.slice(0, 3).map((item, index) => (
                         xl
-                            ? <EventCardDesktop key={item.eventId} item={item} to={createSlug(item.eventId)}/>
-                            : <EventCardMobile key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            ? <EventCardDesktop isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            : <EventCardMobile isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
                     ))
-                    : filteredEvents.slice(0, 3).map((item) => (
-                    xl
-                        ? <EventCardDesktop key={item.eventId} item={item} to={createSlug(item.eventId)}/>
-                        : <EventCardMobile key={item.eventId} item={item} to={createSlug(item.eventId)}/>
-                ))}
+                    : filteredEvents.slice(0, 3).map((item, index) => (
+                        xl
+                            ? <EventCardDesktop isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            : <EventCardMobile isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                    ))}
+                <Link className='self-center' to='/events'>
+                    <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Вся афиша</Button>
+                </Link>
             </div>
         </section>
     );
