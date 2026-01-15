@@ -1,14 +1,14 @@
-import {Link, useParams} from "react-router";
+import {useParams} from "react-router";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
 import Article from "./sections/Article.tsx";
 import TagEvents from "./sections/TagEvents.tsx";
 import OtherNews from "./sections/OtherNews.tsx";
 import {getDate} from "../../utils/getDate.ts";
-import Text, {TextVariant} from "../../components/Text.tsx";
 import {fetchCategories, fetchPost, WordPressCategory, WordPressPost} from "../../api";
 import {useEffect, useState} from "react";
 import {SEO} from "../../components/SEO.tsx";
+import Breadcrumbs from "../../components/Breadcrumbs.tsx";
 
 const NewsPage = () => {
     const {id} = useParams()
@@ -47,21 +47,18 @@ const NewsPage = () => {
     }
 
     return (
-        <div className='pt-5 mb-[120px] md:w-[1166px] w-[90vw]'>
+        <div className='pt-5 mt-[88px] xl:w-[1152px] w-[90vw]'>
             <SEO
                 title={post.title.rendered}
                 description='Билеты на лучшие балетные спектакли и симфонические концерты." +
                     "Классическая музыка, премьеры в Вашем городе'
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <Text className='text-lightgray pb-5' variant={TextVariant.CAPTION}>
-                <Link className='hover:text-white transition-colors ' to={`/news/`}>Новости</Link>
-                {` · `}
-                <Link className='hover:text-white transition-colors ' to={`/news?tag=${encodeURIComponent(post.categories[0])}`}>
-                    {`${searchTag()}`}
-                </Link>
-                {` · ${getDate(post.date).formattedDate} `}
-            </Text>
+            <div className='flex'>
+                <Breadcrumbs isFirst={true} to='/'>Главная</Breadcrumbs>
+                <Breadcrumbs to='/news'>Новости</Breadcrumbs>
+                <Breadcrumbs isLast={true}>{getDate(post.date).formattedDate}</Breadcrumbs>
+            </div>
             <div className='flex flex-col gap-[100px]'>
                 <Article post={post}/>
                 <TagEvents tag={searchTag()}/>
