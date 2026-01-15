@@ -2,23 +2,11 @@ import GoogleTagManager from './GoogleTagManager';
 import YandexMetrika from "./YandexMetrika.tsx";
 import MailRuMetrika from "./MailRuMetrika.tsx";
 import {useCookieConsent} from "../../hooks/useCookieConsent.ts";
-import CookieConsent from "../CookieConsent.tsx";
-import {CookiePreferences} from "../../types/cookie.ts";
-
 
 const MetricsProvider = () => {
 
-    const { showBanner, acceptAll, rejectAll, customize, cookiePreferences } = useCookieConsent();
-    const handleClose = () => {
-        if (!cookiePreferences) {
-            const defaultPreferences: CookiePreferences = {
-                necessary: true,
-                analytics: true,
-                marketing: true
-            };
-            customize(defaultPreferences);
-        }
-    };
+    const { cookiePreferences } = useCookieConsent();
+
 
     return (
         <>
@@ -29,14 +17,6 @@ const MetricsProvider = () => {
                     <MailRuMetrika counterId={import.meta.env.VITE_MAILRU_ID}/>
                 </>
             )}
-
-            {showBanner &&
-                <CookieConsent onAcceptAll={acceptAll}
-                               onRejectAll={rejectAll}
-                               onCustomize={customize}
-                               onClose={handleClose}
-                />
-            }
         </>
     );
 };
