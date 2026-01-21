@@ -55,7 +55,8 @@ const Footer = () => {
                             <LinkItem to='/refund' className='text-text-tertiary'>Возврат билетов</LinkItem>
                         </div>
                         <div className='flex flex-col gap-3'>
-                            <Text  variant={TextVariant.Subtitle_M}>Номера для связи</Text>
+                            <Text  variant={TextVariant.Subtitle_M}>Контакты для связи</Text>
+                            <Text className='text-text-tertiary' variant={TextVariant.Body_S}>info@backstagegroup.ru</Text>
                             <Text className='text-text-tertiary' variant={TextVariant.Body_S}>+7 999 440-02-49</Text>
                             <Text className='text-text-tertiary' variant={TextVariant.Body_S}>+7 923 215-76-34</Text>
                         </div>
@@ -98,7 +99,10 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className='flex flex-col gap-3'>
-                    <Text  variant={TextVariant.Subtitle_M}>Номера для связи</Text>
+                    <Text  variant={TextVariant.Subtitle_M}>Контакты для связи</Text>
+                    <a href='mailto:info@backstagegroup.ru'>
+                        <Text className='text-text-tertiary' variant={TextVariant.Body_S}>info@backstagegroup.ru</Text>
+                    </a>
                     <a href='tel:+79994400249'>
                         <Text className='text-text-tertiary' variant={TextVariant.Body_S}>+7 999 440-02-49</Text>
                     </a>
