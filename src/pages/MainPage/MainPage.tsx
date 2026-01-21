@@ -2,6 +2,7 @@ import {SEO} from "../../components/SEO.tsx";
 import EventList from "./sections/EventList/EventList.tsx";
 import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
+import SEOContent from "../../components/SEOContent.tsx";
 
 const Hero = lazy(() => import('./sections/Hero/Hero'));
 const AboutUsSection = lazy(() => import('./sections/AboutUs/AboutUs'));
@@ -25,6 +26,9 @@ const MainPage = () => {
                 <Suspense fallback={<LoadingSpinner />}><ReviewsSection/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><NewsSection/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><Faq/></Suspense>
+                
+                {/* SEO-текст для главной страницы Красноярска */}
+                <SEOContent city="krasnoyarsk" pageType="main" />
             </div>
         </div>
     );

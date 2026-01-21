@@ -1,19 +1,19 @@
-import Text, {TextVariant} from "../../components/Text.tsx";
-import { getSEOData } from '../../data/seoData';
-import { SEO } from '../../components/SEO';
-import SEOContent from '../../components/SEOContent';
-import Anchor from "../../components/Anchor.tsx";
-import Button, {ButtonVariant} from "../../components/Buttons/Button.tsx";
-import {Link} from "react-router";
 import { useEffect } from 'react';
 import { useCity } from '../../hooks/geolocation/useCity';
+import { getSEOData } from '../../data/seoData';
+import { SEO } from '../../components/SEO';
+import { SEOContent } from '../../components/SEOContent';
+import Text, { TextVariant } from "../../components/Text";
+import Anchor from "../../components/Anchor";
+import Button, { ButtonVariant } from "../../components/Buttons/Button";
+import { Link } from "react-router";
 
-const RefundPage = () => {
+const NovosibirskRefundPage = () => {
     const { setSelectedCity } = useCity();
-    const seoInfo = getSEOData('krasnoyarsk', 'refund');
+    const seoInfo = getSEOData('novosibirsk', 'refund');
 
     useEffect(() => {
-        setSelectedCity('Красноярск');
+        setSelectedCity('Новосибирск');
     }, [setSelectedCity]);
 
     return (
@@ -23,8 +23,8 @@ const RefundPage = () => {
                 description={seoInfo.description} 
                 keywords={seoInfo.keywords} 
             />
-            <div className='flex flex-col w-full items-start gap-10 '>
-                <div className=' flex flex-col items-start justify-center gap-5 pt-20 px-5 xl:px-0'>
+            <div className='flex flex-col w-full items-start gap-10'>
+                <div className='flex flex-col items-start justify-center gap-5 pt-20 px-5 xl:px-0'>
                     <Text variant={TextVariant.H1}>Возврат билетов</Text>
                     <Text variant={TextVariant.B}>Уважаемые зрители! Если Вы хотите вернуть билет, выберите, пожалуйста,
                         вашу ситуацию и дальше действуйте СОГЛАСНО ИНСТРУКЦИИ:
@@ -70,17 +70,15 @@ const RefundPage = () => {
                         <br/>Служба поддержки работает с 7:00 до 23:00 (МСК)
                     </Text>
                 </div>
-                <SEOContent city="krasnoyarsk" pageType="refund" />
-                <div className='flex items-center gap-5 '>
-                    <Link to='/'>
+                <SEOContent city="novosibirsk" pageType="refund" />
+                <div className='flex items-center gap-5'>
+                    <Link to='/nsk'>
                         <Button className='w-[284px] h-[53px]' variant={ButtonVariant.outline}>Главная</Button>
                     </Link>
                 </div>
             </div>
-
-
         </>
     );
 };
 
-export default RefundPage;
+export default NovosibirskRefundPage;
