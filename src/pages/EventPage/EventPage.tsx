@@ -9,18 +9,16 @@ import HeroDesktop from "./sections/HeroDesktop.tsx";
 import HeroMobile from "./sections/HeroMobile.tsx";
 import {DrupalAPI} from "../../api/drupal.ts";
 import {Event} from '../../types/event.ts'
-import MenuItemButton from "./components/MenuItemButton.tsx";
-import FixedTicketButton from "./components/FixedTicketButton.tsx";
 import Disclaimer from "./sections/Disclaimer.tsx";
+import Tab, {TabButtonSize} from "../../components/Tab.tsx";
 
 const Information = lazy(() => import('./sections/Information'));
 const TrackList = lazy(() => import('./sections/TrackList'));
 const ArtistsSection = lazy(() => import('./sections/ArtistsSection'));
 const LocationSection = lazy(() => import('./sections/LocationSection'));
-const AboutUsSection = lazy(() => import('../MainPage/sections/AboutUs/AboutUs'));
-const ReviewsSection = lazy(() => import('./sections/ReviewsSection'));
+const GallerySection = lazy(() => import('./sections/Gallery'))
 const UpcomingEvents = lazy(() => import('./sections/UpcomingEvents'));
-
+const NewsSection = lazy(() => import('../MainPage/sections/News/NewsSection'))
 
 const EventPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -28,7 +26,10 @@ const EventPage = () => {
     const [event, setEvent] = useState<Event | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [headerIsVisible, setHeaderIsVisible] = useState(false)
+    const xl = useMediaBreakpoint('xl')
 
+    //получаем концерт
     useEffect(() => {
         const fetchEvent = async () => {
             if (!id) {
@@ -57,6 +58,7 @@ const EventPage = () => {
         fetchEvent();
     }, [id]);
 
+    //получаем остальные концерты
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -78,6 +80,64 @@ const EventPage = () => {
 
         fetchEvents();
     }, [id]);
+
+    //положение табов
+    useEffect(() => {
+        let ticking = false;
+        let lastScrollY = 0;
+        let hideTimeout: NodeJS.Timeout | null = null;
+
+        const controlNavbar = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    const scrollDelta = currentScrollY - lastScrollY;
+                    const isScrollingDown = scrollDelta > 0;
+                    const isScrollingUp = scrollDelta < 0;
+
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                    }
+
+                    if (isScrollingDown && headerIsVisible && currentScrollY > 50) {
+                        console.log('Setting hide timeout');
+                        hideTimeout = setTimeout(() => {
+                            console.log('Hiding navbar');
+                            setHeaderIsVisible(false);
+                        }, 50);
+                    }
+                    else if (isScrollingUp && !headerIsVisible) {
+                        console.log('Setting show timeout');
+                        hideTimeout = setTimeout(() => {
+                            console.log('Showing navbar');
+                            setHeaderIsVisible(true);
+                        }, 50);
+                    }
+
+                    if (currentScrollY < 50) {
+                        console.log('At top - showing navbar');
+                        if (hideTimeout) {
+                            clearTimeout(hideTimeout);
+                        }
+                        setHeaderIsVisible(true);
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', controlNavbar);
+
+        return () => {
+            window.removeEventListener('scroll', controlNavbar);
+            if (hideTimeout) {
+                clearTimeout(hideTimeout);
+            }
+        };
+    }, [headerIsVisible]);
 
     type menuItemType = 'Описание программы' | 'Трек-лист' | 'Исполнители' | 'Площадка' | null
     const [activeSection, setActiveSection] = useState<menuItemType>('Описание программы')
@@ -123,27 +183,26 @@ const EventPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <FixedTicketButton eventId={event.eventId}/>
-            <div className='relative flex flex-col gap-[100px] w-[90vw] xl:w-[1166px]'>
+            {/*<FixedTicketButton eventId={event.eventId}/>*/}
+            <div className='relative flex flex-col gap-24 w-[90vw] xl:w-[1152px] pt-[88px]'>
 
                 {md ? <HeroDesktop item={event}/> : <HeroMobile item={event} />}
 
                 {event.title === "Симфония Раммштайн" &&
                     <Disclaimer
-                        firstArticle=
-                            {<>
-                                <p className='text-light-brown'>Организатор и исполнители не поддерживают официальную позицию немецкой метал-группы «Rammstein».</p>
-                                Организатор и исполнители не несут ответственность за смысл текстов песен, а так же любые высказывания и мнения метал-группы «Rammstein».
-                                «Backstage group» не несёт ответственности за содержание авторских материалов.
-                            </>}
-                        secondArticle=
-                            {<>
-                                <p className='text-light-brown'>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
-                                и исполняет музыку метал-группы «Rammstein»
-                                в симфонической аранжировке.
-                                Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими людьми случайно.
-                            </>}
-                        />
+                        firstArticle={
+                        <>
+                            <p>Организатор и исполнители не поддерживают официальную позицию немецкой метал-группы «Rammstein».</p>
+                            Организатор и исполнители не несут ответственность за смысл текстов песен, а так же любые высказывания и мнения метал-группы «Rammstein».
+                            «Backstage group» не несёт ответственности за содержание авторских материалов.
+                        </>}
+                        secondArticle={
+                        <>
+                            <p className='text-light-brown'>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
+                            и исполняет музыку метал-группы «Rammstein» в симфонической аранжировке.
+                            Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими людьми случайно.
+                        </>}
+                    />
                 }
 
                 {event.title === "Симфония Imagine Dragons" &&
@@ -165,38 +224,43 @@ const EventPage = () => {
                 }
 
                 <Suspense fallback={<LoadingSpinner />}>
-                    <div className='flex flex-col items-start gap-[50px] w-[90vw] md:w-full '>
-                        <div className='flex gap-6 md:gap-[30px] overflow-auto w-[90vw] md:w-full'>
+                    <div className='flex flex-col gap-11'>
+                        <h2><Text variant={TextVariant.H2}>ПОДРОБНЕЕ О КОНЦЕРТЕ</Text></h2>
+                        <div
+                            className={`sticky flex md:w-full w-[90vw] overflow-x-auto scrollbar-hide bg-bg-global z-10
+                            ${headerIsVisible ? 'top-[76px]' : 'top-0'} transition-all duration-300`}
+                        >
                             {menuItems.map((item) => (
-                                <MenuItemButton
+                                <Tab
                                     key={item}
+                                    size={xl ? TabButtonSize.medium : TabButtonSize.small}
+                                    className='md:flex-1 text-nowrap p-2.5'
                                     isActive={item === activeSection}
-                                    setActive={() => toggleMenu(item)}>
-                                    <Text variant={TextVariant.P}>{item}</Text>
-                                </MenuItemButton>
+                                    onClick={() => toggleMenu(item)}
+                                >
+                                    {item}
+                                </Tab>
                             ))}
                         </div>
                         {renderContent()}
                     </div>
                 </Suspense>
+
+                <Suspense fallback={<LoadingSpinner/>}>
+                    <GallerySection/>
+                </Suspense>
+
                 {events.length > 1 &&
                     <Suspense fallback={<LoadingSpinner />}>
-                        <UpcomingEvents
-                            item={event}
-                            events={events.filter((item) =>
+                        <UpcomingEvents events={events.filter((item) =>
                                 item.eventId != event.eventId && item.city === event.city
                             )}
                         />
                     </Suspense>
                 }
                 <Suspense fallback={<LoadingSpinner />}>
-                    <AboutUsSection />
+                    <NewsSection/>
                 </Suspense>
-                <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <ReviewsSection />
-                    </Suspense>
-                </section>
             </div>
         </>
     );
