@@ -28,7 +28,7 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
             }
 
             {artists.length > 0 &&
-                <div className='w-full grid grid-cols-2 gap-y-8'>
+                <div className='w-full grid grid-cols-2 gap-y-8 md:flex md:flex-wrap md:gap-3'>
                     {artists.map((item) => (
                         <ArtistCard name={item.name} key={item.name} photo={item.photo} role={item.role} />
                     ))}

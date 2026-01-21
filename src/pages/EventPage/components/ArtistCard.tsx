@@ -8,9 +8,9 @@ interface ArtistCardProps {
 
 const ArtistCard = ({name, photo, role}: ArtistCardProps) => {
     return (
-        <div className='flex flex-col gap-4 w-40 justify-self-center'>
+        <div className='flex flex-col gap-4 w-40 md:w-[220px] justify-self-center'>
             <img
-                className='object-cover max-w-40 max-h-40'
+                className='object-cover w-40 h-40 md:w-[220px] md:h-[220px]'
                 alt={photo}
                 src={photo}
             />
