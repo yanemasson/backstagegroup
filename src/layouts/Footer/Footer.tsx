@@ -16,7 +16,7 @@ const Footer = () => {
         return (
             <section
                 id='footer'
-                className={`py-[52px] w-full flex justify-between ${borderStyle}`}>
+                className={`py-[52px] w-[1152px] flex justify-between ${borderStyle}`}>
                 <div className='flex flex-col gap-[52px]'>
                     <Logo/>
                     <div className='flex flex-col gap-6'>
@@ -84,7 +84,7 @@ const Footer = () => {
         );
     }
     return (
-        <section id='footer' className={`py-[52px] w-full flex flex-col justify-between gap-[52px] ${borderStyle}`}>
+        <section id='footer' className={`py-[52px] w-[90vw] flex flex-col justify-between gap-[52px] ${borderStyle}`}>
             <Logo/>
             <div className='flex flex-col gap-11'>
                 <div className='flex gap-[52px]'>
