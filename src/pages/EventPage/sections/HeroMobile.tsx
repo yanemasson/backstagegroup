@@ -20,7 +20,7 @@ const HeroMobile = memo(({item}: HeroProps) => {
     const hasVideo = item.video && item.video.length > 0;
 
     return (
-        <section id='hero' className='flex flex-col gap-6'>
+        <section className='flex flex-col gap-6'>
             <div className='flex flex-col gap-4'>
                 <div className='flex'>
                     <Breadcrumbs isFirst={true} to='/'>Главная</Breadcrumbs>

@@ -20,7 +20,7 @@ const HeroDesktop = memo(({item}: HeroProps) => {
     const hasVideo = item.video && item.video.length > 0;
 
     return (
-        <section id='hero' className='flex flex-col gap-4'>
+        <section className='flex flex-col gap-4'>
             <div className='flex'>
                 <Breadcrumbs isFirst={true} to='/'>Главная</Breadcrumbs>
                 <Breadcrumbs to='/events'>Афиша</Breadcrumbs>
