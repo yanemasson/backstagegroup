@@ -16,7 +16,7 @@ const Information = lazy(() => import('./sections/Information'));
 const TrackList = lazy(() => import('./sections/TrackList'));
 const ArtistsSection = lazy(() => import('./sections/ArtistsSection'));
 const LocationSection = lazy(() => import('./sections/LocationSection'));
-const GallerySection = lazy(() => import('./sections/Gallery'))
+// const GallerySection = lazy(() => import('./sections/Gallery'))
 const UpcomingEvents = lazy(() => import('./sections/UpcomingEvents'));
 const NewsSection = lazy(() => import('../MainPage/sections/News/NewsSection'))
 
@@ -246,9 +246,9 @@ const EventPage = () => {
                     </div>
                 </Suspense>
 
-                <Suspense fallback={<LoadingSpinner/>}>
-                    <GallerySection/>
-                </Suspense>
+                {/*<Suspense fallback={<LoadingSpinner/>}>*/}
+                {/*    <GallerySection/>*/}
+                {/*</Suspense>*/}
 
                 {events.length > 1 &&
                     <Suspense fallback={<LoadingSpinner />}>
