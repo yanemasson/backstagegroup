@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useCity } from '../../hooks/geolocation/useCity';
 import { getSEOData } from '../../data/seoData';
 import { SEO } from '../../components/SEO';
-import { SEOContent } from '../../components/SEOContent';
+import SEOContent from '../../components/SEOContent';
 import Text, { TextVariant } from "../../components/Text";
 import Anchor from "../../components/Anchor";
 import Button, { ButtonVariant } from "../../components/Buttons/Button";
