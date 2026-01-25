@@ -40,7 +40,7 @@ const BurgerMenu = ({isOpen, onClose}: BurgerMenuProps) => {
                 <div>
                     <Text className='h-8 text-text-tertiary' variant={TextVariant.Body_M}>Страницы</Text>
                     {MenuItems.map((item) => (
-                        <Link to={item.href} key={item.href}>
+                        <Link to={item.href} key={item.href} onClick={onClose}>
                             <Text className='h-10 py-2.5' variant={TextVariant.Subtitle_M}>{item.title}</Text>
                         </Link>
                     ))}
@@ -52,7 +52,6 @@ const BurgerMenu = ({isOpen, onClose}: BurgerMenuProps) => {
                 <div className='flex flex-col gap-1'>
                     <Text className='text-text-tertiary' variant={TextVariant.Body_M}>Контакты</Text>
                     <a href="tel:+79994400249"><Text className='h-10 py-2.5' variant={TextVariant.Subtitle_M}>+7 999 440-02-49</Text></a>
-
                 </div>
 
 
