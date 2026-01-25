@@ -7,7 +7,7 @@ import {SEO} from "../../components/SEO.tsx";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
 import Disclaimer from "../EventPage/sections/Disclaimer.tsx";
-import ReviewsSection from "../EventPage/sections/ReviewsSection.tsx";
+import ReviewsSection from "../MainPage/sections/Reviews/ReviewsSection";
 import ProgramEvents from "./sections/ProgramEvents.tsx";
 import {useCity} from "../../hooks/geolocation/useCity.ts";
 import HeroDesktop from "./sections/HeroDesktop.tsx";
