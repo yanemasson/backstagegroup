@@ -13,12 +13,12 @@ const ReviewsSection = () => {
 
             <div>
                 <Text variant={TextVariant.H4}>Фотографии зрителей</Text>
-                <div className='flex gap-2.5 overflow-x-auto pt-[30px]'>
+                <div className='flex gap-2.5 lg:overflow-hidden overflow-x-auto pt-[30px]'>
                     {arr.map((item) => (
                         <img
                             alt={'/images/review/' + item + '.jpg' }
                             src={'/images/review/' + item + '.jpg' }
-                            className='md:w-[186px] md:h-[276px] w-[290px] h-[431px] object-center object-cover'
+                            className='flex-1 md:h-[276px] h-[431px] object-center object-cover'
                         />
                     ))}
                 </div>
