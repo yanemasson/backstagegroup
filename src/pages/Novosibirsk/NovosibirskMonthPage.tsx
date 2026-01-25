@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
 import { useCity } from '../../hooks/geolocation/useCity';
 import { getSEOData } from '../../data/seoData';
 import { SEO } from '../../components/SEO';
-import { SEOContent } from '../../components/SEOContent';
+import SEOContent from '../../components/SEOContent';
 import Hero from '../MainPage/sections/Hero/Hero';
 import EventList from '../MainPage/sections/EventList/EventList';
 import AboutUs from '../MainPage/sections/AboutUs/AboutUs';
-import Reviews from '../MainPage/sections/Reviews/Reviews';
-import News from '../MainPage/sections/News/News';
+import Reviews from '../EventPage/sections/ReviewsSection.tsx';
+import News from '../MainPage/sections/News/NewsSection.tsx';
 import Faq from '../MainPage/sections/FAQ/FAQ';
 
-const NovosibirskMonthPage = () => {
-    const { month } = useParams();
+interface MonthPageProps {
+    month: string;
+}
+
+const NovosibirskMonthPage = ({ month }: MonthPageProps) => {
+    const seoInfo = getSEOData('krasnoyarsk', 'month', month);
     const { setSelectedCity } = useCity();
-    const seoInfo = getSEOData('novosibirsk', 'month', month);
 
     useEffect(() => {
         setSelectedCity('Новосибирск');
