@@ -16,7 +16,7 @@ const Information = ({description, poster}: InformationProps) => {
             </Text>
             <div className='xl:flex md:grid grid-cols-2 gap-[108px] xl:gap-[60px]'>
                 <div className='flex flex-col gap-10 justify-between'>
-                    <Text className='whitespace-pre-wrap' variant={TextVariant.P}>{description}</Text>
+                    <Text className='whitespace-pre-wrap' variant={TextVariant.Body_S}>{description}</Text>
                 </div>
                 {md && <img alt={poster === '' ? defaultPoster : poster} className='xl:w-[572px] xl:h-[326px]' src={poster === '' ? defaultPoster : poster} />
                 }
