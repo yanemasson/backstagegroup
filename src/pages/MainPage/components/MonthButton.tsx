@@ -1,17 +1,15 @@
 import {ReactNode} from "react";
-import {Link} from "react-router";
 
 interface MonthButtonProps {
     isActive: boolean;
     count: number;
-    setActive?: () => void;  // теперь опциональный
-    href?: string;           // новое свойство для ссылки
+    setActive: () => void;
     children: ReactNode;
 }
 
-const MonthButton = ({isActive, count, setActive, href, children}: MonthButtonProps) => {
-    const content = (
-        <div className='flex flex-col min-h-10 items-end'>
+const MonthButton = ({isActive, count, setActive, children}: MonthButtonProps) => {
+    return (
+        <div className='flex flex-col min-h-10 items-end' onClick={setActive}>
             <p className={`text-[14px] transition-colors duration-100
             ${!isActive ? 'text-gray' : 'text-white'}`}
             >
@@ -24,14 +22,6 @@ const MonthButton = ({isActive, count, setActive, href, children}: MonthButtonPr
             </p>
         </div>
     );
-
-    // Если href задан - это SEO-город, используем Link
-    if (href) {
-        return <Link to={href}>{content}</Link>;
-    }
-
-    // Иначе - обычный onClick для фильтрации
-    return <div onClick={setActive}>{content}</div>;
 };
 
 export default MonthButton;
