@@ -84,7 +84,7 @@ const ProgramPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <div className='relative flex flex-col gap-[100px] w-[90vw] xl:w-[1166px]'>
+            <div className='relative flex flex-col gap-24 w-[90vw] xl:w-[1152px] pt-[88px]'>
 
                 {md ? <HeroDesktop item={program}/> : <HeroMobile item={program} />}
 

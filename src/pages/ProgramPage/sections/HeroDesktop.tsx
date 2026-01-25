@@ -3,7 +3,8 @@ import {Program} from '../../../types/program.ts'
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {memo, useMemo} from "react";
-import {Link} from "react-router";
+import Breadcrumbs from "../../../components/Breadcrumbs.tsx";
+import {getDuration} from "../../../utils/getDuration.ts";
 
 interface HeroProps {
     item: Program
@@ -15,20 +16,14 @@ const HeroDesktop = memo(({item}: HeroProps) => {
     const hasVideo = item.video && item.video.length > 0;
 
     return (
-        <section id='hero' className='flex flex-col h-full gap-5'>
-            <div className='flex justify-between'>
-                <Text className='text-lightgray' variant={TextVariant.CAPTION}>
-                    <Link className='hover:text-white transition-colors ' to={'/'}>Главная</Link>
-                    {` · `}
-                    <Link className='hover:text-white transition-colors ' to={'/#eventlist'}>Программы</Link>
-                    {` · ${item.title}`}
-                </Text>
-                <div className='flex gap-2'>
-                    <Text variant={TextVariant.CAPTION} className='text-dark-text'>{`${item.age} +`}</Text>
-                </div>
+        <section className='flex flex-col gap-4'>
+            <div className='flex'>
+                <Breadcrumbs isFirst={true} to='/'>Главная</Breadcrumbs>
+                <Breadcrumbs to='/programs'>Программы</Breadcrumbs>
+                <Breadcrumbs isLast={true}>{item.title}</Breadcrumbs>
             </div>
 
-            <div className='h-[436px] relative'>
+            <div className='h-[420px] relative'>
                 <div className='w-full h-full flex items-center justify-center overflow-hidden'>
                     {!hasVideo
                         ? <img
@@ -41,16 +36,25 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                 </div>
             </div>
 
-            <div className='flex w-full gap-[108px] items-end space-between'>
+            <div className='flex w-full justify-between'>
 
-                <div className='flex flex-col justify-between'>
-                    <div className='flex flex-col gap-5'>
-                        <Text className='leading-none' variant={TextVariant.H1}>{title}</Text>
-                        <Text className='text-dark-text w-[500px]' variant={TextVariant.P}>{item.descriptionShort}</Text>
+                <div className='flex flex-col gap-6'>
+                    <div className='flex flex-col gap-4'>
+                        <h1><Text className='leading-none' variant={TextVariant.H1}>{title}</Text></h1>
+                        <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
                     </div>
-
                 </div>
 
+                <div className='flex flex-col gap-6'>
+                    <div className='flex flex-col gap-6'>
+                        <div>
+                            <Text variant={TextVariant.Body_L}>{getDuration(item.duration)}</Text>
+                            <Text className='text-text-tertiary' variant={TextVariant.Body_M}>Продолжительность концерта</Text>
+                        </div>
+                        <Text variant={TextVariant.Body_L}>{item.age + '+'}</Text>
+
+                    </div>
+                </div>
             </div>
         </section>
     );
