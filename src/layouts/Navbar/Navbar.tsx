@@ -14,6 +14,7 @@ import LinkItem from "../../components/LinkItem.tsx";
 import CitySelection from "./components/CitySelection.tsx";
 import IconButton, {IconButtonSize, IconButtonVariant} from "../../components/Buttons/IconButton.tsx";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
+import {useLocation} from "react-router-dom";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -28,9 +29,10 @@ const Navbar = () => {
     useEffect(() => {
         visibleRef.current = visible;
     }, [visible]);
+    const location = useLocation();
 
     const activeSection = useActiveSection()
-    const isTransparent = activeSection === 'hero'
+    const isTransparent = (activeSection === 'hero' && location.pathname === '/')
 
     const md = useMediaBreakpoint('md')
     const xl = useMediaBreakpoint('xl')
