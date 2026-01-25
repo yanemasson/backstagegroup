@@ -8,7 +8,7 @@ import {getSEOData} from "../../data/seoData.ts";
 
 const Hero = lazy(() => import('../MainPage/sections/Hero/Hero'));
 const AboutUsSection = lazy(() => import('../MainPage/sections/AboutUs/AboutUs'));
-const ReviewsSection = lazy(() => import('../EventPage/sections/ReviewsSection'));
+const ReviewsSection = lazy(() => import('../MainPage/sections/Reviews/ReviewsSection'));
 const NewsSection = lazy(() => import('../MainPage/sections/News/NewsSection'));
 const Faq = lazy(() => import('../MainPage/sections/FAQ/FAQ'));
 
