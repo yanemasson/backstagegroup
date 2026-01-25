@@ -21,7 +21,7 @@ export const parseHTMLToJSX = (htmlString: string): JSX.Element => {
         case 'h2':
           return <Text key={index} variant={TextVariant.H2}>{children}</Text>;
         case 'p':
-          return <Text key={index} variant={TextVariant.P}>{children}</Text>;
+          return <Text key={index} variant={TextVariant.Body_S}>{children}</Text>;
         case 'ul':
           return (
             <ul key={index} className='list-disc pl-6 flex flex-col gap-2'>
