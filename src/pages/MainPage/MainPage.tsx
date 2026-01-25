@@ -1,6 +1,7 @@
 import {SEO} from "../../components/SEO.tsx";
 import {lazy, Suspense} from "react";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
+import SEOContent from "../../components/SEOContent.tsx";
 
 const Hero = lazy(() => import('./sections/Hero/Hero'));
 const EventList = lazy(() => import('./sections/EventList/EventList'));
@@ -25,6 +26,9 @@ const MainPage = () => {
                 <Suspense fallback={<LoadingSpinner />}><AboutUsSection/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><NewsSection/></Suspense>
                 <Suspense fallback={<LoadingSpinner />}><Faq/></Suspense>
+                
+                {/* SEO-текст для главной страницы Красноярска */}
+                <SEOContent city="krasnoyarsk" pageType="main" />
             </div>
         </div>
     );

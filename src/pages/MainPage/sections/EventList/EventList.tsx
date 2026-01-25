@@ -41,6 +41,7 @@ const EventList = () => {
                 setLoading(false);
             }
         };
+
         fetchEvents();
     }, [selectedCity]);
 
@@ -69,7 +70,7 @@ const EventList = () => {
             document.body.style.top = '';
         };
     }, [citySearchModalIsOpen]);
-    
+
     if(loading) { return <LoadingSpinner/> }
     if(error) { return <>{error}</> }
 

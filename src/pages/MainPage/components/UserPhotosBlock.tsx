@@ -5,7 +5,7 @@ import {useHorizontalScroll} from "../../../hooks/useHorizontalScroll.ts";
 import HorizontalScrollButton from "../../../components/Buttons/HorizontalScrollButton.tsx";
 
 const UserPhotosBlock = () => {
-    const arr = [1, 2, 3, 4, 5, 6]
+    const arr = [1, 2, 3, 4, 5,]
 
     const xl = useMediaBreakpoint('xl')
 
@@ -30,8 +30,8 @@ const UserPhotosBlock = () => {
                     {arr.map((item) => (
                         <img
                             key={'userImage' + item}
-                            alt={'/images/review/' + item + '.png' }
-                            src={'/images/review/' + item + '.png' }
+                            alt={'/images/review/' + item + '.jpg' }
+                            src={'/images/review/' + item + '.jpg' }
                             className='w-[85vw] h-[484px] xl:w-[272px] xl:h-[412px] object-center object-cover'
                         />
                     ))}

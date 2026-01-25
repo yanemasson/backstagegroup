@@ -1,13 +1,20 @@
-import Text, {TextVariant} from "../../components/Text.tsx";
+import { useEffect } from 'react';
+import { useCity } from '../../hooks/geolocation/useCity';
 import { getSEOData } from '../../data/seoData';
 import { SEO } from '../../components/SEO';
 import SEOContent from '../../components/SEOContent';
-import Anchor from "../../components/Anchor.tsx";
-import Button, {ButtonVariant} from "../../components/Buttons/Button.tsx";
-import {Link} from "react-router";
+import Text, { TextVariant } from "../../components/Text";
+import Anchor from "../../components/Anchor";
+import Button, { ButtonVariant } from "../../components/Buttons/Button";
+import { Link } from "react-router";
 
-const RefundPage = () => {
-    const seoInfo = getSEOData('krasnoyarsk', 'refund');
+const NovosibirskRefundPage = () => {
+    const { setSelectedCity } = useCity();
+    const seoInfo = getSEOData('novosibirsk', 'refund');
+
+    useEffect(() => {
+        setSelectedCity('Новосибирск');
+    }, [setSelectedCity]);
 
     return (
         <>
@@ -63,7 +70,7 @@ const RefundPage = () => {
                         <br/>Служба поддержки работает с 7:00 до 23:00 (МСК)
                     </Text>
                 </div>
-                <SEOContent city="krasnoyarsk" pageType="refund" />
+                <SEOContent city="novosibirsk" pageType="refund" />
                 <div className='flex items-center gap-5 '>
                     <div className='flex self-center xl:self-start '>
                         <Link to='/'>
@@ -76,4 +83,4 @@ const RefundPage = () => {
     );
 };
 
-export default RefundPage;
+export default NovosibirskRefundPage;
