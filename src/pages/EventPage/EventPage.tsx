@@ -11,6 +11,7 @@ import {DrupalAPI} from "../../api/drupal.ts";
 import {Event} from '../../types/event.ts'
 import Disclaimer from "./sections/Disclaimer.tsx";
 import Tab, {TabButtonSize} from "../../components/Tab.tsx";
+import FixedTicketButton from "./components/FixedTicketButton.tsx";
 
 const Information = lazy(() => import('./sections/Information'));
 const TrackList = lazy(() => import('./sections/TrackList'));
@@ -183,7 +184,7 @@ const EventPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            {/*<FixedTicketButton eventId={event.eventId}/>*/}
+            <FixedTicketButton operator={event.operator} eventId={event.eventId}/>
             <div className='relative flex flex-col gap-24 w-[90vw] xl:w-[1152px] pt-[88px]'>
 
                 {md ? <HeroDesktop item={event}/> : <HeroMobile item={event} />}

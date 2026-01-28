@@ -1,12 +1,10 @@
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
 import {Event} from '../../../types/event.ts'
 import Text, {TextVariant} from "../../../components/Text.tsx";
-import TicketButtonWrapper from "../../../components/Buttons/TicketButtonWrapper.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {getDuration} from "../../../utils/getDuration.ts";
 import {memo, useMemo} from "react";
-import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 import Breadcrumbs from "../../../components/Breadcrumbs.tsx";
 
 interface HeroProps {
@@ -47,9 +45,6 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                         <h1><Text className='leading-none' variant={TextVariant.H1}>{title}</Text></h1>
                         <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
                     </div>
-                    <TicketButtonWrapper eventId={item.eventId}>
-                        <Button className='w-40' size={ButtonSize.medium} variant={ButtonVariant.primary}>Купить билет</Button>
-                    </TicketButtonWrapper>
                 </div>
 
                 <div className='flex flex-col gap-6'>

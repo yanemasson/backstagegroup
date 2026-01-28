@@ -1,18 +1,19 @@
-import {FC, ReactNode, useEffect} from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 interface TicketButtonWrapperProps {
     eventId: number;
     children: ReactNode;
+    operator: "radario" | "intickets" | "kassir";
     className?: string;
 }
 
-const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, children, className}) => {
+const TicketButtonWrapper = ({ eventId, operator, children, className }: TicketButtonWrapperProps) => {
     const eventIdString = eventId.toString();
-    const isIntickets = eventIdString.length > 7;
+    const linkRef = useRef<HTMLAnchorElement>(null);
 
-    // Логика для Radario
+    //radario
     useEffect(() => {
-        if (isIntickets) return;
+        if (operator !== 'radario') return;
 
         if (!document.getElementById('radario-script')) {
             const script = document.createElement('script');
@@ -33,8 +34,48 @@ const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, children, c
             };
             document.head.appendChild(script);
         }
-    }, [eventIdString, isIntickets]);
+    }, [eventIdString, operator]);
 
+    //kassir
+    useEffect(() => {
+        if (operator === 'kassir' && linkRef.current) {
+            const link = linkRef.current;
+
+            link.onclick = function() {
+                if (window.ksr && typeof window.ksr.summon === 'function') {
+                    try {
+                        return window.ksr.summon();
+                    } catch (error) {
+                        console.error('Kassir summon error:', error);
+                    }
+                }
+                return false;
+            };
+        }
+    }, [operator, eventIdString]);
+
+    const getKassirUrl = () => {
+        return `https://widget.kassir.ru/?type=E&key=62a61af3-48f2-c264-ea78-0d77bc476c59&domain=sakh.kassir.ru&id=${eventIdString}`;
+    };
+
+    if (operator === 'kassir') {
+        const kassirUrl = getKassirUrl();
+        return (
+            <a
+                ref={linkRef}
+                className={`w-fit ${className} widget-tr`}
+                href={kassirUrl}
+                target="_blank"
+                // Добавляем data-атрибуты для отладки
+                data-kassir-event={eventIdString}
+                data-kassir-operator="kassir"
+            >
+                {children}
+            </a>
+        );
+    }
+
+    //intickets
     const getInticketsUrl = () => {
         if (eventIdString === '62738053') {
             return `https://iframeab-pre6263.intickets.ru/seance/${eventIdString}/#abiframe`;
@@ -42,17 +83,20 @@ const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, children, c
         return `https://iframeab-pre11666.intickets.ru/seance/${eventIdString}/#abiframe`;
     };
 
-    const href = isIntickets
-        ? getInticketsUrl()
-        : `#event/${eventIdString}`;
+    let href = `#event/${eventIdString}`;
+    let linkProps: any = {};
 
-    const linkProps = isIntickets
-        ? { rel: "noopener noreferrer" as const }
-        : {};
+    if (operator === 'intickets') {
+        href = getInticketsUrl();
+        linkProps = {
+            rel: "noopener noreferrer",
+            target: "_blank"
+        };
+    }
 
     return (
         <a
-            className={`w-fit ${className}`}
+            className={`w-fit ${className} widget-tr`}
             href={href}
             {...linkProps}
         >
@@ -61,4 +105,4 @@ const TicketButtonWrapper: FC<TicketButtonWrapperProps> = ({eventId, children, c
     );
 };
 
-export default TicketButtonWrapper
+export default TicketButtonWrapper;

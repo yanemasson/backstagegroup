@@ -6,8 +6,6 @@ import videoPosterMobile from "../../../assets/video_poster_mobile.png";
 import {memo, useMemo} from "react";
 import {getDuration} from "../../../utils/getDuration.ts";
 import Breadcrumbs from "../../../components/Breadcrumbs.tsx";
-import TicketButtonWrapper from "../../../components/Buttons/TicketButtonWrapper.tsx";
-import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 
 interface HeroProps {
     item: Event
@@ -61,10 +59,6 @@ const HeroMobile = memo(({item}: HeroProps) => {
                 </div>
 
             </div>
-
-            <TicketButtonWrapper eventId={item.eventId}>
-                <Button size={ButtonSize.medium} className='w-[90vw]' variant={ButtonVariant.primary}>Купить билет</Button>
-            </TicketButtonWrapper>
 
             <div className='flex flex-col gap-6'>
                 <div>
