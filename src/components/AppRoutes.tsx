@@ -41,10 +41,10 @@ const AppRoutes = () => {
                 <Route path={'events'} element={<EventsPage/>} />
 
                 <Route path={'programs'} element={<MainPage/>} />
-                <Route path={'programs/:id'} element={<ProgramPage/>} />
+                <Route path={'programs/:id'} element={<ProgramPage/>}/>
 
                 <Route path={'events'} element={<MainPage/>} />
-                <Route path={'events/:id'} element={<EventPage/>} />
+                <Route path={'events/:id'} element={<Suspense fallback={<LoadingSpinner/>}><EventPage/></Suspense>} />
 
                 <Route path={'news'} element={<NewsListPage/>} />
                 <Route path={'news/:id'} element={<NewsPage/>} />

@@ -41,9 +41,12 @@ const EventPage = () => {
 
             try {
                 setLoading(true);
+                setError(null);
 
                 const eventData = await DrupalAPI.getEventByEventId(id);
+
                 setEvent(eventData);
+                setLoading(false);
 
                 if (!eventData) {
                     setError(`Событие с ID ${id} не найдено`);
@@ -51,7 +54,7 @@ const EventPage = () => {
             } catch (err) {
                 console.error('Error loading event:', err);
                 setError(err instanceof Error ? err.message : 'Unknown error');
-            } finally {
+                setEvent(null);
                 setLoading(false);
             }
         };
