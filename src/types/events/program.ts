@@ -1,3 +1,6 @@
+import {Track} from "./track.ts";
+import {InformationItem} from "./information_item.ts";
+
 export interface Program {
     title: string,
     poster?: string,
@@ -6,5 +9,8 @@ export interface Program {
     descriptionFull: string,
     video?: string,
     age?: number,
-    url: string
+    url: string,
+    tag: string,
+    trackList?: Track[],
+    information: InformationItem[]
 }

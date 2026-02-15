@@ -1,14 +1,6 @@
-export interface Track {
-    artist: string,
-    title: string,
-    source: string,
-}
-
-export interface Artist {
-    photo: string,
-    name: string,
-    role: string | 'Вокал',
-}
+import {Track} from "./track.ts";
+import {Artist} from "./artist.ts";
+import {InformationItem} from "./information_item.ts";
 
 export interface Event {
     title: string,
@@ -33,4 +25,5 @@ export interface Event {
     operator: "radario" | "intickets" | "kassir",
     orgId?: number,
     program: string,
+    information: InformationItem[],
 }
