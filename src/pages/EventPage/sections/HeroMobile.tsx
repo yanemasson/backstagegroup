@@ -1,4 +1,4 @@
-import {Event} from "../../../types/event.ts";
+import {Event} from "../../../types/events/event.ts";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import {getDate} from "../../../utils/getDate.ts";

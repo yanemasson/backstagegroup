@@ -1,5 +1,5 @@
 import Text, {TextVariant} from "../Text.tsx";
-import {Event} from "../../types/event.ts"
+import {Event} from "../../types/events/event.ts"
 import {getDate} from "../../utils/getDate.ts";
 import Button, {ButtonSize, ButtonVariant} from "../Buttons/Button.tsx";
 import {Link} from "react-router";

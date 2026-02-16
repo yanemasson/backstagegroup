@@ -8,7 +8,7 @@ import EventCardDesktop from "../../components/EventCard/EventCardDesktop.tsx";
 import EventCardMobile from "../../components/EventCard/EventCardMobile.tsx";
 import createSlug from "../../utils/createSlug.ts";
 import {useCity} from "../../hooks/geolocation/useCity.ts";
-import {Event} from "../../types/event.ts";
+import {Event} from "../../types/events/event.ts";
 import IconButton, {IconButtonSize, IconButtonVariant} from "../../components/Buttons/IconButton.tsx";
 import CitySearchModal from "../../components/CitySearchModal.tsx";
 import Breadcrumbs from "../../components/Breadcrumbs.tsx";

@@ -1,5 +1,5 @@
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
-import {Program} from '../../../types/program.ts'
+import {Program} from '../../../types/events/program.ts'
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
 import {memo, useMemo} from "react";

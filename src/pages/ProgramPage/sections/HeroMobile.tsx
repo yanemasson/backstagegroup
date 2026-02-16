@@ -1,4 +1,4 @@
-import {Program} from "../../../types/program.ts";
+import {Program} from "../../../types/events/program.ts";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import videoPosterMobile from "../../../assets/video_poster_mobile.png";

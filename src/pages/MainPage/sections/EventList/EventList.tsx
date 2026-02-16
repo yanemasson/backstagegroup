@@ -2,7 +2,7 @@ import Text, {TextVariant} from "../../../../components/Text.tsx";
 import createSlug from "../../../../utils/createSlug.ts";
 import {useEffect, useState} from "react";
 import {DrupalAPI} from "../../../../api/drupal.ts";
-import {Event} from '../../../../types/event.ts'
+import {Event} from '../../../../types/events/event.ts'
 import LoadingSpinner from "../../../../components/LoadingSpinner.tsx";
 import EventCardMobile from "../../../../components/EventCard/EventCardMobile.tsx";
 import {useMediaBreakpoint} from "../../../../hooks/useMediaBreakpoint.ts";

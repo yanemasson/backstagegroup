@@ -1,4 +1,4 @@
-import {Track} from "../../../types/event.ts";
+import {Track} from "../../../types/events/track.ts";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 
 const TrackList = ({trackList} : {trackList: Track[]}) => {

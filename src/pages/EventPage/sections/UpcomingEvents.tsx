@@ -3,7 +3,7 @@ import EventCardDesktop from "../../../components/EventCard/EventCardDesktop.tsx
 import createSlug from "../../../utils/createSlug.ts";
 import EventCardMobile from "../../../components/EventCard/EventCardMobile.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
-import {Event} from "../../../types/event.ts";
+import {Event} from "../../../types/events/event.ts";
 import {Link} from "react-router";
 import Button, {ButtonSize, ButtonVariant} from "../../../components/Buttons/Button.tsx";
 

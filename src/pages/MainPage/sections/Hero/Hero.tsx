@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import {DrupalAPI} from "../../../../api/drupal.ts";
-import {Event} from '../../../../types/event.ts'
+import {Event} from '../../../../types/events/event.ts'
 import EventCardSlide from "../../components/EventCardSlide.tsx";
 import LoadingSpinner from "../../../../components/LoadingSpinner.tsx";
 import {useCity} from "../../../../hooks/geolocation/useCity.ts";

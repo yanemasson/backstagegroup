@@ -1,4 +1,4 @@
-import {Event} from '../../../types/event'
+import {Event} from '../../../types/events/event.ts'
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import StatusBar from "../../../components/StatusBar.tsx";

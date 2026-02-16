@@ -1,4 +1,4 @@
-import {Event} from "../../types/event.ts";
+import {Event} from "../../types/events/event.ts";
 import {getDate} from "../../utils/getDate.ts";
 import videoPosterMobile from "../../assets/video_poster_mobile.png";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.tsx";

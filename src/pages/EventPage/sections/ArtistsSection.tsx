@@ -1,5 +1,5 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
-import {Artist} from "../../../types/event.ts";
+import {Artist} from "../../../types/events/artist.ts";
 import ArtistCard from "../components/ArtistCard.tsx";
 
 interface ArtistsSectionProps {

@@ -5,7 +5,7 @@ import EventCardMobile from "../../../components/EventCard/EventCardMobile.tsx";
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 import LoadingSpinner from "../../../components/LoadingSpinner.tsx";
 import {useEffect, useState} from "react";
-import { Event } from '../../../types/event.ts'
+import { Event } from '../../../types/events/event.ts'
 import {DrupalAPI} from "../../../api/drupal.ts";
 import {useCity} from "../../../hooks/geolocation/useCity.ts";
 import {Link} from "react-router";

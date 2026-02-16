@@ -1,4 +1,4 @@
-import {Event} from "../../../types/event.ts";
+import {Event} from "../../../types/events/event.ts";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import EventCardDesktop from "../../../components/EventCard/EventCardDesktop.tsx";
 import createSlug from "../../../utils/createSlug.ts";
