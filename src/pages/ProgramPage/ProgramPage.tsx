@@ -1,8 +1,8 @@
-import {Suspense, useEffect, useState} from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import {DrupalAPI} from "../../api/drupal.ts";
 import {useParams} from "react-router";
-import {Program} from "../../types/program.ts";
-import {Event} from "../../types/event.ts";
+import {Program} from "../../types/events/program.ts";
+import {Event} from "../../types/events/event.ts";
 import {SEO} from "../../components/SEO.tsx";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
@@ -13,7 +13,12 @@ import {useCity} from "../../hooks/geolocation/useCity.ts";
 import HeroDesktop from "./sections/HeroDesktop.tsx";
 import HeroMobile from "./sections/HeroMobile.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
-import Information from "../EventPage/sections/Information.tsx";
+import Text, {TextVariant} from "../../components/Text.tsx";
+import Tab, {TabButtonSize} from "../../components/Tab.tsx";
+
+const Information = lazy(() => import('../EventPage/sections/Information'));
+const TrackList = lazy(() => import('../EventPage/sections/TrackList'));
+const GallerySection = lazy(() => import('../EventPage/sections/Gallery'))
 
 const ProgramPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -23,7 +28,11 @@ const ProgramPage = () => {
     const [error, setError] = useState<string | null>(null);
     const {selectedCity} = useCity();
     const md = useMediaBreakpoint('md')
+    const xl = useMediaBreakpoint('xl')
 
+    const [headerIsVisible, setHeaderIsVisible] = useState(false)
+
+    //получаем программу
     useEffect(() => {
         const fetchProgram = async () => {
             if (!id) {
@@ -50,6 +59,7 @@ const ProgramPage = () => {
         fetchProgram();
     }, [id]);
 
+    //получаем ивенты
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -72,9 +82,84 @@ const ProgramPage = () => {
         fetchEvents();
     }, [id]);
 
+    //положение табов
+    useEffect(() => {
+        let ticking = false;
+        let lastScrollY = 0;
+        let hideTimeout: NodeJS.Timeout | null = null;
+
+        const controlNavbar = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    const scrollDelta = currentScrollY - lastScrollY;
+                    const isScrollingDown = scrollDelta > 0;
+                    const isScrollingUp = scrollDelta < 0;
+
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                    }
+
+                    if (isScrollingDown && headerIsVisible && currentScrollY > 50) {
+                        hideTimeout = setTimeout(() => {
+                            setHeaderIsVisible(false);
+                        }, 50);
+                    } else if (isScrollingUp && !headerIsVisible) {
+                        hideTimeout = setTimeout(() => {
+                            setHeaderIsVisible(true);
+                        }, 50);
+                    }
+
+                    if (currentScrollY < 50) {
+                        if (hideTimeout) {
+                            clearTimeout(hideTimeout);
+                        }
+                        setHeaderIsVisible(true);
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', controlNavbar);
+
+        return () => {
+            window.removeEventListener('scroll', controlNavbar);
+            if (hideTimeout) {
+                clearTimeout(hideTimeout);
+            }
+        };
+    }, [headerIsVisible]);
+
+    type menuItemType = 'Описание программы' | 'Трек-лист' | null
+    const [activeSection, setActiveSection] = useState<menuItemType>('Описание программы')
+    const menuItems: menuItemType[] = ['Описание программы', 'Трек-лист']
+
+    const toggleMenu = (item: menuItemType) => {
+        if (item === activeSection) {
+            return setActiveSection(null)
+        }
+        setActiveSection(item)
+    }
+
     if(loading) return <LoadingSpinner/>
     if(!program) return <NotFoundPage/>
     if(error) return <>{error}</>
+
+    const renderContent = () => {
+        switch (activeSection) {
+            case 'Описание программы':
+                return <Information information={program.information}/>
+            case 'Трек-лист':
+                return <TrackList trackList={program.trackList ? program.trackList : []}/>
+
+            default:
+                return null
+        }
+    };
 
     return (
         <>
@@ -124,19 +209,44 @@ const ProgramPage = () => {
                     />
                 }
 
-                <section>
-                    <Suspense fallback={<LoadingSpinner/>}>
-                        <Information poster={program.poster} description={program.descriptionFull} />
-                    </Suspense>
-                </section>
+                <Suspense fallback={<LoadingSpinner/>}>
+                    <div className='flex flex-col gap-11'>
+                        <h2><Text variant={TextVariant.H2}>ПОДРОБНЕЕ О КОНЦЕРТЕ</Text></h2>
+                        <div
+                            className={`sticky flex md:w-full w-[90vw] overflow-x-auto scrollbar-hide bg-bg-global z-10
+                            ${headerIsVisible ? 'top-[76px]' : 'top-0'} transition-all duration-300`}
+                        >
+                            {menuItems.map((item) => (
+                                <Tab
+                                    key={item}
+                                    size={xl ? TabButtonSize.medium : TabButtonSize.small}
+                                    className='md:flex-1 text-nowrap p-2.5'
+                                    isActive={item === activeSection}
+                                    onClick={() => toggleMenu(item)}
+                                >
+                                    {item}
+                                </Tab>
+                            ))}
+                        </div>
+                        {renderContent()}
+                    </div>
+                </Suspense>
+
+                <Suspense fallback={<LoadingSpinner/>}>
+                    <GallerySection photos={program.photos} videos={program.videos} />
+                </Suspense>
 
                 <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
                     <Suspense fallback={<LoadingSpinner />}>
                         <ReviewsSection />
                     </Suspense>
                 </section>
+
                 <Suspense fallback={<LoadingSpinner />}>
-                    <ProgramEvents events={events.filter((item) => item.city === selectedCity)}/>
+                    {selectedCity === 'Все города'
+                        ? <ProgramEvents events={events}/>
+                        : <ProgramEvents events={events.filter((item) => item.city === selectedCity)}/>
+                    }
                 </Suspense>
             </div>
             </>
