@@ -1,5 +1,5 @@
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
-import {Event} from '../../../types/event.ts'
+import {Event} from '../../../types/events/event.ts'
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import {getDate} from "../../../utils/getDate.ts";
 import videoPosterDesktop from '../../../assets/video_poster_desktop.png'
@@ -38,13 +38,11 @@ const HeroDesktop = memo(({item}: HeroProps) => {
                 </div>
             </div>
 
-            <div className='flex w-full justify-between'>
+            <div className='flex w-full justify-between gap-12'>
 
-                <div className='flex flex-col gap-6'>
-                    <div className='flex flex-col gap-4'>
-                        <h1><Text className='leading-none' variant={TextVariant.H1}>{title}</Text></h1>
-                        <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
-                    </div>
+                <div className='flex flex-col gap-4'>
+                    <h1><Text className='leading-none text-wrap' variant={TextVariant.H1}>{title}</Text></h1>
+                    <Text className='text-text-tertiary' variant={TextVariant.Body_M}>{item.descriptionShort}</Text>
                 </div>
 
                 <div className='flex flex-col gap-6'>
