@@ -8,7 +8,8 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
 import HeroDesktop from "./sections/HeroDesktop.tsx";
 import HeroMobile from "./sections/HeroMobile.tsx";
 import {DrupalAPI} from "../../api/drupal.ts";
-import {Event} from '../../types/event.ts'
+import {Event} from '../../types/events/event.ts'
+import {Program} from '../../types/events/program.ts'
 import Disclaimer from "./sections/Disclaimer.tsx";
 import Tab, {TabButtonSize} from "../../components/Tab.tsx";
 import FixedTicketButton from "./components/FixedTicketButton.tsx";
@@ -17,15 +18,17 @@ const Information = lazy(() => import('./sections/Information'));
 const TrackList = lazy(() => import('./sections/TrackList'));
 const ArtistsSection = lazy(() => import('./sections/ArtistsSection'));
 const LocationSection = lazy(() => import('./sections/LocationSection'));
-// const GallerySection = lazy(() => import('./sections/Gallery'))
+const GallerySection = lazy(() => import('./sections/Gallery'))
 const UpcomingEvents = lazy(() => import('./sections/UpcomingEvents'));
 const NewsSection = lazy(() => import('../MainPage/sections/News/NewsSection'))
 
 const EventPage = () => {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const [loading, setLoading] = useState(true);
+
     const [event, setEvent] = useState<Event | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
+
     const [error, setError] = useState<string | null>(null);
     const [headerIsVisible, setHeaderIsVisible] = useState(false)
     const xl = useMediaBreakpoint('xl')
@@ -35,7 +38,6 @@ const EventPage = () => {
         const fetchEvent = async () => {
             if (!id) {
                 setError('Event ID не указан');
-                setLoading(false);
                 return;
             }
 
@@ -44,13 +46,32 @@ const EventPage = () => {
                 setError(null);
 
                 const eventData = await DrupalAPI.getEventByEventId(id);
-
-                setEvent(eventData);
-                setLoading(false);
-
                 if (!eventData) {
-                    setError(`Событие с ID ${id} не найдено`);
+                    return;
                 }
+
+                const programData: Program | null = await DrupalAPI.getProgramByUrl(eventData.program);
+                if (!programData) {
+                    return;
+                }
+
+
+                setEvent({
+                    ...eventData,
+                    poster: eventData.poster || programData.poster,
+                    duration: eventData.duration || programData.duration,
+                    descriptionShort: eventData.descriptionShort || programData.descriptionShort,
+                    descriptionFull: eventData.descriptionFull || programData.descriptionFull,
+                    video: eventData.video || programData.video,
+                    age: eventData.age || programData.age,
+                    trackList: eventData.trackList?.length ? eventData.trackList : programData.trackList,
+                    information: eventData.information?.length ? eventData.information : programData.information,
+                    photos: programData.photos
+                });
+
+                console.log("photos: ", event?.photos);
+
+                setLoading(false)
             } catch (err) {
                 console.error('Error loading event:', err);
                 setError(err instanceof Error ? err.message : 'Unknown error');
@@ -66,7 +87,6 @@ const EventPage = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                setLoading(true);
 
                 const eventsData = await DrupalAPI.getEvents();
                 setEvents(eventsData);
@@ -77,8 +97,6 @@ const EventPage = () => {
             } catch (err) {
                 console.error('Error loading events:', err);
                 setError(err instanceof Error ? err.message : 'Unknown error');
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -104,22 +122,16 @@ const EventPage = () => {
                     }
 
                     if (isScrollingDown && headerIsVisible && currentScrollY > 50) {
-                        console.log('Setting hide timeout');
                         hideTimeout = setTimeout(() => {
-                            console.log('Hiding navbar');
                             setHeaderIsVisible(false);
                         }, 50);
-                    }
-                    else if (isScrollingUp && !headerIsVisible) {
-                        console.log('Setting show timeout');
+                    } else if (isScrollingUp && !headerIsVisible) {
                         hideTimeout = setTimeout(() => {
-                            console.log('Showing navbar');
                             setHeaderIsVisible(true);
                         }, 50);
                     }
 
                     if (currentScrollY < 50) {
-                        console.log('At top - showing navbar');
                         if (hideTimeout) {
                             clearTimeout(hideTimeout);
                         }
@@ -148,7 +160,7 @@ const EventPage = () => {
     const menuItems: menuItemType[] = ['Описание программы', 'Трек-лист', 'Исполнители', 'Площадка']
 
     const toggleMenu = (item: menuItemType) => {
-        if(item === activeSection) {
+        if (item === activeSection) {
             return setActiveSection(null)
         }
         setActiveSection(item)
@@ -156,24 +168,28 @@ const EventPage = () => {
 
     const md = useMediaBreakpoint('md')
 
-    if(loading) return <LoadingSpinner/>
-    if(!event) return <NotFoundPage/>
-    if(error) return <>{error}</>
+    if (loading) return <LoadingSpinner/>
+    if (!event) return <NotFoundPage/>
+    if (error) return <>{error}</>
 
     const renderContent = () => {
-        switch(activeSection) {
+        switch (activeSection) {
             case 'Описание программы':
-                return <Information description={event.descriptionFull} poster={event.poster && event.poster} />
+                return <Information information={event.information}/>
             case 'Трек-лист':
-                return <TrackList trackList={event.trackList ? event.trackList : []} />
+                return <TrackList trackList={event.trackList ? event.trackList : []}/>
             case 'Исполнители':
                 return <ArtistsSection
-                        artists={event.artists ? event.artists : []}
-                        artistsTeam={event.artistsTeam ? event.artistsTeam : ''}
-                        artistsGroupPhoto={event.artistsGroupPhoto && event.artistsGroupPhoto}
-                    />
+                    artists={event.artists ? event.artists : []}
+                    artistsTeam={event.artistsTeam ? event.artistsTeam : ''}
+                    artistsGroupPhoto={event.artistsGroupPhoto && event.artistsGroupPhoto}
+                />
             case 'Площадка':
-                return <LocationSection photos={event.locationPhotos} location={event.location} address={event.address}/>
+                return <LocationSection
+                    photos={event.locationPhotos}
+                    location={event.location}
+                    address={event.address}
+                />
             default:
                 return null
         }
@@ -190,22 +206,25 @@ const EventPage = () => {
             <FixedTicketButton operator={event.operator} eventId={event.eventId}/>
             <div className='relative flex flex-col gap-24 w-[90vw] xl:w-[1152px] pt-[88px]'>
 
-                {md ? <HeroDesktop item={event}/> : <HeroMobile item={event} />}
+                {md ? <HeroDesktop item={event}/> : <HeroMobile item={event}/>}
 
                 {event.title === "Симфония Раммштайн" &&
                     <Disclaimer
                         firstArticle={
-                        <>
-                            <p>Организатор и исполнители не поддерживают официальную позицию немецкой метал-группы «Rammstein».</p>
-                            Организатор и исполнители не несут ответственность за смысл текстов песен, а так же любые высказывания и мнения метал-группы «Rammstein».
-                            «Backstage group» не несёт ответственности за содержание авторских материалов.
-                        </>}
+                            <>
+                                <p>Организатор и исполнители не поддерживают официальную позицию немецкой метал-группы
+                                    «Rammstein».</p>
+                                Организатор и исполнители не несут ответственность за смысл текстов песен, а так же
+                                любые высказывания и мнения метал-группы «Rammstein».
+                                «Backstage group» не несёт ответственности за содержание авторских материалов.
+                            </>}
                         secondArticle={
-                        <>
-                            <p>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
-                            и исполняет музыку метал-группы «Rammstein» в симфонической аранжировке.
-                            Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими людьми случайно.
-                        </>}
+                            <>
+                                <p>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
+                                и исполняет музыку метал-группы «Rammstein» в симфонической аранжировке.
+                                Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими
+                                людьми случайно.
+                            </>}
                     />
                 }
 
@@ -213,21 +232,25 @@ const EventPage = () => {
                     <Disclaimer
                         firstArticle=
                             {<>
-                                <p className='text-light-brown'>Организатор и исполнители не поддерживают официальную позицию группы «Imagine Dragons».</p>
-                                Организатор и исполнители не несут ответственность за смысл текстов песен, а так же любые высказывания и мнения группы «Imagine Dragons».
+                                <p className='text-light-brown'>Организатор и исполнители не поддерживают официальную
+                                    позицию группы «Imagine Dragons».</p>
+                                Организатор и исполнители не несут ответственность за смысл текстов песен, а так же
+                                любые высказывания и мнения группы «Imagine Dragons».
                                 «Backstage group» не несёт ответственности за содержание авторских материалов.
                             </>}
                         secondArticle=
                             {<>
-                                <p className='text-light-brown'>«Backstage group» несёт исключительно культурно-развлекательный характер</p>
+                                <p className='text-light-brown'>«Backstage group» несёт исключительно
+                                    культурно-развлекательный характер</p>
                                 и исполняет музыку группы «Imagine Dragons»
                                 в симфонической аранжировке.
-                                Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими людьми случайно.
+                                Все персонажи являются вымышленными, и любое совпадение с реально живущими или жившими
+                                людьми случайно.
                             </>}
                     />
                 }
 
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={<LoadingSpinner/>}>
                     <div className='flex flex-col gap-11'>
                         <h2><Text variant={TextVariant.H2}>ПОДРОБНЕЕ О КОНЦЕРТЕ</Text></h2>
                         <div
@@ -250,19 +273,19 @@ const EventPage = () => {
                     </div>
                 </Suspense>
 
-                {/*<Suspense fallback={<LoadingSpinner/>}>*/}
-                {/*    <GallerySection/>*/}
-                {/*</Suspense>*/}
+                <Suspense fallback={<LoadingSpinner/>}>
+                    <GallerySection photos={event.photos} videos={event.videos} />
+                </Suspense>
 
                 {events.length > 1 &&
-                    <Suspense fallback={<LoadingSpinner />}>
+                    <Suspense fallback={<LoadingSpinner/>}>
                         <UpcomingEvents events={events.filter((item) =>
-                                item.eventId != event.eventId && item.city === event.city
-                            )}
+                            item.eventId != event.eventId && item.city === event.city
+                        )}
                         />
                     </Suspense>
                 }
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={<LoadingSpinner/>}>
                     <NewsSection/>
                 </Suspense>
             </div>
