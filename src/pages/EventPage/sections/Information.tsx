@@ -1,26 +1,19 @@
 import Text, {TextVariant} from "../../../components/Text.tsx";
-import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
-import defaultPoster from '/public/images/default_poster.png'
+import {InformationItem} from "../../../types/events/information_item.ts";
 
-interface InformationProps {
-    description: string;
-    poster?: string;
-}
-
-const Information = ({description, poster}: InformationProps) => {
-    const md = useMediaBreakpoint('md')
+const Information = ({information} : {information: InformationItem[]}) => {
     return (
-        <section className='flex flex-col gap-10 xl:gap-[50px]' id='description'>
-            <Text className='leading-none flex flex-col xl:flex-row xl:gap-3' variant={TextVariant.H2}>
-                ОПИСАНИЕ ПРОГРАММЫ
-            </Text>
-            <div className='xl:flex md:grid grid-cols-2 gap-[108px] xl:gap-[60px]'>
-                <div className='flex flex-col gap-10 justify-between'>
-                    <Text className='whitespace-pre-wrap' variant={TextVariant.Body_S}>{description}</Text>
+        <section className='flex flex-col gap-11' id='description'>
+            {information.map((item) => (
+                <div className='flex xl:flex-row flex-col gap-6' key={item.title}>
+                    <img className='xl:min-w-[667px] xl:max-h-[426px] min-w-[90vw] overflow-hidden' alt={item.photo} src={item.photo}/>
+                    <div className='flex flex-col gap-3 justify-center' >
+                        <Text variant={TextVariant.Subtitle_L} className='text-text-accent'>{item.title}</Text>
+                        <Text variant={TextVariant.Body_L} >{item.text}</Text>
+                    </div>
                 </div>
-                {md && <img alt={poster === '' ? defaultPoster : poster} className='xl:w-[572px] xl:h-[326px]' src={poster === '' ? defaultPoster : poster} />
-                }
-            </div>
+                )
+            )}
         </section>
     );
 };
