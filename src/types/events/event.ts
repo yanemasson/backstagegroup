@@ -13,7 +13,6 @@ export interface Event {
     descriptionShort: string,
     descriptionFull: string,
     video?: string,
-    photos?: string[],
     trackList?: Track[],
     age?: number,
     eventId: number,
@@ -26,4 +25,6 @@ export interface Event {
     orgId?: number,
     program: string,
     information: InformationItem[],
+    photos: string[],
+    videos: string[],
 }

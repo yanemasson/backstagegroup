@@ -12,5 +12,7 @@ export interface Program {
     url: string,
     tag: string,
     trackList?: Track[],
-    information: InformationItem[]
+    information: InformationItem[],
+    photos: string[],
+    videos: string[],
 }
