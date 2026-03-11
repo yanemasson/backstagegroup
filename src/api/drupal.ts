@@ -1,7 +1,10 @@
 import {API_CONFIG} from './config';
 import {DrupalNode, DrupalResponse} from './types';
-import {Artist, Event, Track} from '../types/event';
-import {Program} from '../types/program';
+import {Event} from '../types/events/event';
+import {Track} from '../types/events/track';
+import {Artist} from '../types/events/artist';
+import {Program} from '../types/events/program';
+import {InformationItem} from "../types/events/information_item.ts";
 
 class DrupalParser {
     static getFieldValue(attributes: Record<string, unknown>, fieldName: string): string | number | null {
@@ -127,6 +130,34 @@ class DrupalParser {
                 .filter((track: Track | null): track is Track => track !== null);
         }
 
+        let information: InformationItem[] = [];
+        if (relationships?.field_information?.data && Array.isArray(relationships.field_information.data)) {
+            information = relationships.field_information.data
+                .map((itemRef: any) => {
+                    const informationData = included?.find(item =>
+                        item.type === 'paragraph--events_information_item' && item.id === itemRef.id
+                    );
+
+                    if (!informationData) {
+                        return null;
+                    }
+
+                    const itemTitle = this.getFieldValue(informationData.attributes, 'field_information_title');
+                    const photoId = informationData.relationships?.field_photo?.data?.id;
+                    const itemPhoto = photoId ? this.getFileUrl(photoId, included) : '';
+                    const itemText = this.getFieldValue(informationData.attributes, 'field_text');
+
+                    console.log('title:', itemTitle);
+
+                    return {
+                        title: itemTitle?.toString() || '',
+                        photo: itemPhoto?.toString() || '',
+                        text: itemText?.toString() || '',
+                    };
+                })
+                .filter((item: any): item is InformationItem => item !== null); // Фильтрация null
+        }
+
         return {
             title: attributes.title || '',
             poster: posterUrl,
@@ -148,6 +179,9 @@ class DrupalParser {
             artists: artists,
             operator: attributes.field_operator,
             program: attributes.field_program,
+            information: information,
+            photos: [],
+            videos: [],
         };
     }
 
@@ -170,6 +204,78 @@ class DrupalParser {
             }
         }
 
+        let trackList: Track[] = [];
+        if (relationships?.field_tracklist_new?.data && Array.isArray(relationships.field_tracklist_new.data)) {
+            trackList = relationships.field_tracklist_new.data
+                .map((trackRef: any) => {
+                    const trackData = included?.find(item =>
+                        item.type === 'paragraph--track' && item.id === trackRef.id
+                    );
+
+                    if (!trackData) {
+                        return null;
+                    }
+
+                    const trackTitle = this.getFieldValue(trackData.attributes, 'field_title');
+                    const trackArtist = this.getFieldValue(trackData.attributes, 'field_artist');
+                    const trackSource = this.getFieldValue(trackData.attributes, 'field_source');
+
+                    return {
+                        title: trackTitle?.toString() || '',
+                        artist: trackArtist?.toString() || '',
+                        source: trackSource?.toString() || '',
+                    };
+                })
+                .filter((track: Track | null): track is Track => track !== null);
+        }
+
+        let information: InformationItem[] = [];
+        if (relationships?.field_program_information?.data && Array.isArray(relationships.field_program_information.data)) {
+            information = relationships.field_program_information.data
+                .map((itemRef: any) => {
+                    const informationData = included?.find(item =>
+                        item.type === 'paragraph--events_iformation_item' && item.id === itemRef.id
+                    );
+
+                    if (!informationData) {
+                        return null;
+                    }
+
+                    const itemTitle = this.getFieldValue(informationData.attributes, 'field_information_title');
+                    const photoId = informationData.relationships?.field_photo?.data?.id;
+                    const itemPhoto = photoId ? this.getFileUrl(photoId, included) : '';
+                    const itemText = this.getFieldValue(informationData.attributes, 'field_text');
+
+
+                    return {
+                        title: itemTitle?.toString() || '',
+                        photo: itemPhoto?.toString() || '',
+                        text: itemText?.toString() || '',
+                    };
+                })
+                .filter((item: any): item is InformationItem => item !== null); // Фильтрация null
+        }
+
+        let photos: string[] = []
+        if (relationships?.field_photos?.data && Array.isArray(relationships.field_photos.data)) {
+            photos = relationships.field_photos.data
+                .map((itemRef: any) => {
+                    const photosData = included?.find(item =>
+                        item.type === 'paragraph--photos_item' && item.id === itemRef.id
+                    );
+
+                    if (!photosData) {
+                        return null;
+                    }
+
+                    const photoId = photosData.relationships?.field_photos_item_?.data?.id;
+                    const itemPhoto = photoId ? this.getFileUrl(photoId, included) : '';
+
+                    return itemPhoto?.toString() || '';
+                })
+
+        }
+
         return {
             title: attributes.title || '',
             poster: posterUrl,
@@ -178,7 +284,12 @@ class DrupalParser {
             descriptionFull: attributes.field_description_full || '',
             duration: attributes.field_duration || '',
             age: attributes.field_age?.toString() || '',
-            url: attributes.field_url || ''
+            url: attributes.field_url || '',
+            tag: attributes.field_tag || '',
+            trackList: trackList,
+            information: information,
+            photos: photos,
+            videos: []
         };
     }
 
@@ -235,7 +346,7 @@ export class DrupalAPI {
     static async getProgramByUrl(link: string): Promise<Program | null> {
         try {
             const filterParam = `filter[field_link]=${link}`;
-            const includeParam = 'field_poster,field_video';
+            const includeParam = 'field_poster,field_video,field_program_information,field_program_information.field_photo,field_photos,field_photos.field_photos_item_,field_videos';
             const fieldsParam = 'fields[file--file]=uri,url,filename';
             const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/program?${filterParam}&include=${includeParam}&${fieldsParam}`;
 
@@ -257,7 +368,6 @@ export class DrupalAPI {
             console.error('Error fetching program by url:', error);
             return null;
         }
-
     }
 
     static async getEvents(): Promise<Event[]> {
@@ -338,7 +448,7 @@ export class DrupalAPI {
         try {
             const filterParam = `filter[field_event_id]=${eventId}`;
 
-            const includeParam = 'field_poster,field_video,field_artists_group_photo,field_location_photos,field_tracklist_new,field_artists,field_artists.field_photo';
+            const includeParam = 'field_poster,field_video,field_artists_group_photo,field_location_photos,field_tracklist_new,field_information,field_information.field_photo,field_artists,field_artists.field_photo';
 
             const fieldsParam = 'fields[file--file]=uri,url,filename';
 
