@@ -13,7 +13,7 @@ const CityConfirmationModal = ({ city, onConfirm, onChangeCity }:CityConfirmatio
     const navigate = useNavigate()
     const handleConfirm = () => {
         onConfirm();
-        navigate(0);
+        navigate('/')
     }
 
     return (

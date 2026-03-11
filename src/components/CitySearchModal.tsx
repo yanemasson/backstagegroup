@@ -19,7 +19,7 @@ const CitySearchModal = ({ isOpen, onClose }: CitySearchModalProps) => {
     const handleCitySelect = (cityName: string) => {
         setSelectedCity(cityName);
         onClose();
-        navigate(0);
+        navigate('/')
     };
 
     const borderStyle = 'border-solid border-x-0 border-t-0 border-b-[1px] border-divider-default';
