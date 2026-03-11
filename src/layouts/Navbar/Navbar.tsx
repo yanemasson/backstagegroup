@@ -6,8 +6,9 @@ import Button, {ButtonSize, ButtonVariant} from "../../components/Buttons/Button
 import {useCity} from "../../hooks/geolocation/useCity.ts";
 import CitySearchModal from "../../components/CitySearchModal.tsx";
 import CityConfirmationModal from "../../components/CityConfirmationModal.tsx";
+/*
 import DesktopLogo from '../../assets/logos/logo_bg_full.svg?react';
-import MobileLogo from '../../assets/logos/logo_bg.svg?react'
+*/
 import BurgerIcon from '../../assets/icons/ic_burger.svg?react'
 import {Link} from "react-router";
 import LinkItem from "../../components/LinkItem.tsx";
@@ -35,7 +36,9 @@ const Navbar = () => {
     const isTransparent = (activeSection === 'hero' && location.pathname === '/')
 
     const md = useMediaBreakpoint('md')
+/*
     const xl = useMediaBreakpoint('xl')
+*/
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
@@ -170,7 +173,10 @@ const Navbar = () => {
         >
 
             <div className='flex items-center gap-3 md:gap-6'>
-                <Link to='/'>{xl ? <DesktopLogo /> : <MobileLogo />}</Link>
+                {/*<Link to='/'>{xl ? <DesktopLogo /> : <MobileLogo />}</Link>*/}
+                <Link to='/'>
+                    <Text variant={TextVariant.Body_L}>БГ</Text>
+                </Link>
                 <CitySelection city={selectedCity} onClick={() => setIsCityModalOpen(true)}/>
             </div>
 
