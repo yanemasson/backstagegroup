@@ -1,5 +1,4 @@
 import Text, {TextVariant} from "./Text.tsx";
-import {useNavigate} from "react-router";
 import Button, {ButtonSize, ButtonVariant} from "./Buttons/Button.tsx";
 
 interface CityConfirmationModalProps {
@@ -10,10 +9,8 @@ interface CityConfirmationModalProps {
 
 const CityConfirmationModal = ({ city, onConfirm, onChangeCity }:CityConfirmationModalProps) => {
 
-    const navigate = useNavigate()
     const handleConfirm = () => {
         onConfirm();
-        navigate('/')
     }
 
     return (
