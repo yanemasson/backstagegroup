@@ -152,7 +152,7 @@ const ProgramPage = () => {
     const renderContent = () => {
         switch (activeSection) {
             case 'Описание программы':
-                return <Information information={program.information}/>
+                return <Information information={program.information} descriptionFull={program.descriptionFull}/>
             case 'Трек-лист':
                 return <TrackList trackList={program.trackList ? program.trackList : []}/>
 
@@ -233,7 +233,12 @@ const ProgramPage = () => {
                 </Suspense>
 
                 <Suspense fallback={<LoadingSpinner/>}>
-                    <GallerySection photos={program.photos} videos={program.videos} />
+                    {(program.photos.length > 0 || program.videos.length > 0) &&
+                        <GallerySection
+                            photos={program.photos}
+                            videos={program.videos}
+                        />
+                    }
                 </Suspense>
 
                 <section className='flex flex-col gap-[100px] xl:gap-40' id='reviews'>
