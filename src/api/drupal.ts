@@ -276,6 +276,26 @@ class DrupalParser {
 
         }
 
+        let videos: string[] = []
+        if (relationships?.field_videos?.data && Array.isArray(relationships.field_videos.data)) {
+            videos = relationships.field_videos.data
+                .map((itemRef: any) => {
+                    const videosData = included?.find(item =>
+                        item.type === 'paragraph--videos_item' && item.id === itemRef.id
+                    );
+
+                    if (!videosData) {
+                        return null;
+                    }
+
+                    const videoId = videosData.relationships?.field_videos_item?.data?.id;
+                    const itemVideo = videoId ? this.getFileUrl(videoId, included) : '';
+
+                    return itemVideo?.toString() || '';
+                })
+
+        }
+
         return {
             title: attributes.title || '',
             poster: posterUrl,
@@ -289,7 +309,7 @@ class DrupalParser {
             trackList: trackList,
             information: information,
             photos: photos,
-            videos: []
+            videos: videos
         };
     }
 
@@ -346,7 +366,7 @@ export class DrupalAPI {
     static async getProgramByUrl(link: string): Promise<Program | null> {
         try {
             const filterParam = `filter[field_link]=${link}`;
-            const includeParam = 'field_poster,field_video,field_program_information,field_program_information.field_photo,field_photos,field_photos.field_photos_item_,field_videos';
+            const includeParam = 'field_poster,field_video,field_program_information,field_program_information.field_photo,field_photos,field_photos.field_photos_item_,field_videos,field_videos.field_videos_item';
             const fieldsParam = 'fields[file--file]=uri,url,filename';
             const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/program?${filterParam}&include=${includeParam}&${fieldsParam}`;
 
