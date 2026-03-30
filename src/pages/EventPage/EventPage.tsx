@@ -55,7 +55,6 @@ const EventPage = () => {
                     return;
                 }
 
-
                 setEvent({
                     ...eventData,
                     poster: eventData.poster || programData.poster,
@@ -66,12 +65,12 @@ const EventPage = () => {
                     age: eventData.age || programData.age,
                     trackList: eventData.trackList?.length ? eventData.trackList : programData.trackList,
                     information: eventData.information?.length ? eventData.information : programData.information,
-                    photos: programData.photos
+                    photos: programData.photos,
+                    videos: programData.videos,
                 });
 
-                console.log("photos: ", event?.photos);
-
                 setLoading(false)
+
             } catch (err) {
                 console.error('Error loading event:', err);
                 setError(err instanceof Error ? err.message : 'Unknown error');
@@ -175,7 +174,7 @@ const EventPage = () => {
     const renderContent = () => {
         switch (activeSection) {
             case 'Описание программы':
-                return <Information information={event.information}/>
+                return <Information descriptionFull={event.descriptionFull} information={event.information}/>
             case 'Трек-лист':
                 return <TrackList trackList={event.trackList ? event.trackList : []}/>
             case 'Исполнители':
@@ -274,7 +273,12 @@ const EventPage = () => {
                 </Suspense>
 
                 <Suspense fallback={<LoadingSpinner/>}>
-                    <GallerySection photos={event.photos} videos={event.videos} />
+                    {(event.photos.length > 0 || event.videos.length > 0) &&
+                        <GallerySection
+                            photos={event.photos}
+                            videos={event.videos}
+                        />
+                    }
                 </Suspense>
 
                 {events.length > 1 &&
