@@ -25,7 +25,16 @@ const TagEvents = ({tag}: { tag: string; }) => {
             try {
                 setLoading(true);
                 const eventsList = await DrupalAPI.getEvents();
-                setEvents(eventsList);
+
+                const getTodayString = () => new Date().toISOString().split('T')[0];
+                const getEventDateString = (date: string) => date.split('T')[0];
+
+                const todayStr = getTodayString();
+                const upcomingEvents = eventsList.filter(item =>
+                    getEventDateString(item.date) >= todayStr
+                );
+
+                setEvents(upcomingEvents);
             } finally {
                 setLoading(false);
             }

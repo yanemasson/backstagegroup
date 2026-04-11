@@ -87,10 +87,19 @@ const EventPage = () => {
         const fetchEvents = async () => {
             try {
 
-                const eventsData = await DrupalAPI.getEvents();
-                setEvents(eventsData);
+                const eventsList = await DrupalAPI.getEvents();
 
-                if (!eventsData) {
+                const getTodayString = () => new Date().toISOString().split('T')[0];
+                const getEventDateString = (date: string) => date.split('T')[0];
+
+                const todayStr = getTodayString();
+                const upcomingEvents = eventsList.filter(item =>
+                    getEventDateString(item.date) >= todayStr
+                );
+
+                setEvents(upcomingEvents);
+
+                if (!eventsList) {
                     setError(`События не найдены`);
                 }
             } catch (err) {
@@ -182,6 +191,7 @@ const EventPage = () => {
                     artists={event.artists ? event.artists : []}
                     artistsTeam={event.artistsTeam ? event.artistsTeam : ''}
                     artistsGroupPhoto={event.artistsGroupPhoto && event.artistsGroupPhoto}
+                    artistsSubTitle={event.artistsSubTitle}
                 />
             case 'Площадка':
                 return <LocationSection

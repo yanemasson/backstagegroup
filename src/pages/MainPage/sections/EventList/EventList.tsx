@@ -28,13 +28,18 @@ const EventList = () => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-                let eventsList
-                if(selectedCity) {
-                    eventsList = await DrupalAPI.getEventsByCity(selectedCity);
-                } else {
-                    eventsList = await DrupalAPI.getEventsByCity('Все города');
-                }
-                setEvents(eventsList.slice(0, 3))
+                const city = selectedCity || 'Все города';
+                const eventsList = await DrupalAPI.getEventsByCity(city);
+
+                const getTodayString = () => new Date().toISOString().split('T')[0];
+                const getEventDateString = (date: string) => date.split('T')[0];
+
+                const todayStr = getTodayString();
+                const upcomingEvents = eventsList.filter(item =>
+                    getEventDateString(item.date) >= todayStr
+                );
+
+                setEvents(upcomingEvents.slice(0, 3));
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -83,9 +88,8 @@ const EventList = () => {
                 </IconButton>
             </div>
             <div className='flex flex-col'>
-                {events.length > 0 ? (
-                    events
-                        .map((item, index) => (
+                {events.length > 0
+                    ? (events.map((item, index) => (
                         xl
                             ? <EventCardDesktop
                                 key={index} item={item}
@@ -99,10 +103,16 @@ const EventList = () => {
                                 isLast={index !== events.length - 1}
                             />
                         )
-                    )
-                ) : <>text</> }
+                    ))
+                    : <Text className='text-text-tertiary' variant={TextVariant.Body_M}>
+                        В ближайшее время концерты в вашем городе не запланированы. Следите за обновлениями!
+                    </Text>
+                }
+
                 <Link className='self-center' to='/events'>
-                    <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Вся афиша</Button>
+                    <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>
+                        Вся афиша
+                    </Button>
                 </Link>
             </div>
 

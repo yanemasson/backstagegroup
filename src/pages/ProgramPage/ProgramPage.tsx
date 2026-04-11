@@ -65,10 +65,19 @@ const ProgramPage = () => {
             try {
                 setLoading(true);
 
-                const eventsData = await DrupalAPI.getEventsByProgram(id);
-                setEvents(eventsData);
+                const eventsList = await DrupalAPI.getEventsByProgram(id);
 
-                if (!eventsData) {
+                const getTodayString = () => new Date().toISOString().split('T')[0];
+                const getEventDateString = (date: string) => date.split('T')[0];
+
+                const todayStr = getTodayString();
+                const upcomingEvents = eventsList.filter(item =>
+                    getEventDateString(item.date) >= todayStr
+                );
+
+                setEvents(upcomingEvents);
+
+                if (!eventsList) {
                     setError(`События не найдены`);
                 }
             } catch (err) {

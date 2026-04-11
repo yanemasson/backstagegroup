@@ -73,13 +73,22 @@ const Hero = () => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-                let eventsList
-                if(selectedCity) {
+                let eventsList;
+                if (selectedCity) {
                     eventsList = await DrupalAPI.getEventsByCity(selectedCity);
                 } else {
                     eventsList = await DrupalAPI.getEventsByCity('Все города');
                 }
-                setSlideEvents(eventsList.slice(0, 3))
+
+                const getTodayString = () => new Date().toISOString().split('T')[0];
+                const getEventDateString = (date: string) => date.split('T')[0];
+
+                const todayStr = getTodayString();
+                const upcomingEvents = eventsList.filter(item =>
+                    getEventDateString(item.date) >= todayStr
+                );
+
+                setSlideEvents(upcomingEvents.slice(0, 3));
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
