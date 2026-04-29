@@ -20,6 +20,7 @@ export interface Event {
     artists?: Artist[],
     artistsGroupPhoto?: string,
     artistsTeam?: string,
+    artistsSubTitle?: string,
     tag: string,
     operator: "radario" | "intickets" | "kassir",
     orgId?: number,

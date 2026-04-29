@@ -171,6 +171,7 @@ class DrupalParser {
             duration: attributes.field_duration || '',
             age: attributes.field_age?.toString() || '',
             artistsTeam: attributes.field_artists_team || '',
+            artistsSubTitle: attributes.field_artist_subtitle || '',
             artistsGroupPhoto: artistGroupPhotoUrl,
             eventId: attributes.field_event_id?.toString() || '',
             locationPhotos: locationPhotos,

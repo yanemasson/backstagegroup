@@ -6,9 +6,10 @@ interface ArtistsSectionProps {
     artists: Artist[];
     artistsTeam?: string;
     artistsGroupPhoto?: string;
+    artistsSubTitle?: string;
 }
 
-const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectionProps) => {
+const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto, artistsSubTitle}: ArtistsSectionProps) => {
 
     if (artists.length === 0 && !artistsGroupPhoto) {
         return <Text className='text-text-tertiary' variant={TextVariant.Body_M}>
@@ -18,6 +19,8 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto}: ArtistsSectio
 
     return (
         <section className='flex flex-col gap-6' id='artists'>
+
+            <Text variant={TextVariant.Body_M}>{artistsSubTitle}</Text>
 
             <Text variant={TextVariant.Subtitle_L}>{artistsTeam ? artistsTeam : 'Музыканты'}</Text>
 
