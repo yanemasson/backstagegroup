@@ -58,6 +58,12 @@ const RefundPage = () => {
                         <br/>Дополнительная информация по телефону +7 (391) 288-88-81
                     </Text>
                     <Text variant={TextVariant.Body_M}>
+                        Если билеты приобретались у билетного оператора «KASSIR.RU», возврат осуществляется {' '}
+                        <Anchor href={'https://nsk.kassir.ru/pages/refund'}>
+                            согласно правилам возврата компании
+                        </Anchor>
+                    </Text>
+                    <Text variant={TextVariant.Body_M}>
                         Если вы купили билет на нашем сайте, и он не пришел Вам на почту, напишите {' '}
                         <Anchor href={'mailto:help@radario.ru'}>help@radario.ru</Anchor>
                         <br/>Служба поддержки работает с 7:00 до 23:00 (МСК)
