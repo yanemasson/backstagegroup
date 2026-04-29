@@ -3,7 +3,9 @@ import Text, {TextVariant} from "../../../components/Text.tsx";
 
 const TrackList = ({trackList} : {trackList: Track[]}) => {
 
-    if (trackList.length === 0) return <Text className='text-lightgray' variant={TextVariant.Subtitle_S}>Трек-лист уточняется. Следите за обновлениями!</Text>;
+    if (trackList.length === 0 || !trackList[0].title) {
+        return <Text className='text-text-tertiary' variant={TextVariant.Body_M}>Трек-лист уточняется. Следите за обновлениями!</Text>;
+    }
 
     return (
         <section className='flex flex-col gap-6' id='tracklist'>

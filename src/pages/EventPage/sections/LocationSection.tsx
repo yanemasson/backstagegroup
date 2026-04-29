@@ -15,7 +15,7 @@ const LocationSection = ({location, address, photos}: LocationSectionProps) => {
                 <Text variant={TextVariant.Body_L}>{address}</Text>
                 {photos.length === 0 &&
                     <Text className='text-text-tertiary' variant={TextVariant.Body_M}>
-                        Фотографии концертной площадки появятся в ближайшее время. Следите за обновлениями
+                        Фотографии концертной площадки появятся в ближайшее время. Следите за обновлениями!
                     </Text>
                 }
             </div>
