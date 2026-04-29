@@ -36,9 +36,8 @@ const Navbar = () => {
     const isTransparent = (activeSection === 'hero' && location.pathname === '/')
 
     const md = useMediaBreakpoint('md')
-/*
     const xl = useMediaBreakpoint('xl')
-*/
+
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
@@ -128,6 +127,7 @@ const Navbar = () => {
     const handleConfirmCity = () => {
         localStorage.setItem('hasVisited', 'true');
         setShowCityPopUp(false);
+
     };
     const handleChangeCity = () => {
         setShowCityPopUp(false);
@@ -175,7 +175,11 @@ const Navbar = () => {
             <div className='flex items-center gap-3 md:gap-6'>
                 {/*<Link to='/'>{xl ? <DesktopLogo /> : <MobileLogo />}</Link>*/}
                 <Link to='/'>
-                    <Text variant={TextVariant.Body_L}>БГ</Text>
+                    {xl
+                        ? <Text variant={TextVariant.Body_L}>БЭКСТЕЙДЖ | ЗА КУЛИСАМИ</Text>
+                        : <Text variant={TextVariant.Body_L}>БГ</Text>
+                    }
+
                 </Link>
                 <CitySelection city={selectedCity} onClick={() => setIsCityModalOpen(true)}/>
             </div>
