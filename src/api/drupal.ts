@@ -182,6 +182,7 @@ class DrupalParser {
             information: information,
             photos: [],
             videos: [],
+            orgId: attributes.field_org_id || ''
         };
     }
 

@@ -45,7 +45,7 @@ const EventCardDesktop = ({item, to, isLast}: EventCardProps) => {
                     </div>
                 </div>
                 <div className='flex gap-2 justify-between w-full '>
-                    <TicketButtonWrapper operator={item.operator} eventId={item.eventId} className='flex-1'>
+                    <TicketButtonWrapper operator={item.operator} eventId={item.eventId} orgId={item.orgId} className='flex-1'>
                         <Button
                             className='w-full'
                             variant={ButtonVariant.secondary}

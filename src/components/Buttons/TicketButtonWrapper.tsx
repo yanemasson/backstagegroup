@@ -2,12 +2,13 @@ import { ReactNode, useEffect, useRef } from 'react';
 
 interface TicketButtonWrapperProps {
     eventId: number;
+    orgId?: number;
     children: ReactNode;
     operator: "radario" | "intickets" | "kassir";
     className?: string;
 }
 
-const TicketButtonWrapper = ({ eventId, operator, children, className }: TicketButtonWrapperProps) => {
+const TicketButtonWrapper = ({ eventId, orgId = 11666, operator, children, className }: TicketButtonWrapperProps) => {
     const eventIdString = eventId.toString();
     const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -58,6 +59,17 @@ const TicketButtonWrapper = ({ eventId, operator, children, className }: TicketB
         return `https://widget.kassir.ru/?type=E&key=62a61af3-48f2-c264-ea78-0d77bc476c59&domain=sakh.kassir.ru&id=${eventIdString}`;
     };
 
+    if(eventId == 3621116)
+        return (
+            <a
+                className={`w-fit ${className}`}
+                href={'https://widget.kassir.ru/?type=E&key=eb612014-00ac-e30a-d16a-0013749eae60&domain=krs.kassir.ru&id=3621116'}
+                target="_blank"
+            >
+                {children}
+            </a>
+        )
+
     if (operator === 'kassir') {
         const kassirUrl = getKassirUrl();
         return (
@@ -77,10 +89,7 @@ const TicketButtonWrapper = ({ eventId, operator, children, className }: TicketB
 
     //intickets
     const getInticketsUrl = () => {
-        if (eventIdString === '62738053') {
-            return `https://iframeab-pre6263.intickets.ru/seance/${eventIdString}/#abiframe`;
-        }
-        return `https://iframeab-pre11666.intickets.ru/seance/${eventIdString}/#abiframe`;
+        return `https://iframeab-pre${orgId}.intickets.ru/seance/${eventIdString}/#abiframe`;
     };
 
     let href = `#event/${eventIdString}`;
@@ -97,7 +106,10 @@ const TicketButtonWrapper = ({ eventId, operator, children, className }: TicketB
     return (
         <a
             className={`w-fit ${className} widget-tr`}
-            href={href}
+            href={
+            eventId == 801
+                ? 'https://widget2.kassy.ru/auth/backstagegroup/?back=/novokuznetsk/event/7567/'
+                : href}
             {...linkProps}
         >
             {children}
