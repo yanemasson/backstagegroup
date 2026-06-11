@@ -28,4 +28,5 @@ export interface Event {
     information: InformationItem[],
     photos: string[],
     videos: string[],
+    eventLink: string,
 }

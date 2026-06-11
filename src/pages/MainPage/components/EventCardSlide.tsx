@@ -42,7 +42,13 @@ const EventCardSlide = ({event, activeIndex, progress, handleBarClick}: EventCar
                     </div>
 
                     <div className='flex flex-col xl:flex-row-reverse self-center xl:self-end items-end w-full gap-4 xl:gap-[37px]'>
-                        <TicketButtonWrapper className='w-full xl:w-40 self-end' eventId={event.eventId} orgId={event.orgId} operator={event.operator}>
+                        <TicketButtonWrapper
+                            className='w-full xl:w-40 self-end'
+                            eventId={event.eventId}
+                            orgId={event.orgId}
+                            operator={event.operator}
+                            eventLink={event.eventLink}
+                        >
                             <Button variant={ButtonVariant.primary} size={ButtonSize.medium} className='w-full xl:w-40  xl:mb-8'>
                                 Купить билет
                             </Button>

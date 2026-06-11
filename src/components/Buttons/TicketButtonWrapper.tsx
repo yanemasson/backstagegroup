@@ -3,12 +3,13 @@ import { ReactNode, useEffect, useRef } from 'react';
 interface TicketButtonWrapperProps {
     eventId: number;
     orgId?: number;
+    eventLink?: string;
     children: ReactNode;
     operator: "radario" | "intickets" | "kassir";
     className?: string;
 }
 
-const TicketButtonWrapper = ({ eventId, orgId = 11666, operator, children, className }: TicketButtonWrapperProps) => {
+const TicketButtonWrapper = ({ eventId, orgId = 11666, eventLink, operator, children, className }: TicketButtonWrapperProps) => {
     const eventIdString = eventId.toString();
     const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -55,28 +56,15 @@ const TicketButtonWrapper = ({ eventId, orgId = 11666, operator, children, class
         }
     }, [operator, eventIdString]);
 
-    const getKassirUrl = () => {
-        return `https://widget.kassir.ru/?type=E&key=62a61af3-48f2-c264-ea78-0d77bc476c59&domain=sakh.kassir.ru&id=${eventIdString}`;
-    };
 
-    if(eventId == 3621116)
-        return (
-            <a
-                className={`w-fit ${className}`}
-                href={'https://widget.kassir.ru/?type=E&key=eb612014-00ac-e30a-d16a-0013749eae60&domain=krs.kassir.ru&id=3621116'}
-                target="_blank"
-            >
-                {children}
-            </a>
-        )
 
     if (operator === 'kassir') {
-        const kassirUrl = getKassirUrl();
+        console.log(eventLink)
         return (
             <a
                 ref={linkRef}
                 className={`w-fit ${className} widget-tr`}
-                href={kassirUrl}
+                href={eventLink}
                 target="_blank"
                 // Добавляем data-атрибуты для отладки
                 data-kassir-event={eventIdString}

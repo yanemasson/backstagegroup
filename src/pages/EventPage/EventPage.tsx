@@ -68,6 +68,7 @@ const EventPage = () => {
                     photos: programData.photos,
                     videos: programData.videos,
                     orgId: eventData.orgId,
+                    eventLink: eventData.eventLink,
                 });
 
                 setLoading(false)
@@ -213,7 +214,12 @@ const EventPage = () => {
                     "Классическая музыка, премьеры в Вашем городе"}
                 keywords="балет, симфонический оркестр, концерты, классическая музыка, билеты, афиша"
             />
-            <FixedTicketButton operator={event.operator} eventId={event.eventId} orgId={event.orgId}/>
+            <FixedTicketButton
+                operator={event.operator}
+                eventId={event.eventId}
+                orgId={event.orgId}
+                eventLink={event.eventLink}
+            />
             <div className='relative flex flex-col gap-24 w-[90vw] xl:w-[1152px] pt-[88px]'>
 
                 {md ? <HeroDesktop item={event}/> : <HeroMobile item={event}/>}

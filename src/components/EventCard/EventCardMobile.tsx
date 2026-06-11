@@ -61,7 +61,13 @@ const EventCardMobile = ({item, to, isLast}: EventCardProps) => {
             </div>
 
             <div className='flex gap-2'>
-                <TicketButtonWrapper operator={item.operator} eventId={item.eventId} orgId={item.orgId} className='flex-1'>
+                <TicketButtonWrapper
+                    operator={item.operator}
+                    eventId={item.eventId}
+                    orgId={item.orgId}
+                    eventLink={item.eventLink}
+                    className='flex-1'
+                >
                     <Button
                         variant={ButtonVariant.secondary}
                         size={ButtonSize.small}

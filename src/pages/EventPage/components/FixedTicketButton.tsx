@@ -5,10 +5,11 @@ import Button, {ButtonVariant} from "../../../components/Buttons/Button.tsx";
 interface FixedTicketButtonProps {
     eventId: number;
     orgId?: number;
+    eventLink?: string;
     operator: "radario" | "intickets" | "kassir";
 }
 
-const FixedTicketButton = ({eventId, orgId, operator}: FixedTicketButtonProps) => {
+const FixedTicketButton = ({eventId, orgId, operator, eventLink}: FixedTicketButtonProps) => {
     const md = useMediaBreakpoint('md')
 
     return (
@@ -17,7 +18,7 @@ const FixedTicketButton = ({eventId, orgId, operator}: FixedTicketButtonProps) =
         ${md ? 'bg-none' : 'bg-darkgray'}`}
         >
             <div className='md:pr-5 md:py-4 md:bg-darkgray '>
-                <TicketButtonWrapper operator={operator} eventId={eventId} orgId={orgId}>
+                <TicketButtonWrapper operator={operator} eventId={eventId} orgId={orgId} eventLink={eventLink}>
                     <Button className='w-[90vw] h-[45px] md:w-[335px] md:h-[53px]' variant={ButtonVariant.primary}>Купить билет</Button>
                 </TicketButtonWrapper>
             </div>
