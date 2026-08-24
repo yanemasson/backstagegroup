@@ -3,14 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Соединения к источнику данных и виджетам открываем заранее -->
+    <link rel="preconnect" href="https://api.backstagegroup.ru" crossorigin />
+    <link rel="dns-prefetch" href="https://api.backstagegroup.ru" />
+    <link rel="dns-prefetch" href="https://s3.intickets.ru" />
+    <link rel="dns-prefetch" href="https://widget.kassir.ru" />
+
+    <!-- Шрифты первого экрана: основной текст и заголовки -->
+    <link rel="preload" href="/fonts/inter/500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/playfair-display/600.woff2" as="font" type="font/woff2" crossorigin />
+
     <title>Backstage Group</title>
+    <meta name="description" content="Концерты симфонической музыки и балета в Красноярском крае">
     <meta property="og:title" content="Backstage Group">
     <meta property="og:description" content="Концерты симфонической музыки и балета в Красноярском крае">
-    <meta name="description" content="Концерты симфонической музыки и балета в Красноярском крае">
-    <meta property="og:image" content="/src/assets/icons/logo_mobile.svg">
-    <link rel="stylesheet" href="//s3.intickets.ru/intickets.min.css">
-    <script src="//s3.intickets.ru/intickets.js"></script>
-    <script src="https://widget.kassir.ru/summoner/summoner.es.js"></script>
+    <meta property="og:image" content="https://backstagegroup.ru/images/default_poster.png">
+
+    <link rel="stylesheet" href="https://s3.intickets.ru/intickets.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://s3.intickets.ru/intickets.min.css"></noscript>
+
+    <script defer src="https://s3.intickets.ru/intickets.js"></script>
+    <script defer src="https://widget.kassir.ru/summoner/summoner.es.js"></script>
   </head>
   <body>
     <div id="root"></div>

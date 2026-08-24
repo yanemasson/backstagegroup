@@ -23,7 +23,7 @@ const LocationSection = ({location, address, photos}: LocationSectionProps) => {
 
             <div className='flex flex-col xl:flex-row gap-3'>
                 {photos.map((photo) => (
-                    <img className='w-[90vw] xl:w-[49%]' src={photo} alt={photo} key={photo} />
+                    <img className='w-[90vw] xl:w-[49%]' src={photo} alt={location} key={photo} loading="lazy" />
                 ))}
             </div>
         </section>

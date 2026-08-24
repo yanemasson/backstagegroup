@@ -14,8 +14,9 @@ const Information = ({information, descriptionFull} : InformationProps) => {
                     <div className='flex xl:flex-row flex-col gap-6' key={item.title}>
                         <img
                             className='xl:min-w-[667px] xl:max-h-[426px] min-w-[90vw] overflow-hidden'
-                            alt={item.photo}
+                            alt={item.title}
                             src={item.photo}
+                            loading="lazy"
                         />
                         <div className='flex flex-col gap-3 justify-center' >
                             <Text variant={TextVariant.Subtitle_L} className='text-text-accent'>{item.title}</Text>

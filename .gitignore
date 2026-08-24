@@ -24,7 +24,6 @@ dist-ssr
 *.sw?
 
 .env
-public/sitemap.xml
 
 # Local Netlify folder
 .netlify

@@ -45,6 +45,7 @@ const WordPressContent = ({ content, className } : WordPressContentProps) => {
                             src={domNode.attribs.src}
                             alt={domNode.attribs.alt || ''}
                             className="mb-4"
+                            loading="lazy"
                         />
                     );
                 }

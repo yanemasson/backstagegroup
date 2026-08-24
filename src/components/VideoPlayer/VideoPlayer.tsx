@@ -13,6 +13,7 @@ const VideoPlayer = ({video, poster, className, buttonType = 'play'}:VideoPlayer
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(buttonType === 'mute');
     const [isInView, setIsInView] = useState(false);
+    const [shouldLoad, setShouldLoad] = useState(false);
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -22,6 +23,7 @@ const VideoPlayer = ({video, poster, className, buttonType = 'play'}:VideoPlayer
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsInView(entry.isIntersecting);
+                if (entry.isIntersecting) setShouldLoad(true);
             },
             { threshold: 0.1 }
         );
@@ -31,20 +33,28 @@ const VideoPlayer = ({video, poster, className, buttonType = 'play'}:VideoPlayer
     }, []);
 
     useEffect(() => {
-        if (isInView && buttonType === 'mute' && videoRef.current) {
-            videoRef.current.play().catch(e => console.log("Автовоспроизведение не удалось:", e));
-            setIsPlaying(true);
+        const element = videoRef.current;
+        if (!shouldLoad || !element) return;
+
+        element.load();
+
+        if (buttonType === 'mute') {
+            element.play()
+                .then(() => setIsPlaying(true))
+                .catch(() => setIsPlaying(false));
         }
-    }, [isInView, buttonType]);
+    }, [shouldLoad, buttonType]);
 
     const togglePlay = () => {
         if (!videoRef.current) return;
         if (isPlaying) {
             videoRef.current.pause();
+            setIsPlaying(false);
         } else {
-            videoRef.current.play().catch(e => console.log("Воспроизведение не удалось:", e));
+            videoRef.current.play()
+                .then(() => setIsPlaying(true))
+                .catch(() => setIsPlaying(false));
         }
-        setIsPlaying(!isPlaying);
     };
 
     const toggleMute = () => {
@@ -69,7 +79,7 @@ const VideoPlayer = ({video, poster, className, buttonType = 'play'}:VideoPlayer
                 height="100%"
                 poster={poster}
             >
-                <source src={video} type="video/mp4" />
+                {shouldLoad && <source src={video} type="video/mp4" />}
             </video>
 
             {isInView && (

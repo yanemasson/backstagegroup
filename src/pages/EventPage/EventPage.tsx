@@ -2,6 +2,7 @@ import {useParams} from "react-router";
 import LoadingSpinner from "../../components/LoadingSpinner.tsx";
 import {SEO} from "../../components/SEO.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
+import {useHideOnScroll} from "../../hooks/useHideOnScroll.ts";
 import {lazy, Suspense, useEffect, useState} from "react";
 import Text, {TextVariant} from "../../components/Text.tsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.tsx";
@@ -30,7 +31,7 @@ const EventPage = () => {
     const [events, setEvents] = useState<Event[]>([]);
 
     const [error, setError] = useState<string | null>(null);
-    const [headerIsVisible, setHeaderIsVisible] = useState(false)
+    const headerIsVisible = useHideOnScroll(false);
     const xl = useMediaBreakpoint('xl')
 
     //получаем концерт
@@ -89,21 +90,9 @@ const EventPage = () => {
         const fetchEvents = async () => {
             try {
 
-                const eventsList = await DrupalAPI.getEvents();
+                const eventsList = await DrupalAPI.getEvents({upcomingOnly: true});
 
-                const getTodayString = () => new Date().toISOString().split('T')[0];
-                const getEventDateString = (date: string) => date.split('T')[0];
-
-                const todayStr = getTodayString();
-                const upcomingEvents = eventsList.filter(item =>
-                    getEventDateString(item.date) >= todayStr
-                );
-
-                setEvents(upcomingEvents);
-
-                if (!eventsList) {
-                    setError(`События не найдены`);
-                }
+                setEvents(eventsList);
             } catch (err) {
                 console.error('Error loading events:', err);
                 setError(err instanceof Error ? err.message : 'Unknown error');
@@ -113,57 +102,6 @@ const EventPage = () => {
         fetchEvents();
     }, [id]);
 
-    //положение табов
-    useEffect(() => {
-        let ticking = false;
-        let lastScrollY = 0;
-        let hideTimeout: NodeJS.Timeout | null = null;
-
-        const controlNavbar = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const currentScrollY = window.scrollY;
-                    const scrollDelta = currentScrollY - lastScrollY;
-                    const isScrollingDown = scrollDelta > 0;
-                    const isScrollingUp = scrollDelta < 0;
-
-                    if (hideTimeout) {
-                        clearTimeout(hideTimeout);
-                    }
-
-                    if (isScrollingDown && headerIsVisible && currentScrollY > 50) {
-                        hideTimeout = setTimeout(() => {
-                            setHeaderIsVisible(false);
-                        }, 50);
-                    } else if (isScrollingUp && !headerIsVisible) {
-                        hideTimeout = setTimeout(() => {
-                            setHeaderIsVisible(true);
-                        }, 50);
-                    }
-
-                    if (currentScrollY < 50) {
-                        if (hideTimeout) {
-                            clearTimeout(hideTimeout);
-                        }
-                        setHeaderIsVisible(true);
-                    }
-
-                    lastScrollY = currentScrollY;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', controlNavbar);
-
-        return () => {
-            window.removeEventListener('scroll', controlNavbar);
-            if (hideTimeout) {
-                clearTimeout(hideTimeout);
-            }
-        };
-    }, [headerIsVisible]);
 
     type menuItemType = 'Описание программы' | 'Трек-лист' | 'Исполнители' | 'Площадка' | null
     const [activeSection, setActiveSection] = useState<menuItemType>('Описание программы')

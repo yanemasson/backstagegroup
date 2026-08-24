@@ -21,16 +21,16 @@ const ProgramEvents = ({events}: ProgramEventsProps) => {
                     ? events.map((item, index) => (
                         xl
                             ? <EventCardDesktop
-                                key={index}
+                                key={item.eventId}
                                 item={item}
                                 to={createSlug(item.eventId)}
-                                isLast={index !== events.length - 1}
+                                hasDivider={index !== events.length - 1}
                             />
                             : <EventCardMobile
-                                key={index}
+                                key={item.eventId}
                                 item={item}
                                 to={createSlug(item.eventId)}
-                                isLast={index !== events.length - 1}
+                                hasDivider={index !== events.length - 1}
                             />
                     ))
                     : <Text className='text-text-tertiary' variant={TextVariant.Body_M}>В ближайшее время в вашем городе концертов не ожидается. Следите за обновлениями!</Text>

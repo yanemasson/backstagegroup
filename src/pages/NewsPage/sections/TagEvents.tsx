@@ -24,17 +24,9 @@ const TagEvents = ({tag}: { tag: string; }) => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-                const eventsList = await DrupalAPI.getEvents();
+                const eventsList = await DrupalAPI.getEvents({upcomingOnly: true});
 
-                const getTodayString = () => new Date().toISOString().split('T')[0];
-                const getEventDateString = (date: string) => date.split('T')[0];
-
-                const todayStr = getTodayString();
-                const upcomingEvents = eventsList.filter(item =>
-                    getEventDateString(item.date) >= todayStr
-                );
-
-                setEvents(upcomingEvents);
+                setEvents(eventsList);
             } finally {
                 setLoading(false);
             }
@@ -55,13 +47,13 @@ const TagEvents = ({tag}: { tag: string; }) => {
                 {filteredEvents.length === 0 ?
                     events.slice(0, 3).map((item, index) => (
                         xl
-                            ? <EventCardDesktop isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
-                            : <EventCardMobile isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            ? <EventCardDesktop hasDivider={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            : <EventCardMobile hasDivider={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
                     ))
                     : filteredEvents.slice(0, 3).map((item, index) => (
                         xl
-                            ? <EventCardDesktop isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
-                            : <EventCardMobile isLast={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            ? <EventCardDesktop hasDivider={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
+                            : <EventCardMobile hasDivider={index !== 2} key={item.eventId} item={item} to={createSlug(item.eventId)}/>
                     ))}
                 <Link className='self-center' to='/events'>
                     <Button className='w-[138px]' variant={ButtonVariant.shadow} size={ButtonSize.small}>Вся афиша</Button>

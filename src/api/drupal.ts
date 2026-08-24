@@ -1,10 +1,27 @@
 import {API_CONFIG} from './config';
+import {fetchJson} from './requestCache';
+import {getTodayISODate} from '../utils/getTodayISODate';
 import {DrupalNode, DrupalResponse} from './types';
 import {Event} from '../types/events/event';
 import {Track} from '../types/events/track';
 import {Artist} from '../types/events/artist';
 import {Program} from '../types/events/program';
 import {InformationItem} from "../types/events/information_item.ts";
+
+type IncludedIndex = Map<string, DrupalNode>;
+
+const indexIncluded = (included?: DrupalNode[]): IncludedIndex => {
+    const index: IncludedIndex = new Map();
+
+    for (const item of included ?? []) {
+        index.set(`${item.type}|${item.id}`, item);
+    }
+
+    return index;
+};
+
+const getIncluded = (index: IncludedIndex, type: string, id?: string): DrupalNode | undefined =>
+    id ? index.get(`${type}|${id}`) : undefined;
 
 class DrupalParser {
     static getFieldValue(attributes: Record<string, unknown>, fieldName: string): string | number | null {
@@ -44,124 +61,100 @@ class DrupalParser {
         return null;
     }
 
-    static parseEvent(node: DrupalNode, included?: any[]): Event {
+    private static getFileUrl(index: IncludedIndex, fileId?: string): string {
+        const fileData = getIncluded(index, 'file--file', fileId);
+        const url = fileData?.attributes?.uri?.url;
+
+        if (!url) return '';
+
+        return url.startsWith('/') ? `${API_CONFIG.drupal.baseUrl}${url}` : url;
+    }
+
+    private static getRelatedFileUrl(
+        relationships: DrupalNode['relationships'],
+        field: string,
+        index: IncludedIndex
+    ): string {
+        return this.getFileUrl(index, relationships?.[field]?.data?.id);
+    }
+
+    private static getRelatedIds(relationships: DrupalNode['relationships'], field: string): string[] {
+        const data = relationships?.[field]?.data;
+
+        return Array.isArray(data) ? data.map((ref: { id: string }) => ref.id) : [];
+    }
+
+    private static parseTrackList(
+        relationships: DrupalNode['relationships'],
+        index: IncludedIndex
+    ): Track[] {
+        return this.getRelatedIds(relationships, 'field_tracklist_new')
+            .map(id => getIncluded(index, 'paragraph--track', id))
+            .filter((node): node is DrupalNode => node !== undefined)
+            .map(node => ({
+                title: this.getFieldValue(node.attributes, 'field_title')?.toString() || '',
+                artist: this.getFieldValue(node.attributes, 'field_artist')?.toString() || '',
+                source: this.getFieldValue(node.attributes, 'field_source')?.toString() || '',
+            }));
+    }
+
+    private static parseInformation(
+        relationships: DrupalNode['relationships'],
+        index: IncludedIndex,
+        field: string,
+        paragraphType: string
+    ): InformationItem[] {
+        return this.getRelatedIds(relationships, field)
+            .map(id => getIncluded(index, paragraphType, id))
+            .filter((node): node is DrupalNode => node !== undefined)
+            .map(node => ({
+                title: this.getFieldValue(node.attributes, 'field_information_title')?.toString() || '',
+                photo: this.getRelatedFileUrl(node.relationships, 'field_photo', index),
+                text: this.getFieldValue(node.attributes, 'field_text')?.toString() || '',
+            }))
+            .filter(item => item.title || item.text || item.photo);
+    }
+
+    private static parseArtists(
+        relationships: DrupalNode['relationships'],
+        index: IncludedIndex
+    ): Artist[] {
+        return this.getRelatedIds(relationships, 'field_artists')
+            .map(id => getIncluded(index, 'node--artist', id))
+            .filter((node): node is DrupalNode => node !== undefined)
+            .map(node => ({
+                photo: this.getRelatedFileUrl(node.relationships, 'field_photo', index),
+                name: node.attributes?.field_name || '',
+                role: node.attributes?.field_role || 'Вокал',
+            }));
+    }
+
+    private static parseMediaItems(
+        relationships: DrupalNode['relationships'],
+        index: IncludedIndex,
+        field: string,
+        paragraphType: string,
+        fileField: string
+    ): string[] {
+        return this.getRelatedIds(relationships, field)
+            .map(id => getIncluded(index, paragraphType, id))
+            .filter((node): node is DrupalNode => node !== undefined)
+            .map(node => this.getRelatedFileUrl(node.relationships, fileField, index))
+            .filter(url => url !== '');
+    }
+
+    static parseEvent(node: DrupalNode, included?: DrupalNode[]): Event {
         const {attributes, relationships} = node;
+        const index = indexIncluded(included);
 
-        let videoUrl = '';
-        if (relationships?.field_video?.data) {
-            const videoData = relationships.field_video.data;
-            if (videoData.id) {
-                videoUrl = this.getFileUrl(videoData.id, included);
-            }
-        }
-
-        let posterUrl = '';
-        if (relationships?.field_poster?.data) {
-            const posterData = relationships.field_poster.data;
-            if (posterData.id) {
-                posterUrl = this.getFileUrl(posterData.id, included);
-            }
-        }
-
-        let artistGroupPhotoUrl = '';
-        if (relationships?.field_artists_group_photo?.data) {
-            const photoData = relationships.field_artists_group_photo.data;
-            if (photoData.id) {
-                artistGroupPhotoUrl = this.getFileUrl(photoData.id, included);
-            }
-        }
-
-        let locationPhotos: string[] = [];
-        if (relationships?.field_location_photos?.data && Array.isArray(relationships.field_location_photos.data)) {
-            locationPhotos = relationships.field_location_photos.data
-                .map((photoRef: any) => this.getFileUrl(photoRef.id, included))
-                .filter((url : string) => url !== '');
-        }
-
-        let artists: Artist[] = [];
-        if (relationships?.field_artists?.data && Array.isArray(relationships.field_artists.data)) {
-            artists = relationships.field_artists.data
-                .map((artistRef: any) => {
-                    const artistData = included?.find(item =>
-                        item.type === 'node--artist' && item.id === artistRef.id
-                    );
-
-                    if (!artistData) {
-                        return null;
-                    }
-
-                    // Парсинг фото артиста
-                    let photoUrl = '';
-                    if (artistData.relationships?.field_photo?.data?.id) {
-                        photoUrl = this.getFileUrl(artistData.relationships.field_photo.data.id, included);
-                    }
-
-                    return {
-                        photo: photoUrl,
-                        name: artistData.attributes?.field_name || '',
-                        role: artistData.attributes?.field_role || 'Вокал'
-                    };
-                })
-                .filter((artist : Artist) => artist !== null);
-        }
-
-        let trackList: Track[] = [];
-        if (relationships?.field_tracklist_new?.data && Array.isArray(relationships.field_tracklist_new.data)) {
-            trackList = relationships.field_tracklist_new.data
-                .map((trackRef: any) => {
-                    const trackData = included?.find(item =>
-                        item.type === 'paragraph--track' && item.id === trackRef.id
-                    );
-
-                    if (!trackData) {
-                        return null;
-                    }
-
-                    const trackTitle = this.getFieldValue(trackData.attributes, 'field_title');
-                    const trackArtist = this.getFieldValue(trackData.attributes, 'field_artist');
-                    const trackSource = this.getFieldValue(trackData.attributes, 'field_source');
-
-                    return {
-                        title: trackTitle?.toString() || '',
-                        artist: trackArtist?.toString() || '',
-                        source: trackSource?.toString() || '',
-                    };
-                })
-                .filter((track: Track | null): track is Track => track !== null);
-        }
-
-        let information: InformationItem[] = [];
-        if (relationships?.field_information?.data && Array.isArray(relationships.field_information.data)) {
-            information = relationships.field_information.data
-                .map((itemRef: any) => {
-                    const informationData = included?.find(item =>
-                        item.type === 'paragraph--events_information_item' && item.id === itemRef.id
-                    );
-
-                    if (!informationData) {
-                        return null;
-                    }
-
-                    const itemTitle = this.getFieldValue(informationData.attributes, 'field_information_title');
-                    const photoId = informationData.relationships?.field_photo?.data?.id;
-                    const itemPhoto = photoId ? this.getFileUrl(photoId, included) : '';
-                    const itemText = this.getFieldValue(informationData.attributes, 'field_text');
-
-                    console.log('title:', itemTitle);
-
-                    return {
-                        title: itemTitle?.toString() || '',
-                        photo: itemPhoto?.toString() || '',
-                        text: itemText?.toString() || '',
-                    };
-                })
-                .filter((item: any): item is InformationItem => item !== null); // Фильтрация null
-        }
+        const locationPhotos = this.getRelatedIds(relationships, 'field_location_photos')
+            .map(id => this.getFileUrl(index, id))
+            .filter(url => url !== '');
 
         return {
             title: attributes.title || '',
-            poster: posterUrl,
-            video: videoUrl,
+            poster: this.getRelatedFileUrl(relationships, 'field_poster', index),
+            video: this.getRelatedFileUrl(relationships, 'field_video', index),
             date: attributes.field_date || '',
             city: attributes.field_city || '',
             location: attributes.field_location || '',
@@ -172,194 +165,102 @@ class DrupalParser {
             age: attributes.field_age?.toString() || '',
             artistsTeam: attributes.field_artists_team || '',
             artistsSubTitle: attributes.field_artist_subtitle || '',
-            artistsGroupPhoto: artistGroupPhotoUrl,
+            artistsGroupPhoto: this.getRelatedFileUrl(relationships, 'field_artists_group_photo', index),
             eventId: attributes.field_event_id?.toString() || '',
-            locationPhotos: locationPhotos,
+            locationPhotos,
             tag: attributes.field_tag || '',
-            trackList: trackList,
-            artists: artists,
+            trackList: this.parseTrackList(relationships, index),
+            artists: this.parseArtists(relationships, index),
             operator: attributes.field_operator,
             program: attributes.field_program,
-            information: information,
+            information: this.parseInformation(
+                relationships, index, 'field_information', 'paragraph--events_iformation_item'
+            ),
             photos: [],
             videos: [],
             orgId: attributes.field_org_id || '',
-            eventLink: attributes.field_event_link || ''
+            eventLink: attributes.field_event_link || '',
         };
     }
 
-    static parseProgram(node: DrupalNode, included?: any[]): Program {
+    static parseProgram(node: DrupalNode, included?: DrupalNode[]): Program {
         const {attributes, relationships} = node;
-
-        let videoUrl = '';
-        if (relationships?.field_video?.data) {
-            const videoData = relationships.field_video.data;
-            if (videoData.id) {
-                videoUrl = this.getFileUrl(videoData.id, included);
-            }
-        }
-
-        let posterUrl = '';
-        if (relationships?.field_poster?.data) {
-            const posterData = relationships.field_poster.data;
-            if (posterData.id) {
-                posterUrl = this.getFileUrl(posterData.id, included);
-            }
-        }
-
-        let trackList: Track[] = [];
-        if (relationships?.field_tracklist_new?.data && Array.isArray(relationships.field_tracklist_new.data)) {
-            trackList = relationships.field_tracklist_new.data
-                .map((trackRef: any) => {
-                    const trackData = included?.find(item =>
-                        item.type === 'paragraph--track' && item.id === trackRef.id
-                    );
-
-                    if (!trackData) {
-                        return null;
-                    }
-
-                    const trackTitle = this.getFieldValue(trackData.attributes, 'field_title');
-                    const trackArtist = this.getFieldValue(trackData.attributes, 'field_artist');
-                    const trackSource = this.getFieldValue(trackData.attributes, 'field_source');
-
-                    return {
-                        title: trackTitle?.toString() || '',
-                        artist: trackArtist?.toString() || '',
-                        source: trackSource?.toString() || '',
-                    };
-                })
-                .filter((track: Track | null): track is Track => track !== null);
-        }
-
-        let information: InformationItem[] = [];
-        if (relationships?.field_program_information?.data && Array.isArray(relationships.field_program_information.data)) {
-            information = relationships.field_program_information.data
-                .map((itemRef: any) => {
-                    const informationData = included?.find(item =>
-                        item.type === 'paragraph--events_iformation_item' && item.id === itemRef.id
-                    );
-
-                    if (!informationData) {
-                        return null;
-                    }
-
-                    const itemTitle = this.getFieldValue(informationData.attributes, 'field_information_title');
-                    const photoId = informationData.relationships?.field_photo?.data?.id;
-                    const itemPhoto = photoId ? this.getFileUrl(photoId, included) : '';
-                    const itemText = this.getFieldValue(informationData.attributes, 'field_text');
-
-
-                    return {
-                        title: itemTitle?.toString() || '',
-                        photo: itemPhoto?.toString() || '',
-                        text: itemText?.toString() || '',
-                    };
-                })
-                .filter((item: any): item is InformationItem => item !== null); // Фильтрация null
-        }
-
-        let photos: string[] = []
-        if (relationships?.field_photos?.data && Array.isArray(relationships.field_photos.data)) {
-            photos = relationships.field_photos.data
-                .map((itemRef: any) => {
-                    const photosData = included?.find(item =>
-                        item.type === 'paragraph--photos_item' && item.id === itemRef.id
-                    );
-
-                    if (!photosData) {
-                        return null;
-                    }
-
-                    const photoId = photosData.relationships?.field_photos_item_?.data?.id;
-                    const itemPhoto = photoId ? this.getFileUrl(photoId, included) : '';
-
-                    return itemPhoto?.toString() || '';
-                })
-
-        }
-
-        let videos: string[] = []
-        if (relationships?.field_videos?.data && Array.isArray(relationships.field_videos.data)) {
-            videos = relationships.field_videos.data
-                .map((itemRef: any) => {
-                    const videosData = included?.find(item =>
-                        item.type === 'paragraph--videos_item' && item.id === itemRef.id
-                    );
-
-                    if (!videosData) {
-                        return null;
-                    }
-
-                    const videoId = videosData.relationships?.field_videos_item?.data?.id;
-                    const itemVideo = videoId ? this.getFileUrl(videoId, included) : '';
-
-                    return itemVideo?.toString() || '';
-                })
-
-        }
+        const index = indexIncluded(included);
 
         return {
             title: attributes.title || '',
-            poster: posterUrl,
-            video: videoUrl,
+            poster: this.getRelatedFileUrl(relationships, 'field_poster', index),
+            video: this.getRelatedFileUrl(relationships, 'field_video', index),
             descriptionShort: attributes.field_description_short || '',
             descriptionFull: attributes.field_description_full || '',
             duration: attributes.field_duration || '',
             age: attributes.field_age?.toString() || '',
             url: attributes.field_url || '',
             tag: attributes.field_tag || '',
-            trackList: trackList,
-            information: information,
-            photos: photos,
-            videos: videos
+            trackList: this.parseTrackList(relationships, index),
+            information: this.parseInformation(
+                relationships, index, 'field_program_information', 'paragraph--events_iformation_item'
+            ),
+            photos: this.parseMediaItems(
+                relationships, index, 'field_photos', 'paragraph--photos_item', 'field_photos_item_'
+            ),
+            videos: this.parseMediaItems(
+                relationships, index, 'field_videos', 'paragraph--videos_item', 'field_videos_item'
+            ),
         };
-    }
-
-    static getFileUrl(fileId: string, included?: any[]): string {
-        if (!included || !fileId) return '';
-
-        const fileData = included.find(item =>
-            item.type === 'file--file' && item.id === fileId
-        );
-
-        if (!fileData?.attributes?.uri?.url) return '';
-
-        // Если URL относительный, добавьте базовый домен
-        const url = fileData.attributes.uri.url;
-        if (url.startsWith('/')) {
-            return `https://api.backstagegroup.ru${url}`;
-        }
-
-        return url;
     }
 }
 
+
+export interface EventsQuery {
+    /** Только предстоящие события (дата >= сегодня). Фильтрация на стороне Drupal. */
+    upcomingOnly?: boolean;
+    /** Максимальное число событий, которое вернёт сервер. */
+    limit?: number;
+}
+
 export class DrupalAPI {
-    private static async fetchApi(endpoint: string): Promise<any> {
-        const includeFields = [
-            'field_poster',
-            'field_video'
-        ];
-        const includeParam = includeFields.join(',');
-        const fieldsParam = 'fields[file--file]=uri,url,filename';
+    private static readonly FILE_FIELDS = 'fields[file--file]=uri,url,filename';
+    private static readonly EVENT_INCLUDES = 'include=field_poster,field_video';
 
-        const separator = endpoint.includes('?') ? '&' : '?';
-        const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}${endpoint}${separator}include=${includeParam}&${fieldsParam}`;
-        const response = await fetch(url);
+    private static request<T>(resource: string, params: string[] = []): Promise<T> {
+        const query = params.filter(Boolean).join('&');
+        const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}${resource}${query ? `?${query}` : ''}`;
 
-        if (!response.ok) {
-            throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
+        return fetchJson<T>(url, {errorLabel: 'Drupal API Error'});
+    }
+
+
+    private static eventsQueryParams({upcomingOnly, limit}: EventsQuery = {}): string[] {
+        const params = ['sort=field_date'];
+
+        if (upcomingOnly) {
+            params.push(
+                'filter[upcoming][condition][path]=field_date',
+                'filter[upcoming][condition][operator]=>=',
+                `filter[upcoming][condition][value]=${getTodayISODate()}`,
+            );
         }
 
-        return await response.json();
+        if (limit) {
+            params.push(`page[limit]=${limit}`);
+        }
+
+        return params;
+    }
+
+    private static toNodes(data: DrupalResponse['data']): DrupalNode[] {
+        return Array.isArray(data) ? data : [data];
     }
 
     static async getPrograms(): Promise<Program[]> {
         try {
-            const response: DrupalResponse = await this.fetchApi('/node/program');
-            const nodes = Array.isArray(response.data) ? response.data : [response.data];
-            return nodes.map(node => DrupalParser.parseProgram(node, response.included))
+            const response = await this.request<DrupalResponse>('/node/program', [
+                'include=field_poster,field_video',
+                this.FILE_FIELDS,
+            ]);
+
+            return this.toNodes(response.data).map(node => DrupalParser.parseProgram(node, response.included));
         } catch (error) {
             console.error('Error fetching programs:', error);
             throw error;
@@ -368,129 +269,70 @@ export class DrupalAPI {
 
     static async getProgramByUrl(link: string): Promise<Program | null> {
         try {
-            const filterParam = `filter[field_link]=${link}`;
-            const includeParam = 'field_poster,field_video,field_program_information,field_program_information.field_photo,field_photos,field_photos.field_photos_item_,field_videos,field_videos.field_videos_item';
-            const fieldsParam = 'fields[file--file]=uri,url,filename';
-            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/program?${filterParam}&include=${includeParam}&${fieldsParam}`;
+            const data = await this.request<DrupalResponse>('/node/program', [
+                `filter[field_link]=${link}`,
+                'include=field_poster,field_video,field_program_information,field_program_information.field_photo,field_photos,field_photos.field_photos_item_,field_videos,field_videos.field_videos_item',
+                this.FILE_FIELDS,
+            ]);
 
-            const response = await fetch(url);
+            const nodes = this.toNodes(data.data);
+            if (!nodes.length || !nodes[0]) return null;
 
-            if (!response.ok) {
-                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
-            }
-
-            const data: DrupalResponse = await response.json();
-
-            if (data.data && (Array.isArray(data.data) ? data.data.length > 0 : true)) {
-                const nodes = Array.isArray(data.data) ? data.data : [data.data];
-                return DrupalParser.parseProgram(nodes[0], data.included);
-            }
-
-            return null;
+            return DrupalParser.parseProgram(nodes[0], data.included);
         } catch (error) {
             console.error('Error fetching program by url:', error);
             return null;
         }
     }
 
-    static async getEvents(): Promise<Event[]> {
+    private static async fetchEvents(
+        filter: string,
+        query: EventsQuery,
+        errorContext: string
+    ): Promise<Event[]> {
         try {
-            const response: DrupalResponse = await this.fetchApi('/node/concert');
-            const nodes = Array.isArray(response.data) ? response.data : [response.data];
-            const events = nodes.map(node => DrupalParser.parseEvent(node, response.included));
+            const data = await this.request<DrupalResponse>('/node/concert', [
+                filter,
+                this.EVENT_INCLUDES,
+                this.FILE_FIELDS,
+                ...this.eventsQueryParams(query),
+            ]);
 
-            return events.sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-                return dateA.getTime() - dateB.getTime();
-            });
+            return this.toNodes(data.data).map(node => DrupalParser.parseEvent(node, data.included));
         } catch (error) {
-            console.error('Error fetching events:', error);
+            console.error(`Error fetching ${errorContext}:`, error);
             throw error;
         }
     }
 
-    static async getEventsByProgram(program: string | undefined): Promise<Event[]> {
-
-        try {
-            const filterParam = `filter[field_program]=${program}`;
-            const includeParam = 'field_poster,field_video';
-            const fieldsParam = 'fields[file--file]=uri,url,filename';
-            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${filterParam}&include=${includeParam}&${fieldsParam}`;
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
-            }
-            const data: DrupalResponse = await response.json();
-            const nodes = Array.isArray(data.data) ? data.data : [data.data];
-            const events = nodes.map(node => DrupalParser.parseEvent(node, data.included));
-
-            return events.sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-                return dateA.getTime() - dateB.getTime();
-            });
-
-        } catch (error) {
-            console.error('Error fetching events by program:', error);
-            throw error;
-        }
+    static getEvents(query: EventsQuery = {}): Promise<Event[]> {
+        return this.fetchEvents('', query, 'events');
     }
 
-    static async getEventsByCity(cityName: string): Promise<Event[]> {
-        const isAllCities = cityName === 'Все города'
+    static getEventsByProgram(program: string | undefined, query: EventsQuery = {}): Promise<Event[]> {
+        return this.fetchEvents(`filter[field_program]=${program}`, query, 'events by program');
+    }
 
-        try {
-            const encodedCityName = encodeURIComponent(cityName);
-            const filterParam = isAllCities ? '' : `filter[field_city]=${encodedCityName}`;
-            const includeParam = 'field_poster,field_video';
-            const fieldsParam = 'fields[file--file]=uri,url,filename';
-            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${filterParam}&include=${includeParam}&${fieldsParam}`;
-            const response = await fetch(url);
+    static getEventsByCity(cityName: string, query: EventsQuery = {}): Promise<Event[]> {
+        const filter = cityName === 'Все города'
+            ? ''
+            : `filter[field_city]=${encodeURIComponent(cityName)}`;
 
-            if (!response.ok) {
-                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
-            }
-            const data: DrupalResponse = await response.json();
-            const nodes = Array.isArray(data.data) ? data.data : [data.data];
-            const events = nodes.map(node => DrupalParser.parseEvent(node, data.included));
-
-            return events.sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-                return dateA.getTime() - dateB.getTime();
-            });
-        } catch (error) {
-            console.error('Error fetching events by city:', error);
-            throw error;
-        }
+        return this.fetchEvents(filter, query, 'events by city');
     }
 
     static async getEventByEventId(eventId: string): Promise<Event | null> {
         try {
-            const filterParam = `filter[field_event_id]=${eventId}`;
+            const data = await this.request<DrupalResponse>('/node/concert', [
+                `filter[field_event_id]=${eventId}`,
+                'include=field_poster,field_video,field_artists_group_photo,field_location_photos,field_tracklist_new,field_information,field_information.field_photo,field_artists,field_artists.field_photo',
+                this.FILE_FIELDS,
+            ]);
 
-            const includeParam = 'field_poster,field_video,field_artists_group_photo,field_location_photos,field_tracklist_new,field_information,field_information.field_photo,field_artists,field_artists.field_photo';
+            const nodes = this.toNodes(data.data);
+            if (!nodes.length || !nodes[0]) return null;
 
-            const fieldsParam = 'fields[file--file]=uri,url,filename';
-
-            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${filterParam}&include=${includeParam}&${fieldsParam}`;
-
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
-            }
-
-            const data: DrupalResponse = await response.json();
-
-            if (data.data && (Array.isArray(data.data) ? data.data.length > 0 : true)) {
-                const nodes = Array.isArray(data.data) ? data.data : [data.data];
-                return DrupalParser.parseEvent(nodes[0], data.included);
-            }
-
-            return null;
+            return DrupalParser.parseEvent(nodes[0], data.included);
         } catch (error) {
             console.error('Error fetching event by ID:', error);
             return null;
@@ -499,19 +341,11 @@ export class DrupalAPI {
 
     static async getCities(): Promise<string[]> {
         try {
-            const fieldsParam = 'fields[node--concert]=field_city';
-            const url = `${API_CONFIG.drupal.baseUrl}${API_CONFIG.drupal.jsonApiPath}/node/concert?${fieldsParam}`;
+            const data = await this.request<DrupalResponse>('/node/concert', [
+                'fields[node--concert]=field_city',
+            ]);
 
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`Drupal API Error: ${response.status} ${response.statusText}`);
-            }
-
-            const data: DrupalResponse = await response.json();
-
-            const nodes = Array.isArray(data.data) ? data.data : [data.data];
-            const cities = nodes
+            const cities = this.toNodes(data.data)
                 .map(node => {
                     const city = node.attributes.field_city;
                     return typeof city === 'string' ? city.trim() : '';

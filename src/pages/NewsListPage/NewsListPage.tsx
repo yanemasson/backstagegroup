@@ -22,8 +22,7 @@ const NewsListPage = () => {
         const loadNews = async () => {
             try {
                 setLoading(true);
-                const newsData = await fetchNews();
-                const optionsData = await fetchCategories();
+                const [newsData, optionsData] = await Promise.all([fetchNews(), fetchCategories()]);
                 setNewsList(newsData);
                 setOptions(optionsData);
 

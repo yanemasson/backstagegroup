@@ -1,5 +1,5 @@
 import Tab, {TabButtonSize} from "../../../components/Tab.tsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import HorizontalScrollButton from "../../../components/Buttons/HorizontalScrollButton.tsx";
 import {useHorizontalScroll} from "../../../hooks/useHorizontalScroll.ts";
 import IconButton, {IconButtonSize, IconButtonVariant} from "../../../components/Buttons/IconButton.tsx";
@@ -9,6 +9,7 @@ import RightIcon from '../../../assets/icons/arrows/ic_arrow_right.svg?react'
 import {useMediaBreakpoint} from "../../../hooks/useMediaBreakpoint.ts";
 import Text, {TextVariant} from "../../../components/Text.tsx";
 import VideoPlayer from "../../../components/VideoPlayer/VideoPlayer.tsx";
+import {useBodyScrollLock} from "../../../hooks/useBodyScrollLock.ts";
 
 interface GalleryProps {
     photos: string[];
@@ -56,32 +57,7 @@ const Gallery = ({photos, videos} : GalleryProps) => {
 
     const md = useMediaBreakpoint('md')
 
-    // управление скроллом
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.style.top = `-${window.scrollY}px`;
-        } else {
-            const scrollY = document.body.style.top;
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-        };
-    }, [isOpen]);
+    useBodyScrollLock(isOpen);
 
     const {containerRef, canScrollLeft, canScrollRight, scrollLeft, scrollRight,} = useHorizontalScroll({
         scrollAmount:  576,
@@ -119,8 +95,9 @@ const Gallery = ({photos, videos} : GalleryProps) => {
                         photos.map((item, index) => (
                             <img
                                 key={'userImage' + item}
-                                alt={item}
+                                alt={`Фотография ${index + 1}`}
                                 src={item}
+                                loading="lazy"
                                 className='h-[484px] object-center object-cover'
                                 onClick={() => {handleClick(index)}}
                             />
@@ -220,8 +197,10 @@ const Gallery = ({photos, videos} : GalleryProps) => {
                         {activeSection === 'photo' &&
                             photos.map((item, index) => (
                                 <img
-                                    alt={item}
+                                    key={'thumb' + item}
+                                    alt={`Фотография ${index + 1}`}
                                     src={item}
+                                    loading="lazy"
                                     className='h-[77px] cursor-pointer'
                                     onClick={() => {handleClick(index)}}
                                 />

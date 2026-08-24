@@ -8,19 +8,10 @@ interface CityMonthSEO {
   [key: string]: SEOData;
 }
 
-interface CityCategorySEO {
-  [key: string]: SEOData;
-}
-
-interface CitySubcategorySEO {
-  [key: string]: SEOData;
-}
 
 interface CitySEOStructure {
   main: SEOData;
   months: CityMonthSEO;
-  categories: CityCategorySEO;
-  subcategories: CitySubcategorySEO;
   refund: SEOData;
 }
 
@@ -98,40 +89,6 @@ export const seoData: CitySEO = {
         keywords: 'декабрь, красноярск, афиша, 2025, концерт, мероприятие, ноябрь, январь, музыкальная, дк, план, бкз, билет, россия, проведение, календарный, праздники'
       }
     },
-    categories: {
-      'rok-v-ispolnenii-simfonicheskogo-orkestra': {
-        title: 'Рок в исполнении симфонического оркестра в Красноярске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Мировые рок хиты в исполнении симфонического оркестра купить билет по доступной цене в Красноярске. Концерт симфонического оркестра - композиции легенд русского и зарубежного рока, билеты на сайте BACKSTAGE GROUP',
-        keywords: 'рок, исполнении, симфонический, оркестр, хиты, русский, концерт, легенды, рока, оперы, мировые, композиции, музыка, купить, билеты'
-      },
-      'saundtreki-tureczkikh-serialov': {
-        title: 'Саундтреки турецких сериалов в Красноярске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Симфонический оркестр саундтреки из популярных турецких сериалов купить билет по выгодной цене в Красноярске. Музыка и песни из турецких сериалов билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'концерт, турецкий, сериал, саундтрек, оркестр, красноярск, симфонический, музыка, песня'
-      }
-    },
-    subcategories: {
-      'simfoniya-rammstein': {
-        title: 'Симфония Rammstein в Красноярске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Симфония Рамштайн при свечах купить билет по выгодной цене в Красноярске. Рамштайн в исполнении симфонического оркестра, билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'рамштайн, симфония, красноярск, свеча, оркестр, rammstein, отзыв, играет, концерт, backstage, group, купить, билеты'
-      },
-      'simfoniya-imagine-dragons': {
-        title: 'Симфония Imagine Dragons в Красноярске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Симфония Imagine dragons coldplay при свечах купить билет по выгодной цене в Красноярске. Оркестр и симфония Imagine dragons, билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'симфония, imagine, dragons, свеча, оркестр, симфонический'
-      },
-      'marvel': {
-        title: 'Саундтреки Marvel (Марвел) в Красноярске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Саундтреки Марвел с симфоническим оркестром купить билет по выгодной цене в Красноярске. Марвел и симфонический оркестр, билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'марвел, концерт, красноярск, оркестр, симфонический, саундтреки'
-      },
-      'saundtreki-lyubvi': {
-        title: 'Саундтреки любви в Красноярске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Саундтреки любви с симфоническим оркестром купить билет по выгодной цене в Красноярске. Концерт любви с симфоническим оркестром, билеты на сайте BACKSTAGE GROUP',
-        keywords: 'саундтреки, любовь, концерт, оркестр, симфонический'
-      }
-    },
     refund: {
       title: 'Возврат билетов на концерт за мероприятия в Красноярске на сайте BACKSTAGE GROUP',
       description: 'Правила и сроки возврата билетов при переносе или отмене концерта в Красноярске. Как оформить возврат билета онлайн по закону узнать на сайте BACKSTAGE GROUP',
@@ -207,40 +164,6 @@ export const seoData: CitySEO = {
         keywords: 'декабрь, афиша, новосибирск, концерт, мероприятие, филармония, ноябрь, билет, январь, дкж, дк, план, зал, музыкальная, дети, культура, значимый, звезда, программа'
       }
     },
-    categories: {
-      'rok-v-ispolnenii-simfonicheskogo-orkestra': {
-        title: 'Рок в исполнении симфонического оркестра в Новосибирске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Мировые рок хиты в исполнении симфонического оркестра купить билет по недорогой цене в Новосибирске. Концерт симфонического оркестра - композиции легенд русского и зарубежного рока, билеты на сайте BACKSTAGE GROUP',
-        keywords: 'рок, оркестр, концерт, симфонический, исполнение, хиты, мировой, группа, афиша, слушать, музыка, русский, продолжительность, отзыв, песня'
-      },
-      'saundtreki-tureczkikh-serialov': {
-        title: 'Саундтреки турецких сериалов в Новосибирске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Симфонический оркестр саундтреки из популярных турецких сериалов купить билет по доступной цене в Новосибирске. Музыка и песни из турецких сериалов билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'оркестр, турецкий, сериал, саундтреки, свеча, симфонический, backstage, group, концерт, музыка'
-      }
-    },
-    subcategories: {
-      'simfoniya-rammstein': {
-        title: 'Симфония Rammstein в Новосибирске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Симфония Рамштайн при свечах купить билет по разумной цене в Новосибирске. Рамштайн в исполнении симфонического оркестра, билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'рамштайн, симфония, новосибирск, оркестр, свеча, rammstein, отзыв, духовой, рок, купить, билеты, слушать, шоу, концерт, backstage, group'
-      },
-      'simfoniya-imagine-dragons': {
-        title: 'Симфония Imagine Dragons в Новосибирске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Симфония Imagine dragons coldplay при свечах купить билет по привлекательной цене в Новосибирске. Оркестр и симфония Imagine dragons, билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'симфония, imagine, dragons, свеча, оркестр, симфонический'
-      },
-      'marvel': {
-        title: 'Саундтреки Marvel (Марвел) в Новосибирске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Саундтреки Марвел с симфоническим оркестром купить билет по недорогой цене в Новосибирске. Марвел и симфонический оркестр, билеты на концерт на сайте BACKSTAGE GROUP',
-        keywords: 'саундтреки, марвел, оркестр, саундтрек, фильм, симфония'
-      },
-      'saundtreki-lyubvi': {
-        title: 'Саундтреки любви в Новосибирске цена билетов на концерт на сайте BACKSTAGE GROUP',
-        description: 'Саундтреки любви с симфоническим оркестром купить билет по доступной цене в Новосибирске. Концерт любви с симфоническим оркестром, билеты на сайте BACKSTAGE GROUP',
-        keywords: 'саундтрек, любовь, оркестр, симфония'
-      }
-    },
     refund: {
       title: 'Возврат билетов на концерт за мероприятия в Новосибирске на сайте ЗА КУЛИСАМИ | BACKSTAGE',
       description: 'Правила и сроки возврата билетов при переносе или отмене концерта в Новосибирске. Как оформить возврат билета онлайн по закону узнать на сайте BACKSTAGE GROUP',
@@ -252,7 +175,7 @@ export const seoData: CitySEO = {
 // Вспомогательная функция для получения SEO-данных
 export const getSEOData = (
   city: 'krasnoyarsk' | 'novosibirsk',
-  pageType: 'main' | 'month' | 'category' | 'subcategory' | 'refund',
+  pageType: 'main' | 'month' | 'refund',
   identifier?: string
 ): SEOData => {
   const cityData = seoData[city];
@@ -263,14 +186,6 @@ export const getSEOData = (
     case 'month':
       return identifier && cityData.months[identifier] 
         ? cityData.months[identifier] 
-        : cityData.main;
-    case 'category':
-      return identifier && cityData.categories[identifier]
-        ? cityData.categories[identifier]
-        : cityData.main;
-    case 'subcategory':
-      return identifier && cityData.subcategories[identifier]
-        ? cityData.subcategories[identifier]
         : cityData.main;
     case 'refund':
       return cityData.refund;

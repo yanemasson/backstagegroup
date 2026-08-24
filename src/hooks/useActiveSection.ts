@@ -1,26 +1,26 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
+const MIN_VISIBILITY = 0.3;
+
 export const useActiveSection = () => {
-    const [activeSection, setActiveSection] = useState<string>('hero'); // Устанавливаем по умолчанию
+    const [activeSection, setActiveSection] = useState<string>('hero');
     const location = useLocation();
-    const mountedRef = useRef(false);
 
     useEffect(() => {
-        mountedRef.current = true;
+        let frame: number | null = null;
+        let cancelled = false;
 
         const updateActiveSection = () => {
-            if (!mountedRef.current) return;
+            frame = null;
+            if (cancelled) return;
 
-            const sections = document.querySelectorAll('section[id]');
+            const windowHeight = window.innerHeight;
             let currentSection = '';
             let maxVisibility = 0;
 
-            sections.forEach((section) => {
+            document.querySelectorAll('section[id]').forEach((section) => {
                 const rect = section.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-
-                // Рассчитываем, какая часть секции видна
                 const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
                 const visibility = Math.max(0, visibleHeight / Math.min(rect.height, windowHeight));
 
@@ -30,46 +30,36 @@ export const useActiveSection = () => {
                 }
             });
 
-            // Если нашли секцию с достаточной видимостью
-            if (maxVisibility > 0.3 && currentSection) {
+            if (maxVisibility > MIN_VISIBILITY && currentSection) {
                 setActiveSection(currentSection);
             }
         };
 
-        // Запускаем немедленно
-        updateActiveSection();
-
-        // Настраиваем IntersectionObserver для отслеживания скролла
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-                        setActiveSection(entry.target.id);
-                    }
-                });
-            },
-            {
-                threshold: [0.1, 0.3, 0.5, 0.7, 1],
-                rootMargin: '-50px 0px -50px 0px'
-            }
-        );
-
-        // Начинаем наблюдение
-        setTimeout(() => {
-            const sections = document.querySelectorAll('section[id]');
-            sections.forEach((section) => observer.observe(section));
-        }, 100);
-
-        // Также обновляем при скролле
-        const handleScroll = () => {
-            updateActiveSection();
+        const scheduleUpdate = () => {
+            if (frame !== null) return;
+            frame = window.requestAnimationFrame(updateActiveSection);
         };
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        updateActiveSection();
+
+        const observer = new IntersectionObserver(scheduleUpdate, {threshold: [0, MIN_VISIBILITY]});
+
+        // Секции подгружаются лениво, поэтому наблюдение подключаем после первой отрисовки
+        const attachTimeout = window.setTimeout(() => {
+            if (cancelled) return;
+            document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
+            scheduleUpdate();
+        }, 100);
+
+        window.addEventListener('scroll', scheduleUpdate, {passive: true});
+        window.addEventListener('resize', scheduleUpdate, {passive: true});
 
         return () => {
-            mountedRef.current = false;
-            window.removeEventListener('scroll', handleScroll);
+            cancelled = true;
+            window.clearTimeout(attachTimeout);
+            if (frame !== null) window.cancelAnimationFrame(frame);
+            window.removeEventListener('scroll', scheduleUpdate);
+            window.removeEventListener('resize', scheduleUpdate);
             observer.disconnect();
         };
     }, [location.pathname]);

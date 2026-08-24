@@ -15,7 +15,7 @@ const Hero = () => {
 
     const [progress, setProgress] = useState(0);
     const slideTime = 4000
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const {selectedCity} = useCity();
 
@@ -73,22 +73,12 @@ const Hero = () => {
         const fetchEvents = async () => {
             try {
                 setLoading(true);
-                let eventsList;
-                if (selectedCity) {
-                    eventsList = await DrupalAPI.getEventsByCity(selectedCity);
-                } else {
-                    eventsList = await DrupalAPI.getEventsByCity('Все города');
-                }
-
-                const getTodayString = () => new Date().toISOString().split('T')[0];
-                const getEventDateString = (date: string) => date.split('T')[0];
-
-                const todayStr = getTodayString();
-                const upcomingEvents = eventsList.filter(item =>
-                    getEventDateString(item.date) >= todayStr
+                const eventsList = await DrupalAPI.getEventsByCity(
+                    selectedCity || 'Все города',
+                    {upcomingOnly: true, limit: 3}
                 );
 
-                setSlideEvents(upcomingEvents.slice(0, 3));
+                setSlideEvents(eventsList);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -99,8 +89,8 @@ const Hero = () => {
     }, [selectedCity]);
 
     if(loading) return <LoadingSpinner/>;
-    if (error) return <div>{error}</div>;
-
+    if(error) return <div>{error}</div>;
+    if(slideEvents.length === 0) return <div className='h-[76px]'/>;
     return (
         <section className='w-screen xl:w-[99vw] h-screen overflow-hidden' id='hero'>
             <div

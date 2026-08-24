@@ -1,5 +1,5 @@
 // hooks/useCookieConsent.ts
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { CookiePreferences } from '../types/cookie';
 
 export const useCookieConsent = () => {
@@ -70,12 +70,15 @@ export const useCookieConsent = () => {
         savePreferences(preferences);
     }, [savePreferences]);
 
-    return {
-        showBanner,
-        cookiePreferences,
-        acceptAll,
-        rejectAll,
-        customize,
-        setShowBanner
-    };
+    return useMemo(
+        () => ({
+            showBanner,
+            cookiePreferences,
+            acceptAll,
+            rejectAll,
+            customize,
+            setShowBanner
+        }),
+        [showBanner, cookiePreferences, acceptAll, rejectAll, customize]
+    );
 };

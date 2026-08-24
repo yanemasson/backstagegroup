@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
 import {DrupalAPI} from "../../api/drupal.ts";
 import DownIcon from '../../assets/icons/arrows/ic_down.svg?react'
@@ -13,50 +13,72 @@ import IconButton, {IconButtonSize, IconButtonVariant} from "../../components/Bu
 import CitySearchModal from "../../components/CitySearchModal.tsx";
 import Breadcrumbs from "../../components/Breadcrumbs.tsx";
 import Tab, { TabButtonSize } from "../../components/Tab.tsx";
+import {useHideOnScroll} from "../../hooks/useHideOnScroll.ts";
+import {useBodyScrollLock} from "../../hooks/useBodyScrollLock.ts";
+
+const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+const VISIBLE_MONTHS_COUNT = 6;
+
+const monthKey = (year: number, monthIndex: number) => `${year}-${monthIndex}`;
 
 const EventsPage = () => {
 
     const {selectedCity} = useCity();
     const [citySearchModalIsOpen, setCitySearchModalIsOpen] = useState(false)
 
-    const [headerIsVisible, setHeaderIsVisible] = useState(false)
-    
-    const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентярь', 'Октябрь', 'Ноябрь', 'Декабрь']
-    const now = new Date()
-    const currentMonthIndex = now.getMonth()
+    const headerIsVisible = useHideOnScroll(false);
 
-    const getVisibleMonths = () => {
-        const visibleMonths = [];
-        for (let i = 0; i < 6; i++) {
+    // Набор вкладок зависит только от текущей даты — считаем один раз за монтирование
+    const visibleMonths = useMemo(() => {
+        const now = new Date();
+        const currentMonthIndex = now.getMonth();
+
+        return Array.from({length: VISIBLE_MONTHS_COUNT}, (_, i) => {
             const monthIndex = (currentMonthIndex + i) % 12;
             const yearOffset = Math.floor((currentMonthIndex + i) / 12);
             const year = now.getFullYear() + yearOffset;
-            visibleMonths.push({
-                index: monthIndex,
-                name: months[monthIndex],
-                year,
-                displayName: `${months[monthIndex]}${yearOffset > 0 ? ` ${year}` : ''}`
-            });
-        }
-        return visibleMonths;
-    };
 
-    const visibleMonths = getVisibleMonths();
+            return {
+                index: monthIndex,
+                name: MONTHS[monthIndex],
+                year,
+                displayName: `${MONTHS[monthIndex]}${yearOffset > 0 ? ` ${year}` : ''}`
+            };
+        });
+    }, []);
 
     const [activeMonthSection, setActiveMonthSection] = useState(0)
     const [events, setEvents] = useState<Event[]>([]);
-    const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const xl = useMediaBreakpoint('xl')
 
-    const hasEventsInMonth = (monthIndex: number, year: number): boolean => {
-        return events.some(event => {
-            const eventDate = new Date(event.date);
-            return eventDate.getMonth() === monthIndex && eventDate.getFullYear() === year;
-        });
-    };
+    const eventsByMonth = useMemo(() => {
+        const grouped = new Map<string, Event[]>();
+
+        for (const event of events) {
+            const date = new Date(event.date);
+            const key = monthKey(date.getFullYear(), date.getMonth());
+            const bucket = grouped.get(key);
+
+            if (bucket) bucket.push(event);
+            else grouped.set(key, [event]);
+        }
+
+        return grouped;
+    }, [events]);
+
+    const filteredEvents = useMemo(() => {
+        if (activeMonthSection === 0) return events;
+
+        const monthInfo = visibleMonths[activeMonthSection - 1];
+        if (!monthInfo) return [];
+
+        return eventsByMonth.get(monthKey(monthInfo.year, monthInfo.index)) ?? [];
+    }, [activeMonthSection, events, eventsByMonth, visibleMonths]);
 
 
     useEffect(() => {
@@ -79,108 +101,7 @@ const EventsPage = () => {
         fetchEvents();
     }, [selectedCity]);
 
-    useEffect(() => {
-        if (activeMonthSection === 0) {
-            setFilteredEvents(events);
-        } else {
-            const monthInfo = visibleMonths[activeMonthSection - 1];
-            if (!monthInfo) {
-                setFilteredEvents([]);
-                return;
-            }
-
-            const filtered = events.filter(event => {
-                const eventDate = new Date(event.date);
-                return eventDate.getMonth() === monthInfo.index &&
-                    eventDate.getFullYear() === monthInfo.year;
-            });
-            setFilteredEvents(filtered);
-        }
-    }, [activeMonthSection, events]);
-
-    useEffect(() => {
-        if (citySearchModalIsOpen) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.style.top = `-${window.scrollY}px`;
-        } else {
-            const scrollY = document.body.style.top;
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-        };
-    }, [citySearchModalIsOpen]);
-
-    //положение табов
-    useEffect(() => {
-        let ticking = false;
-        let lastScrollY = 0;
-        let hideTimeout: NodeJS.Timeout | null = null;
-
-        const controlNavbar = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const currentScrollY = window.scrollY;
-                    const scrollDelta = currentScrollY - lastScrollY;
-                    const isScrollingDown = scrollDelta > 0;
-                    const isScrollingUp = scrollDelta < 0;
-
-                    if (hideTimeout) {
-                        clearTimeout(hideTimeout);
-                    }
-
-                    if (isScrollingDown && headerIsVisible && currentScrollY > 50) {
-                        console.log('Setting hide timeout');
-                        hideTimeout = setTimeout(() => {
-                            console.log('Hiding navbar');
-                            setHeaderIsVisible(false);
-                        }, 50);
-                    }
-                    else if (isScrollingUp && !headerIsVisible) {
-                        console.log('Setting show timeout');
-                        hideTimeout = setTimeout(() => {
-                            console.log('Showing navbar');
-                            setHeaderIsVisible(true);
-                        }, 50);
-                    }
-
-                    if (currentScrollY < 50) {
-                        console.log('At top - showing navbar');
-                        if (hideTimeout) {
-                            clearTimeout(hideTimeout);
-                        }
-                        setHeaderIsVisible(true);
-                    }
-
-                    lastScrollY = currentScrollY;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', controlNavbar);
-
-        return () => {
-            window.removeEventListener('scroll', controlNavbar);
-            if (hideTimeout) {
-                clearTimeout(hideTimeout);
-            }
-        };
-    }, [headerIsVisible]);
+    useBodyScrollLock(citySearchModalIsOpen);
     
     if(loading) { return <LoadingSpinner/> }
     if(error) { return <>{error}</> }
@@ -217,7 +138,7 @@ const EventsPage = () => {
                         Все месяца
                     </Tab>
                     {visibleMonths.map((monthData, idx) => {
-                        const hasEvents = hasEventsInMonth(monthData.index, monthData.year);
+                        const hasEvents = eventsByMonth.has(monthKey(monthData.year, monthData.index));
 
                         return (
                             <Tab
@@ -236,16 +157,16 @@ const EventsPage = () => {
                 {filteredEvents.map((item, index) => (
                     xl
                         ? <EventCardDesktop
-                            key={index}
+                            key={item.eventId}
                             item={item}
                             to={createSlug(item.eventId)}
-                            isLast={index !== filteredEvents.length - 1}
+                            hasDivider={index !== filteredEvents.length - 1}
                         />
                         : <EventCardMobile
-                            key={index}
+                            key={item.eventId}
                             item={item}
                             to={createSlug(item.eventId)}
-                            isLast={index !== filteredEvents.length - 1}
+                            hasDivider={index !== filteredEvents.length - 1}
                         />
                 ))}
             </div>

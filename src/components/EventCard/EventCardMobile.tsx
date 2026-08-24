@@ -10,17 +10,17 @@ import {Link, useNavigate} from "react-router";
 interface EventCardProps {
     item: Event,
     to: string,
-    isLast: boolean,
+    hasDivider: boolean,
 }
 
-const EventCardMobile = ({item, to, isLast}: EventCardProps) => {
+const EventCardMobile = ({item, to, hasDivider}: EventCardProps) => {
     const datetime = getDate(item.date)
     const navigate = useNavigate();
 
     return (
         <div
             className={`flex flex-col gap-6 pt-8 pb-11
-            ${isLast ? 'border-solid border-b-[2px] border-x-0 border-t-0 border-divider-default' : ''}`}
+            ${hasDivider ? 'border-solid border-b-[2px] border-x-0 border-t-0 border-divider-default' : ''}`}
         >
             <div className='flex flex-col gap-3' onClick={() => navigate(`/events/${to}`)}>
                 <div className='flex justify-between items-end'>
@@ -37,8 +37,9 @@ const EventCardMobile = ({item, to, isLast}: EventCardProps) => {
                 {!item.video || item.video?.length === 0
                         ? <img
                             className='h-full w-full object-cover'
-                            alt={item.poster ? item.poster : videoPosterMobile}
-                            src={item.poster ? item.poster : videoPosterMobile} />
+                            alt={item.title}
+                            src={item.poster ? item.poster : videoPosterMobile}
+                            loading="lazy" />
                         : <VideoPlayer
                             poster={item.poster}
                             buttonType='play'

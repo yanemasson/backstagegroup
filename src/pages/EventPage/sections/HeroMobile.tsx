@@ -30,7 +30,7 @@ const HeroMobile = memo(({item}: HeroProps) => {
                     {!hasVideo
                         ? <img
                             className='h-full w-full object-cover'
-                            alt={posterSrc}
+                            alt={item.title}
                             src={posterSrc}
                             loading="eager"
                             fetchPriority="high"

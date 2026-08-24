@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import BurgerMenu from "./components/BurgerMenu.tsx";
 import Text, {TextVariant} from "../../components/Text.tsx";
 import {useMediaBreakpoint} from "../../hooks/useMediaBreakpoint.ts";
@@ -15,7 +15,9 @@ import LinkItem from "../../components/LinkItem.tsx";
 import CitySelection from "./components/CitySelection.tsx";
 import IconButton, {IconButtonSize, IconButtonVariant} from "../../components/Buttons/IconButton.tsx";
 import {useActiveSection} from "../../hooks/useActiveSection.ts";
+import {useHideOnScroll} from "../../hooks/useHideOnScroll.ts";
 import {useLocation} from "react-router-dom";
+import {useBodyScrollLock} from "../../hooks/useBodyScrollLock.ts";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -25,11 +27,7 @@ const Navbar = () => {
     const [hasUserInteracted, setHasUserInteracted] = useState(false);
     const { selectedCity } = useCity();
 
-    const [visible, setVisible] = useState(true);
-    const visibleRef = useRef(visible);
-    useEffect(() => {
-        visibleRef.current = visible;
-    }, [visible]);
+    const visible = useHideOnScroll(true);
     const location = useLocation();
 
     const activeSection = useActiveSection()
@@ -41,87 +39,7 @@ const Navbar = () => {
 
     const toggleMenu = () => {setIsOpen(!isOpen)}
 
-    // управление скроллом
-    useEffect(() => {
-        const shouldDisableScroll = isOpen || isCityModalOpen;
-
-        if (shouldDisableScroll) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.style.top = `-${window.scrollY}px`;
-        } else {
-            const scrollY = document.body.style.top;
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-        };
-    }, [isOpen, isCityModalOpen]);
-
-    // видимость навбара
-    useEffect(() => {
-        let ticking = false;
-        let lastScrollY = 0;
-        let hideTimeout: NodeJS.Timeout | null = null;
-
-        const controlNavbar = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const currentScrollY = window.scrollY;
-                    const scrollDelta = currentScrollY - lastScrollY;
-                    const isScrollingDown = scrollDelta > 0;
-                    const isScrollingUp = scrollDelta < 0;
-
-                    if (hideTimeout) {
-                        clearTimeout(hideTimeout);
-                    }
-
-                    if (isScrollingDown && visible && currentScrollY > 50) {
-                        hideTimeout = setTimeout(() => {
-                            setVisible(false);
-                        }, 50);
-                    }
-                    else if (isScrollingUp && !visible) {
-                        hideTimeout = setTimeout(() => {
-                            setVisible(true);
-                        }, 50);
-                    }
-
-                    if (currentScrollY < 50) {
-                        if (hideTimeout) {
-                            clearTimeout(hideTimeout);
-                        }
-                        setVisible(true);
-                    }
-
-                    lastScrollY = currentScrollY;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', controlNavbar);
-
-        return () => {
-            window.removeEventListener('scroll', controlNavbar);
-            if (hideTimeout) {
-                clearTimeout(hideTimeout);
-            }
-        };
-    }, [visible]);
+    useBodyScrollLock(isOpen || isCityModalOpen);
 
     // геолокация
     const handleConfirmCity = () => {

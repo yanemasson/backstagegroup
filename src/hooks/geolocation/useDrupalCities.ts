@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { DrupalAPI } from '../../api/drupal';
 
-export const useDrupalCities = () => {
+export const useDrupalCities = (enabled: boolean = true) => {
     const [cities, setCities] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -21,10 +21,10 @@ export const useDrupalCities = () => {
         }
     }, []);
 
-    // Автоматически загружаем города при инициализации хука
     useEffect(() => {
+        if (!enabled) return;
         loadCities();
-    }, [loadCities]);
+    }, [enabled, loadCities]);
 
     return {
         cities,

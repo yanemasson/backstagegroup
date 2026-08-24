@@ -10,16 +10,16 @@ import TicketButtonWrapper from "../Buttons/TicketButtonWrapper.tsx";
 interface EventCardProps {
     item: Event,
     to: string,
-    isLast: boolean,
+    hasDivider: boolean,
 }
 
-const EventCardDesktop = ({item, to, isLast}: EventCardProps) => {
+const EventCardDesktop = ({item, to, hasDivider}: EventCardProps) => {
     const datetime = getDate(item.date)
 
     return (
         <div
             className={`flex flex-row justify-between gap-11 py-[52px]
-            ${isLast ? 'border-solid border-b-[2px] border-x-0 border-t-0 border-divider-default' : ''}`}
+            ${hasDivider ? 'border-solid border-b-[2px] border-x-0 border-t-0 border-divider-default' : ''}`}
         >
             <div className='flex flex-col items-end gap-6 w-[88px]'>
                 <div className='flex flex-col items-end gap-2'>
@@ -76,8 +76,9 @@ const EventCardDesktop = ({item, to, isLast}: EventCardProps) => {
                 {!item.video || item.video?.length === 0
                     ? <img
                         className='h-full w-full object-cover'
-                        alt={item.poster ? item.poster : videoPosterDesktop}
+                        alt={item.title}
                         src={item.poster ? item.poster : videoPosterDesktop}
+                        loading="lazy"
                     />
                     : <VideoPlayer
                         poster={item.poster}

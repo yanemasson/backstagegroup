@@ -65,21 +65,9 @@ const ProgramPage = () => {
             try {
                 setLoading(true);
 
-                const eventsList = await DrupalAPI.getEventsByProgram(id);
+                const eventsList = await DrupalAPI.getEventsByProgram(id, {upcomingOnly: true});
 
-                const getTodayString = () => new Date().toISOString().split('T')[0];
-                const getEventDateString = (date: string) => date.split('T')[0];
-
-                const todayStr = getTodayString();
-                const upcomingEvents = eventsList.filter(item =>
-                    getEventDateString(item.date) >= todayStr
-                );
-
-                setEvents(upcomingEvents);
-
-                if (!eventsList) {
-                    setError(`События не найдены`);
-                }
+                setEvents(eventsList);
             } catch (err) {
                 console.error('Error loading events:', err);
                 setError(err instanceof Error ? err.message : 'Unknown error');
@@ -95,7 +83,7 @@ const ProgramPage = () => {
     useEffect(() => {
         let ticking = false;
         let lastScrollY = 0;
-        let hideTimeout: NodeJS.Timeout | null = null;
+        let hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
         const controlNavbar = () => {
             if (!ticking) {

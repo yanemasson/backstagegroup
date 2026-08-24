@@ -1,34 +1,64 @@
+import { useEffect, useMemo, useState } from 'react';
 import { parseHTMLToJSX } from '../utils/parseHTMLToJSX';
-import { seoContentHTML } from '../data/seoContent';
 
 interface SEOContentProps {
   city: 'krasnoyarsk' | 'novosibirsk';
-  pageType: 'main' | 'month' | 'category' | 'subcategory' | 'refund';
+  pageType: 'main' | 'month' | 'refund';
   month?: string;
-  category?: string;
-  subcategory?: string;
 }
 
-const SEOContent = ({ city, pageType, month, category, subcategory }: SEOContentProps) => {
-  let htmlContent: string | null = null;
+/**
+ * Каждый SEO-текст лежит в отдельном модуле и грузится отдельным чанком:
+ * страница тянет только свой фрагмент, а не всю базу текстов обоих городов.
+ */
+const seoModules = import.meta.glob<{ default: string }>('../data/seo/**/*.ts');
 
-  if (pageType === 'main') {
-    htmlContent = seoContentHTML[city].main;
-  } else if (pageType === 'month' && month) {
-    htmlContent = seoContentHTML[city].months[month];
-  } else if (pageType === 'category' && category) {
-    htmlContent = seoContentHTML[city].categories[category];
-  } else if (pageType === 'subcategory' && subcategory) {
-    htmlContent = seoContentHTML[city].subcategories[subcategory];
-  } else if (pageType === 'refund') {
-    htmlContent = seoContentHTML[city].refund;
+const modulePath = ({ city, pageType, month }: SEOContentProps): string | null => {
+  switch (pageType) {
+    case 'main':
+      return `../data/seo/${city}/main.ts`;
+    case 'refund':
+      return `../data/seo/${city}/refund.ts`;
+    case 'month':
+      return month ? `../data/seo/${city}/months/${month}.ts` : null;
+    default:
+      return null;
   }
+};
 
-  if (!htmlContent) return null;
+const SEOContent = ({ city, pageType, month }: SEOContentProps) => {
+  const [htmlContent, setHtmlContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const path = modulePath({ city, pageType, month });
+    const load = path ? seoModules[path] : undefined;
+
+    if (!load) {
+      setHtmlContent(null);
+      return;
+    }
+
+    let cancelled = false;
+    load().then(module => {
+      if (!cancelled) setHtmlContent(module.default);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [city, pageType, month]);
+
+  // Разбор HTML через DOMParser — дорогая операция, держим её вне рендера
+  const content = useMemo(
+    () => (htmlContent ? parseHTMLToJSX(htmlContent) : null),
+    [htmlContent]
+  );
+
+  if (!content) return null;
 
   return (
     <section className='flex flex-col w-[90vw] md:w-[1166px] gap-[30px] mb-[120px]'>
-      {parseHTMLToJSX(htmlContent)}
+      {content}
     </section>
   );
 };

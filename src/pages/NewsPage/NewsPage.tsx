@@ -21,8 +21,7 @@ const NewsPage = () => {
         const loadPost = async () => {
             try {
                 setIsLoading(true);
-                const postData = await fetchPost(id);
-                const optionsData = await fetchCategories()
+                const [postData, optionsData] = await Promise.all([fetchPost(id), fetchCategories()]);
                 setPost(postData);
                 setOptions(optionsData);
                 setError(null);

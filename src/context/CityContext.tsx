@@ -1,10 +1,12 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 
 interface CityContextType {
     selectedCity: string | null;
     setSelectedCity: (city: string | null) => void;
     isLoading: boolean;
 }
+
+const ALL_CITIES = 'Все города';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const CityContext = createContext<CityContextType | undefined>(undefined);
@@ -37,17 +39,14 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
                     }
                 );
                 const data = await response.json();
-                if (data.location?.data?.city) {
-                    setSelectedCity(data.location.data.city);
-                    localStorage.setItem('selectedCity', data.location.data.city);
-                } else {
-                    setSelectedCity('Все города');
-                    localStorage.setItem('selectedCity', 'Все города');
-                }
+                const detected = data.location?.data?.city || ALL_CITIES;
+
+                setSelectedCity(detected);
+                localStorage.setItem('selectedCity', detected);
             } catch (error) {
                 console.error('Ошибка при определении города:', error);
-                setSelectedCity('Все города');
-                localStorage.setItem('selectedCity', 'Все города');
+                setSelectedCity(ALL_CITIES);
+                localStorage.setItem('selectedCity', ALL_CITIES);
             } finally {
                 setIsLoading(false);
             }
@@ -56,23 +55,22 @@ export const CityProvider = ({ children }: { children: ReactNode }) => {
         detectCity();
     }, []);
 
-    const handleSetCity = (city: string | null) => {
+    const handleSetCity = useCallback((city: string | null) => {
         setSelectedCity(city);
         if (city) {
             localStorage.setItem('selectedCity', city);
         } else {
             localStorage.removeItem('selectedCity');
         }
-    };
+    }, []);
+
+    const value = useMemo<CityContextType>(
+        () => ({ selectedCity, setSelectedCity: handleSetCity, isLoading }),
+        [selectedCity, handleSetCity, isLoading]
+    );
 
     return (
-        <CityContext.Provider
-            value={{
-                selectedCity,
-                setSelectedCity: handleSetCity,
-                isLoading
-            }}
-        >
+        <CityContext.Provider value={value}>
             {children}
         </CityContext.Provider>
     );

@@ -30,8 +30,9 @@ const UserPhotosBlock = () => {
                     {arr.map((item) => (
                         <img
                             key={'userImage' + item}
-                            alt={'/images/review/' + item + '.jpg' }
+                            alt={'Фотография зрителя ' + item}
                             src={'/images/review/' + item + '.jpg' }
+                            loading="lazy"
                             className='w-[85vw] h-[484px] xl:w-[272px] xl:h-[412px] object-center object-cover'
                         />
                     ))}

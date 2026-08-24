@@ -20,15 +20,11 @@ const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
 
 // SEO-страницы для Красноярска
 const MonthPage = lazy(() => import('../pages/MonthPage/MonthPage'));
-const CategoryPage = lazy(() => import('../pages/CategoryPage/CategoryPage'));
-const SubcategoryPage = lazy(() => import('../pages/CategoryPage/SubcategoryPage'));
 
 // SEO-страницы для Новосибирска
 const NovosibirskMainPage = lazy(() => import('../pages/Novosibirsk/NovosibirskMainPage'));
 const NovosibirskMonthPage = lazy(() => import('../pages/Novosibirsk/NovosibirskMonthPage'));
 const NovosibirskRefundPage = lazy(() => import('../pages/Novosibirsk/NovosibirskRefundPage'));
-const NovosibirskCategoryPage = lazy(() => import('../pages/Novosibirsk/NovosibirskCategoryPage'));
-const NovosibirskSubcategoryPage = lazy(() => import('../pages/Novosibirsk/NovosibirskSubcategoryPage'));
 
 const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december' ];
 
@@ -43,8 +39,7 @@ const AppRoutes = () => {
                 <Route path={'programs'} element={<MainPage/>} />
                 <Route path={'programs/:id'} element={<ProgramPage/>}/>
 
-                <Route path={'events'} element={<MainPage/>} />
-                <Route path={'events/:id'} element={<Suspense fallback={<LoadingSpinner/>}><EventPage/></Suspense>} />
+                <Route path={'events/:id'} element={<EventPage/>} />
 
                 <Route path={'news'} element={<NewsListPage/>} />
                 <Route path={'news/:id'} element={<NewsPage/>} />
@@ -58,8 +53,6 @@ const AppRoutes = () => {
                 {months.map(item => (
                     <Route key={item} path={item} element={<MonthPage month={item} />} />
                 ))}
-                <Route path='simfonicheskij-orkestr/:category' element={<CategoryPage />} />
-                <Route path='simfonicheskij-orkestr/:category/:subcategory' element={<SubcategoryPage />} />
 
                 {/* SEO-страницы: Новосибирск */}
                 <Route path='nsk' element={<NovosibirskMainPage />} />
@@ -67,8 +60,6 @@ const AppRoutes = () => {
                     <Route key={'nsk/' + item} path={'nsk/' + item} element={<NovosibirskMonthPage month={item} />} />
                 ))}
                 <Route path='nsk/refund' element={<NovosibirskRefundPage />} />
-                <Route path='nsk/simfonicheskij-orkestr/:category' element={<NovosibirskCategoryPage />} />
-                <Route path='nsk/simfonicheskij-orkestr/:category/:subcategory' element={<NovosibirskSubcategoryPage />} />
                 <Route path={'*'} element={<NotFoundPage />} />
             </Routes>
         </Suspense>

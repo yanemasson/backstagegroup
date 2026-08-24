@@ -3,8 +3,9 @@ import {SEO} from "../../components/SEO.tsx";
 import Button, {ButtonSize, ButtonVariant} from "../../components/Buttons/Button.tsx";
 import {Link} from "react-router";
 import {useCookieContext} from "../../context/CookieContext.tsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import CookieCustomizeModal from "./components/CookieCustomizeModal.tsx";
+import {useBodyScrollLock} from "../../hooks/useBodyScrollLock.ts";
 
 const PrivacyPage = () => {
 
@@ -21,32 +22,7 @@ const PrivacyPage = () => {
         setCookieCustomizeModalIsOpen(false);
     }
 
-    // управление скроллом
-    useEffect(() => {
-        if (CookieCustomizeModalIsOpen) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.style.top = `-${window.scrollY}px`;
-        } else {
-            const scrollY = document.body.style.top;
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-        };
-    }, [CookieCustomizeModalIsOpen]);
+    useBodyScrollLock(CookieCustomizeModalIsOpen);
 
     return (
         <>

@@ -26,7 +26,7 @@ const ArtistsSection = ({artists, artistsTeam, artistsGroupPhoto, artistsSubTitl
 
             {artistsGroupPhoto &&
                 <div className='flex flex-col gap-[15px] xl:gap-5'>
-                    <img src={artistsGroupPhoto} alt={artistsGroupPhoto} />
+                    <img src={artistsGroupPhoto} alt={artistsTeam || 'Музыканты'} loading="lazy" />
                 </div>
             }
 

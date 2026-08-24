@@ -11,8 +11,9 @@ const ArtistCard = ({name, photo, role}: ArtistCardProps) => {
         <div className='flex flex-col gap-4 w-40 md:w-[220px] justify-self-center'>
             <img
                 className='object-cover w-40 h-40 md:w-[220px] md:h-[220px]'
-                alt={photo}
+                alt={name}
                 src={photo}
+                loading="lazy"
             />
             <div className='flex flex-col gap-1'>
                 <Text variant={TextVariant.Body_L}>{name}</Text>

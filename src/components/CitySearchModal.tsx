@@ -13,7 +13,7 @@ interface CitySearchModalProps {
 
 const CitySearchModal = ({ isOpen, onClose }: CitySearchModalProps) => {
     const { setSelectedCity } = useCity();
-    const { cities, isLoading, error } = useDrupalCities();
+    const { cities, isLoading, error } = useDrupalCities(isOpen);
     const navigate = useNavigate();
 
     const handleCitySelect = (cityName: string) => {

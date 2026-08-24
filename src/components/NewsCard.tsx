@@ -21,7 +21,7 @@ const NewsCard = ({post}: NewsCardProps) => {
 
     return (
         <div className='flex flex-col xl:flex-row gap-6 w-full'>
-            <img className='xl:w-[570px] object-cover' src={poster} alt={title} />
+            <img className='xl:w-[570px] object-cover' src={poster} alt={title} loading="lazy" />
             <div className='flex flex-col gap-6 justify-between items-start'>
                 <div className='flex flex-col gap-3'>
                     <Text className='text-text-tertiary' variant={TextVariant.Overline}>{datetime.formattedDate}</Text>

@@ -13,6 +13,7 @@ import {Link} from "react-router";
 import IconButton, {IconButtonSize, IconButtonVariant} from "../../../../components/Buttons/IconButton.tsx";
 import DownIcon from '../../../../assets/icons/arrows/ic_down.svg?react'
 import CitySearchModal from "../../../../components/CitySearchModal.tsx";
+import {useBodyScrollLock} from "../../../../hooks/useBodyScrollLock.ts";
 
 const EventList = () => {
 
@@ -29,17 +30,9 @@ const EventList = () => {
             try {
                 setLoading(true);
                 const city = selectedCity || 'Все города';
-                const eventsList = await DrupalAPI.getEventsByCity(city);
+                const eventsList = await DrupalAPI.getEventsByCity(city, {upcomingOnly: true, limit: 3});
 
-                const getTodayString = () => new Date().toISOString().split('T')[0];
-                const getEventDateString = (date: string) => date.split('T')[0];
-
-                const todayStr = getTodayString();
-                const upcomingEvents = eventsList.filter(item =>
-                    getEventDateString(item.date) >= todayStr
-                );
-
-                setEvents(upcomingEvents.slice(0, 3));
+                setEvents(eventsList);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
@@ -50,31 +43,7 @@ const EventList = () => {
         fetchEvents();
     }, [selectedCity]);
 
-    useEffect(() => {
-        if (citySearchModalIsOpen) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.style.top = `-${window.scrollY}px`;
-        } else {
-            const scrollY = document.body.style.top;
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-        };
-    }, [citySearchModalIsOpen]);
+    useBodyScrollLock(citySearchModalIsOpen);
 
     if(loading) { return <LoadingSpinner/> }
     if(error) { return <>{error}</> }
@@ -92,19 +61,19 @@ const EventList = () => {
                     ? (events.map((item, index) => (
                         xl
                             ? <EventCardDesktop
-                                key={index} item={item}
+                                key={item.eventId} item={item}
                                 to={createSlug(item.eventId)}
-                                isLast={index !== events.length - 1}
+                                hasDivider={index !== events.length - 1}
                             />
                             : <EventCardMobile
-                                key={index}
+                                key={item.eventId}
                                 item={item}
                                 to={createSlug(item.eventId)}
-                                isLast={index !== events.length - 1}
+                                hasDivider={index !== events.length - 1}
                             />
                         )
                     ))
-                    : <Text className='text-text-tertiary' variant={TextVariant.Body_M}>
+                    : <Text className='text-text-tertiary py-6' variant={TextVariant.Body_M}>
                         В ближайшее время концерты в вашем городе не запланированы. Следите за обновлениями!
                     </Text>
                 }
